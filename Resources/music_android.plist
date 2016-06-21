@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bg1</key>
+	<string>sounds_android/bg1.ogg</string>
+	<key>bg2</key>
+	<string>sounds_android/bg2.ogg</string>
+	<key>bg3</key>
+	<string>sounds_android/bg3.ogg</string>
+	<key>bg4</key>
+	<string>sounds_android/bg4.ogg</string>
+	<key>boss_come</key>
+	<string>sounds_android/boss_come.ogg</string>
+	<key>pk</key>
+	<string>sounds_android/pk.ogg</string>
+	<key>room</key>
+	<string>sounds_android/room.ogg</string>
+</dict>
+</plist>

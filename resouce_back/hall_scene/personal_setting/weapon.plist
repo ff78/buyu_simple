@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>hall_scene/personal_setting/me_right.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,432},{42,47}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{42,47}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{113,0},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{226,0},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{339,0},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,206},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,319},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{171,108},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun0.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{284,108},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{397,206},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_change_gun.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{452,0},{206,45}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{206,45}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_buy.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,108},{171,66}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{171,66}</string>
+			</dict>
+			<key>hall_scene/personal_setting/me_gun108.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{108,314},{113,108}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<true />
+				<key>sourceSize</key>
+				<string>{113,108}</string>
+			</dict>
+		</dict>
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>textureFileName</key>
+			<string>weapon.png</string>
+			<key>realTextureFileName</key>
+			<string>weapon.png</string>
+			<key>size</key>
+			<string>{512,512}</string>
+		</dict>
+		<key>texture</key>
+		<dict>
+			<key>width</key>
+			<integer>512</integer>
+			<key>height</key>
+			<integer>512</integer>
+		</dict>
+	</dict>
+</plist>
