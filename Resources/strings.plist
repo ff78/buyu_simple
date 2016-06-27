@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>share_content</key>
-	<string>抢红包，领话费，陪我一起玩《捕鱼比赛》。赢话费、iphone6s等实物礼品，帮我来打大鲨鱼吧！</string>
+	<string>我正在玩单机捕鱼，遇到了深海BOSS鲨鱼，快来帮我一起打</string>
 	<key>get_score</key>
-	<string>恭喜获得%d金币!</string>
+	<string>获得奖励金币</string>
 	<key>share_times</key>
 	<string>您已成功分享过%d次</string>
 	<key>no_exchange_code_enter</key>
@@ -13,77 +13,77 @@
 	<key>exchange_err_invalid</key>
 	<string>兑换码已失效！</string>
 	<key>exchange_err_used</key>
-	<string>已领取过，谢谢使用！</string>
+	<string>对不起，你已经领取过了。</string>
 	<key>exchange_err_code</key>
-	<string>兑换码错误，请检查兑换码再试！</string>
+	<string>对不起，礼品卡号码错误。</string>
 	<key>exchange_success</key>
 	<string>恭喜您成功兑换到</string>
-	<key>tip_eva_str</key>
-	<string>亲，打赏我们一个好评！可以获得金币哦！\n评价优秀有机会参与抽奖呢！</string>
-	<key>bank_get_success</key>
-	<string>取款成功！</string>
-	<key>bank_save_success</key>
-	<string>存款成功！</string>
-	<key>daily_rec_tip</key>
-	<string>恭喜你获得了</string>
-	<key>qq_err_invalid</key>
-	<string>QQ号应该为数字，请重新输入！</string>
-	<key>phone_err_invalid</key>
-	<string>手机号应该为数字，请重新输入！</string>
-	<key>phone_err_len</key>
-	<string>手机号码应该为11位数字，请重新输入！</string>
-	<key>nick_err_len</key>
-	<string>昵称必须为4~12位，请重新输入!</string>
-	<key>register_err_account_invaild</key>
-	<string>请不要输入字母数字和汉字以外的字符！</string>
-	<key>appname</key>
-	<string>电玩城捕鱼</string>
-	<key>account_label_text</key>
-	<string>帐号:</string>
-	<key>password_label_text</key>
-	<string>密码:</string>
-	<key>account_placeholder</key>
-	<string>请输入帐号:</string>
-	<key>password_placeholder</key>
-	<string>请输入密码:</string>
-	<key>password2_placeholder</key>
-	<string>请再次输入密码:</string>
-	<key>password_account_not_empty</key>
-	<string>账号或者密码不能为空</string>
-	<key>register_err_account_len</key>
-	<string>游戏帐号必须为4~12位，请重新输入!</string>
-	<key>register_err_password_len</key>
-	<string>游戏密码必须为4~12位，请重新输入!</string>
-	<key>register_err_password_confirm</key>
-	<string>您两次输入的密码不一致，请重新输入!</string>
-	<key>qq_not_nil</key>
-	<string>QQ号不能为空。</string>
-	<key>cell_phone_not_nil</key>
-	<string>电话号码不能为空。</string>
-	<key>bill_not_enough</key>
-	<string>您的话费不足!</string>
-	<key>query_bill_status_0</key>
-	<string>审核中</string>
-	<key>query_bill_status_1</key>
-	<string>已发放</string>
-	<key>query_bill_status_2</key>
-	<string>已退回</string>
-	<key>change_bill_failed</key>
-	<string>话费兑换失败!</string>
-	<key>change_bill_success</key>
-	<string>话费兑换成功!</string>
-	<key>receive_award_suc</key>
-	<string>领取奖励成功！</string>
-	<key>obtain_award_failed</key>
-	<string>领取奖励失败，或不是VIP会员!</string>
-	<key>receive_award_failed</key>
-	<string>领取奖励失败！</string>
-	<key>obtain_gold</key>
-	<string>领取金币%d</string>
-	<key>change_unit</key>
-	<string>%d元</string>
-	<key>bank_money_not_enough</key>
-	<string>您银行钱不够!</string>
+	<key>tide_forbid_skill</key>
+	<string>潮汐即将来临，无法使用技能</string>
+	<key>gold_lack</key>
+	<string>金币已不足，请充值</string>
+	<key>share_error</key>
+	<string>分享出错，请稍后重试</string>
+	<key>qq_share_error</key>
+	<string>还没安装QQ哦，请安装后重试</string>
+	<key>skill_need_unlock</key>
+	<string>炸弹要等炮台解锁到2000倍才可以用。</string>
+	<key>ray_need_vip</key>
+	<string>使用激光炮需要解锁vip</string>
+	<key>autofire_need_vip</key>
+	<string>使用自动发炮需要解锁vip</string>
+	<key>skill_need_diamond</key>
+	<string>钻石不足，不能使用技能。</string>
+	<key>unlock_need_diamond</key>
+	<string>钻石不足，升级失败</string>
+	<key>recharge_success</key>
+	<string>恭喜你充值成功</string>
+	<key>mystery_cannon</key>
+	<string>???</string>
+	<key>anmie_cannon</key>
+	<string>黯灭炮</string>
+	<key>weapon_need_vip</key>
+	<string>升级VIP可获得新的捕鱼神器！</string>
+	<key>room_need_multi_1</key>
+	<string>此房间最低炮台倍数为:</string>
+	<key>room_need_multi_2</key>
+	<string>，请升级炮台</string>
+	<key>password_account_error</key>
+	<string>登陆用户名或密码错误！</string>
+	<key>login_error_title</key>
+	<string>登陆失败</string>
+	<key>gold_pass_stage</key>
+	<string>恭喜你，闯关成功！\n本关收益: </string>
+	<key>gold_pass_fail</key>
+	<string>游戏失败，再接再厉！</string>
+	<key>gold_lack_money</key>
+	<string>对不起，你的金币不够！</string>
+	<key>gold_ban_challenge</key>
+	<string>不能进入挑战</string>
+	<key>gold_challenge_exhaust</key>
+	<string>亲，你今天的挑战次数已用完，明天再来吧！</string>
+	<key>gold_free</key>
+	<string>每日首次免费</string>
+	<key>gold_ban_rechallenge</key>
+	<string>已打过的关卡不能重打！</string>
+	<key>gold_stage_open_fail</key>
+	<string>开启失败</string>
+	<key>gold_need_keys</key>
+	<string>需要集齐5把钥匙，去大海里寻找吧！</string>
+	<key>gold_box_locked</key>
+	<string>无法开启</string>
+	<key>gold_box_need_stage</key>
+	<string>需要经过10关才能打开它！</string>
+	<key>gold_box_has_used</key>
+	<string>这个宝箱已经开过了，去找其他的宝藏吧！</string>
+	<key>gold_box_open_bound</key>
+	<string>你居然找到了宝藏！</string>
+	<key>gold_box_open_big_bound</key>
+	<string>你居然找到了金山！</string>
+	<key>gold_box_open_empty</key>
+	<string>你居然啥都没找到！</string>
+	<key>gold_box_unlock</key>
+	<string>成功开启</string>
 	<key>your_money_not_enough</key>
 	<string>您金币不够!</string>
 	<key>input_format_invalidate</key>
