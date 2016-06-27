@@ -118,7 +118,7 @@ lotteryManager(nullptr)
     
     coreDataStr = "";
     
-//    deleteJson();
+//    deleteJson();
     if (!loadJson()) {
         sceneProb = gRebateProb;
         sceneProbDuration = probTotalDuration = REBATE_TIME_LIMIT;
