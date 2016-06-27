@@ -40,7 +40,6 @@ GameUILayer::~GameUILayer()
     Director::getInstance()->getEventDispatcher()->removeEventListener(initBossTaskListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(initTaskListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(updateSkillListener);
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(showSkillChargeListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(hideSkillChargeListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(updateStarBoxListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(updateTaskListener);
@@ -247,8 +246,6 @@ bool GameUILayer::init()
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(updateSkillListener, -1);
     useSkillListener = EventListenerCustom::create(UI_USE_SKILL, CC_CALLBACK_1(GameUILayer::useSkill, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(useSkillListener, -1);
-//    showSkillChargeListener = EventListenerCustom::create(UI_SKILL_CHARGE, CC_CALLBACK_1(GameUILayer::showSkillCharge, this));
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(showSkillChargeListener, -1);
     hideSkillChargeListener = EventListenerCustom::create(UI_CHARGE_USE_SKILL, CC_CALLBACK_1(GameUILayer::hideSkillCharge, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(hideSkillChargeListener, -1);
     updateStarBoxListener = EventListenerCustom::create(UI_UPDATE_STAR_BOX, CC_CALLBACK_1(GameUILayer::updateStarBox, this));
@@ -998,57 +995,6 @@ void GameUILayer::useSkill(cocos2d::EventCustom *event)
     bombBtn->setEnabled(false);
     //            }
     
-}
-
-void GameUILayer::showSkillCharge(cocos2d::EventCustom *event)
-{
-//    confirmLayer = LayerColor::create(Color4B(10, 10, 10, 128));
-//    auto callback = [](Touch * ,Event *)
-//    {
-//        return true;
-//    };
-//    auto listener = EventListenerTouchOneByOne::create();
-//    listener->onTouchBegan = callback;
-//    listener->setSwallowTouches(true);
-//    getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,confirmLayer);
-//    
-//    auto root = CSLoader::createNode(NEXT_STAGE_UI);
-//    root->setPosition(Vec2(GameUtils::winSize.width/2, GameUtils::winSize.height/2));
-//    confirmLayer->addChild(root);
-//    addChild(confirmLayer);
-//    auto tipLabel = (Text*)root->getChildByName("Text_1");
-//    auto okBtn = (Button*)root->getChildByName("ok_btn");
-//    auto cancelBtn = (Button*)root->getChildByName("cancel_btn");
-//    tipLabel->setString("升级VIP可获得新的捕鱼神器！");
-//    okBtn->addClickEventListener(CC_CALLBACK_0(ChangeCannonLayer::upgradeVip, this));
-//    cancelBtn->addClickEventListener(CC_CALLBACK_0(ChangeCannonLayer::removeConfirm, this));
-    L2E_SKILL_CHARGE info = *static_cast<L2E_SKILL_CHARGE*>(event->getUserData());
-    chargeSkillId = info.skillId;
-    tipNode = CSLoader::createNode(COMMON_TIP_UI);
-    tipNode->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    tipNode->setPosition(Vec2(GameUtils::winSize.width/2, GameUtils::winSize.height/2));
-    addChild(tipNode);
-    
-    auto text1 = (Text*)tipNode->getChildByName("Text_1");
-    auto text2 = (Text*)tipNode->getChildByName("Text_2");
-    text1->setString("Congratulations，you get 10 diamonds！");
-    text2->setVisible(false);
-//    auto boundText = (TextAtlas*)card[0]->getChildByName("Bounds");
-//    std::string boundStr("获得奖励金币");
-//    boundStr += boundText->getString();
-//    text2->setString(boundStr);
-    
-    auto okBtn = (Button*)tipNode->getChildByName("ButtonOk");
-    okBtn->addClickEventListener(CC_CALLBACK_1(GameUILayer::clickChargeOk, this));
-}
-
-void GameUILayer::clickChargeOk(cocos2d::Ref *pSender)
-{
-    AUDIO_PLAY("click", AUDIO_TYPE::EFFECT_TYPE);
-    E2L_CHARGE_SKILL info;
-    info.eProtocol = e2l_charge_skill;
-    info.skillId = chargeSkillId;
-    ClientLogic::instance()->ProcessUIRequest(&info);
 }
 
 void GameUILayer::hideSkillCharge(cocos2d::EventCustom *event)

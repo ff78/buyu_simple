@@ -43,7 +43,6 @@ enum E2LProtocol
 //    e2l_auto_fire,                          //  自动开炮
     
     e2l_use_skill,                          //  使用技能
-    e2l_charge_skill,                       //  充值钻石并使用技能
     e2l_fish_all_remove,                    //  显示层没有鱼了
     
     e2l_niuniu_splash_over,                  //  进入牛牛游戏前的效果播放完
@@ -896,12 +895,6 @@ typedef struct __L2E_SKILL_CHARGE
     L2EProtocol     eProtocol;
     int             skillId;
 }L2E_SKILL_CHARGE;
-
-typedef struct __E2L_CHARGE_SKILL
-{
-    E2LProtocol     eProtocol;
-    int             skillId;
-}E2L_CHARGE_SKILL;
 
 typedef struct __L2E_CHARGE_USE_SKILL
 {

@@ -173,7 +173,6 @@ public:
     //改变炮倍率
     void changeCannonMul(E2L_CHANGE_CANNON_MULTIPLY info);
     void useSkill(E2L_USE_SKILL info);
-    void chargeSkill(E2L_CHARGE_SKILL info);
     
     //网碰到鱼
     void hitFishes(cocos2d::EventCustom* event);
@@ -184,10 +183,6 @@ public:
     void endRayFire(cocos2d::EventCustom* event);
     void readyPlane(cocos2d::EventCustom* event);
     void endPlane(cocos2d::EventCustom* event);
-    
-    void loadTaskConfig(int taskId);
-    void loadStageConfig(int stageId);
-    void loadLevelConfig(int levelId);
     
     void readLevelFile(int idx, std::string filename);
     static void initLevelTable(rapidjson::Document &_doc);
@@ -383,7 +378,6 @@ private:
     BlackMary *maryManager;
     BlackLottery *lotteryManager;
     
-    cocos2d::EventListenerCustom* emitListener;
     cocos2d::EventListenerCustom* hitListener;
     cocos2d::EventListenerCustom* rayHitListener;
     cocos2d::EventListenerCustom* bombListener;

@@ -28,14 +28,10 @@
 //#include "server/AndroidHelper.h"
 #endif
 
-//#include "external/xxtea/CryptXXTEA.h"
-
 using namespace CocosDenshion;
 
 USING_NS_CC;
 using namespace std;
-
-//static cocos2d::Size designResolutionSize = cocos2d::Size(1074, 740);
 
 AppDelegate::AppDelegate()
 {
@@ -86,6 +82,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaStack* stack = engine->getLuaStack();
     stack->setXXTEAKeyAndSign(xxteaKeyStr.c_str(), strlen(xxteaKeyStr.c_str()), xxteaSignStr.c_str(), strlen(xxteaSignStr.c_str()));
 
+    //设置存档json的加密秘钥
     std::string uuStr("pojiedesiquanjia");
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     uuStr += iOSHelper::uuidStr;
@@ -93,6 +90,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 //    uuStr += AndroidHelper::instance()->getDeviceID().c_str();
     #endif
     coAesSetKey(uuStr.substr(0,32).c_str());
+    
+    //设置资源文件的加密秘钥和签名
     CryptXXTEA::getInstance()->setXXTEAKeyAndSign(xxteaKeyStr.c_str(), strlen(xxteaKeyStr.c_str()), xxteaSignStr.c_str(), strlen(xxteaSignStr.c_str()));
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
@@ -115,7 +114,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     Director::getInstance()->setDisplayStats(true);
     GameUtils::winSize = Director::getInstance()->getWinSize();
     
+    //初始化声音引擎
     SoundManager::shared();
+    
     //从登陆状态开启游戏
 //    ClientLogic::instance()->ChangeState(GAME_STATE_GOLDEN_DIFF);
     ClientLogic::instance()->ChangeState(GAME_STATE_LOGIN);

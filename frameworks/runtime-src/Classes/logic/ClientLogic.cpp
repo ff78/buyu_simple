@@ -49,7 +49,6 @@ ClientLogic::ClientLogic()
     m_UI2LogicFunc[e2l_choose_cannon] = &ClientLogic::UIChooseCannon;
     m_UI2LogicFunc[e2l_change_cannon_multi] = &ClientLogic::UIChangeCannonMul;
     m_UI2LogicFunc[e2l_use_skill] = &ClientLogic::UIUseSkill;
-    m_UI2LogicFunc[e2l_charge_skill] = &ClientLogic::UIChargeSkill;
     m_UI2LogicFunc[e2l_fish_all_remove] = &ClientLogic::UIFishClear;
     m_UI2LogicFunc[e2l_niuniu_splash_over] = &ClientLogic::UINiuNiuSplashOver;
     m_UI2LogicFunc[e2l_niuniu_ask_showHand] = &ClientLogic::UIShowHand;
@@ -198,14 +197,8 @@ bool ClientLogic::enterGameMode(E_GAME_STATE next)
             pass2Engine(&info);
         }
             break;
-//        case GAME_STATE_LOAD_GAME:
-//        {
-//            
-//        }
-//            break;
         case GAME_STATE_GAME:
         {
-            //todo 炮最低倍数限制
             GameCore::instance()->changeGameState(FISH_GAME_LOAD);
         }
             break;

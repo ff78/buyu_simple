@@ -59,7 +59,7 @@ lotteryManager(nullptr)
     maxUnlockStage = 1;
     maxStage = 1;
     energyDuration = 0;
-//    totalScore = 1000000;
+
     totalScore = 3000;
     totalDiamond = 10;
     energyScore = 0;
@@ -101,9 +101,7 @@ lotteryManager(nullptr)
     for (int i = 0; i < 4; i++) {
         shareCountState[i] = 0;
     }
-//    killTask1Count = 0;
-//    killTask2Count = 0;
-//    killTask3Count = 0;
+
     killBigCount = 0;
     killStarCount = 0;
     killBigScore = 0;
@@ -133,7 +131,6 @@ lotteryManager(nullptr)
 
 GameCore::~GameCore()
 {
-//    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(emitListener);
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(hitListener);
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(frozenListener);
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(readyRayListener);
@@ -183,15 +180,17 @@ void GameCore::askShowHand()
     }
     ClientLogic::instance()->pass2Engine(&info);
 }
+
+//不会进入状态准备方法，返回上一个状态
 void GameCore::backGameState()
 {
     exitGameState(currState);
     currState = lastState;
     log("back to currState: %d", currState);
 }
+
 void GameCore::niuniuEnd(E2L_NIUNIU_END info)
 {
-//    totalScore += info.result;
     changeGold(info.result);
     backGameState();
     
@@ -268,36 +267,29 @@ void GameCore::logic(float dt)
             break;
     }
     
-//    if (rebateDuration > 0) {
-//        rebateDuration -= dt;
-//        if (rebateDuration <= 0) {
-//            changeSceneProb();
-//        }
-//    }else{
-//        sceneProbDuration -= dt;
-//        if (sceneProbDuration <= 0) {
-//            changeSceneProb();
-//        }
-//    }
-    
     sceneProbDuration -= dt;
     if (sceneProbDuration <= 0) {
+        //场景的命中倍率因子持续时间到时改变场景命中倍率因子
         changeSceneProb();
     }
     
     if (energyDuration > 0) {
         energyDuration -= dt;
         if (energyDuration <= 0) {
+            //能量炮时间到时，结束能量炮形态，返回之前选择的炮
             endEnergyCannon();
         }
     }
     
+    //金币数少于关卡最小倍率，进入救济金逻辑
     if (totalScore < cannonManager->levelConfigs[stageConfig.minMultiply].multiply) {
         
         if (relifeData.relifeState == 1) {
+            //relifeState == 1 :倒数计时
             getRelifeFCS();
             relifeData.relifeCountDown -= dt;
             if (relifeData.relifeCountDown <= 0) {
+                //relifeState == 1 :计时结束，可领取救济金
                 relifeData.relifeCountDown = 0;
                 relifeData.relifeState = 2;
                 Relife_Config config;
@@ -322,6 +314,7 @@ void GameCore::logic(float dt)
             }
             saveRelife2CS();
         }else if (relifeData.relifeState == 0 && bulletManager->bulletMap.size() == 0) {
+            //relifeState == 0 :还未开始计时，等待所有子弹都消除掉
             getRelifeFCS();
             Relife_Config config;
             readRelifeConfig(relifeData.relifeId, config, RELIFE_CONFIG_FILE);
@@ -360,9 +353,12 @@ void GameCore::tideSwitchOver()
 
 void GameCore::heroFire(E2L_CANNON_FIRE info)
 {
+    //暴走状态下，会发3颗子弹
     int count = bulletManager->getRushFire()?3:1;
+    //激光炮和炸弹不消耗子弹
     if (cannonManager->getHeroCannon().getState() == CANNON_NORMAL) {
         if (cannonManager->getHeroCannon().getCannonMul() < stageConfig.minMultiply) {
+            //不满足关卡最低倍率
             L2E_CANNON_MULTI_NOT_ENOUGH info;
             info.eProtocol = l2e_cannon_multi_not_enough;
             info.requireMultiply = cannonManager->levelConfigs[stageConfig.minMultiply].multiply;
@@ -370,6 +366,7 @@ void GameCore::heroFire(E2L_CANNON_FIRE info)
             return;
         }
         if (totalScore < cannonManager->getHeroCannon().getMultiple()*count ) {
+            //金币不足以发炮
             if (currState == FISH_GAME_BATTLE_RECHAGE) {
                 return;
             }
@@ -380,64 +377,61 @@ void GameCore::heroFire(E2L_CANNON_FIRE info)
             }else{
                 showHallRecharge(1);
             }
-//            L2E_LACK_GOLD info;
-//            info.eProtocol = l2e_lack_gold;
-//            ClientLogic::instance()->pass2Engine(&info);
             return;
         }
     }
-//    if (true) {
-        cannonManager->getHeroCannon().setAngle(info.angle);
-        
-        CREATE_BULLET_CMD cmd;
-        cmd.angle = cannonManager->getHeroCannon().getAngle();
-        cmd.angle = info.angle;
-        cmd.bulletCount = cannonManager->getHeroCannon().getBulletCount();
-        cmd.chariId = cannonManager->getHeroCannon().getChairId();
-        cmd.multiply = cannonManager->getHeroCannon().getMultiple();
-        auto offVec = cocos2d::Vec2::forAngle(CC_DEGREES_TO_RADIANS(90-info.angle));
-        if (info.posX == -2000 || info.posY == -2000) {
-            cmd.pos = cannonManager->getHeroCannon().getPosition() + offVec*45;
-        }else{
-            cmd.pos = cocos2d::Vec2(info.posX, info.posY);
-        }
-//        cmd.pos = cannonManager->getHeroCannon().getPosition() + offVec*45;
-        cmd.speed = 1;
-        cmd.isHero = true;
-        cmd.cannonType = cannonManager->getHeroCannon().getCannonType();
-        cmd.traceFishId = info.traceFishId;
-        cmd.expMulti = cannonManager->getHeroCannon().getExpMulti();
     
-        if(bulletManager->createBullet(cmd))
-        {
-            if (cannonManager->getHeroCannon().getState() == CANNON_NORMAL) {
-                changeGold(-cannonManager->getHeroCannon().getMultiple()*count);
-                int mul = cannonManager->getHeroMul();
-                int val = 0;
-                while (totalScore < cannonManager->levelConfigs[mul].multiply) {
-                    if (mul <= stageConfig.minMultiply) {
-                        break;
-                    }
-                    val++;
-                    mul--;
-                    
+    cannonManager->getHeroCannon().setAngle(info.angle);
+    
+    CREATE_BULLET_CMD cmd;
+    cmd.angle = cannonManager->getHeroCannon().getAngle();
+    cmd.angle = info.angle;
+    cmd.bulletCount = cannonManager->getHeroCannon().getBulletCount();
+    cmd.chariId = cannonManager->getHeroCannon().getChairId();
+    cmd.multiply = cannonManager->getHeroCannon().getMultiple();
+    auto offVec = cocos2d::Vec2::forAngle(CC_DEGREES_TO_RADIANS(90-info.angle));
+    if (info.posX == -2000 || info.posY == -2000) {
+        cmd.pos = cannonManager->getHeroCannon().getPosition() + offVec*45;
+    }else{
+        cmd.pos = cocos2d::Vec2(info.posX, info.posY);
+    }
+    cmd.speed = 1;
+    cmd.isHero = true;
+    cmd.cannonType = cannonManager->getHeroCannon().getCannonType();
+    cmd.traceFishId = info.traceFishId;
+    cmd.expMulti = cannonManager->getHeroCannon().getExpMulti();
+
+    if(bulletManager->createBullet(cmd))
+    {
+        if (cannonManager->getHeroCannon().getState() == CANNON_NORMAL) {
+            //消耗金币
+            changeGold(-cannonManager->getHeroCannon().getMultiple()*count);
+            
+            //自动降倍率
+            int mul = cannonManager->getHeroMul();
+            int val = 0;
+            while (totalScore < cannonManager->levelConfigs[mul].multiply) {
+                if (mul <= stageConfig.minMultiply) {
+                    break;
                 }
-                if (val > 0) {
-                    cannonManager->changeCannonMul(-val, stageConfig.minMultiply);
-                    saveMulti2CS();
-                }
+                val++;
+                mul--;
                 
             }
+            if (val > 0) {
+                cannonManager->changeCannonMul(-val, stageConfig.minMultiply);
+                saveMulti2CS();
+            }
+            
         }
-        
-
-//    }
+    }
 }
 
 void GameCore::catchFish(E2L_FISH_DEAD info)
 {
     int fishTypeId = fishManager->fishMap[info.fishId].getTypeID();
     int catchScore = fishManager->fishMap[info.fishId].getCatchScore();
+    //物品掉落
     Fish_Drop_Item item = fishManager->fishMap[info.fishId].caculateDrop();
     if (item.dropItemCount > 0) {
         dropItemIncreacement++;
@@ -456,6 +450,7 @@ void GameCore::catchFish(E2L_FISH_DEAD info)
     
     fishManager->removeFish(info.fishId);
     
+    //牛牛和玛丽两种特殊鱼，切换游戏状态，进小游戏
     if (currState != FISH_GAME_NIUNIU && currState != FISH_GAME_MARY) {
         if (fishTypeId == FISH_TYPE_EX_39) {
             changeGameState(FISH_GAME_NIUNIU);
@@ -469,10 +464,12 @@ void GameCore::catchFish(E2L_FISH_DEAD info)
     checkTask(fishTypeId);
     if(checkKillBig(fishTypeId))
     {
+        //打中大鱼，加星，加积分
         getKillBigFCS();
         lotteryManager->addKillBig(catchScore*0.1);
         saveKillBig2CS();
         
+        //为捕鱼日志加鱼的类型
         if (bigFishCountMap.find(fishTypeId) == bigFishCountMap.end()) {
             Big_Fish_Count fishCount;
             fishCount.fishType = fishManager->getFishType(fishTypeId);
@@ -505,6 +502,7 @@ bool GameCore::checkTask(int fishTypeId)
         return false;
     }
     
+    //找到鱼的类型是否关系到某个子任务
     int index = 0;
     for (; index < MAX_TASK_COUNT; index++) {
         if (fishTypeId == missionConfig.fishId[index]) {
@@ -522,6 +520,7 @@ bool GameCore::checkTask(int fishTypeId)
     
     killTaskCount[index]++;
     
+    //检查是否完成某个子任务
     if (killTaskCount[index] >= missionConfig.fishCount[index]) {
         L2E_COMPLETE_SUB_TASK info;
         info.eProtocol = l2e_complete_sub_task;
@@ -531,6 +530,7 @@ bool GameCore::checkTask(int fishTypeId)
         changeGold(missionConfig.fishGold[index]);
     }
     
+    //检查是否完成所有任务
     bool complete = true;
     for (int i = 0; i < MAX_TASK_COUNT; i++) {
         if (killTaskCount[i] < missionConfig.fishCount[i]) {
@@ -625,17 +625,20 @@ void GameCore::nextStage()
         return;
     }
     
-    
+    //下一关按钮仅在最后一个关卡出现
     currStage = maxUnlockStage;
     stageTargetState = STAGE_TARGET_INIT;
     killBoss1Count = 0;
     killBoss2Count = 0;
     saveBossTask2CS();
     
+    //清除所有掉落，并加给玩家
     clearDrop();
     save2Json();
+    //清除所有子弹，把金币返还给玩家
     bulletManager->clear();
     bulletManager->setRushFire(false);
+    //结束技能的使用状态
     for (int i = 1; i <= 5; i++) {
         skillManager->endSkill(i);
     }
@@ -652,11 +655,13 @@ void GameCore::quitStage()
         stageTargetState = STAGE_TARGET_INIT;
     }
     saveBossTask2CS();
-    
+    //清除所有掉落，并加给玩家
     clearDrop();
     save2Json();
+    //清除所有子弹，把金币返还给玩家
     bulletManager->clear();
     bulletManager->setRushFire(false);
+    //结束技能的使用状态
     for (int i = 1; i <= 5; i++) {
         skillManager->endSkill(i);
     }
@@ -698,13 +703,8 @@ void GameCore::useSkill(E2L_USE_SKILL info)
     
     getVipFCS();
     if (info.skillId == 4) {
-        
+        //vip4之前不能用激光炮
         if (vip < 4) {
-//            if (vip == 0) {
-//                showVipGift();
-//            }else{
-//                showVipIntro();
-//            }
             changeGameState(FISH_GAME_NEED_VIP);
             L2E_RAY_NEED_VIP info;
             info.eProtocol = l2e_ray_need_vip;
@@ -713,6 +713,7 @@ void GameCore::useSkill(E2L_USE_SKILL info)
             return;
         }
     } else if (info.skillId == 5) {
+        //2000炮之前不能用炸弹
         if(cannonManager->levelConfigs[cannonManager->getUnlockLevel()].multiply < 2000){
             L2E_BOMB_NEED_UNLOCK info;
             info.eProtocol = l2e_bomb_need_unlock;
@@ -724,15 +725,11 @@ void GameCore::useSkill(E2L_USE_SKILL info)
     getSkillCountFCS();
     
     if (skillManager->skillMap[info.skillId].count == 0) {
+        //技能数量不足，消耗钻石
         if (totalDiamond >= skillManager->skillMap[info.skillId].price) {
             changeDiamond(-skillManager->skillMap[info.skillId].price);
         }else{
-//            getVipFCS();
-//            if (vip == 0) {
-//                showVipGift();
-//            }else{
-//                showHallRecharge(0);
-//            }
+            //钻石不足，提示后进钻石充值或vip礼包
             changeGameState(FISH_GAME_BATTLE_RECHAGE);
             L2E_SKILL_CHARGE chargeInfo;
             chargeInfo.eProtocol = l2e_skill_charge;
@@ -743,12 +740,15 @@ void GameCore::useSkill(E2L_USE_SKILL info)
     }
     skillManager->useSkill(info.skillId);
     if (info.skillId == 1 && vip >= 8) {
+        //vip8锁定不计次数
         skillManager->skillMap[info.skillId].count = -1;
     }else if (info.skillId == 3 && vip >= 9){
+        //vip9暴走不计次数
         skillManager->skillMap[info.skillId].count = -1;
     }
     
     saveSkillCount2CS();
+    //更新技能数量
     L2E_UPDATE_SKILL skillInfo;
     skillInfo.eProtocol = l2e_update_skill;
     for (int i = 0; i < 5; i++) {
@@ -757,31 +757,17 @@ void GameCore::useSkill(E2L_USE_SKILL info)
     }
     ClientLogic::instance()->pass2Engine(&skillInfo);
     
+    //更新技能CD
     L2E_USE_SKILL useInfo;
     useInfo.eProtocol = l2e_use_skill;
     useInfo.useSkillId = info.skillId;
     useInfo.cd = skillManager->skillMap[info.skillId].coolDuration;
     getVipFCS();
     if (vip >= 2 && info.skillId == 1) {
+        //vip2锁定CD时间翻倍
         useInfo.cd *= 2;
     }
     ClientLogic::instance()->pass2Engine(&useInfo);
-}
-
-void GameCore::chargeSkill(E2L_CHARGE_SKILL info)
-{
-    changeDiamond(10);
-    
-    if (totalDiamond > skillManager->skillMap[info.skillId].price) {
-        getSkillCountFCS();
-        changeDiamond(-skillManager->skillMap[info.skillId].price);
-        skillManager->useSkill(info.skillId);
-        saveSkillCount2CS();
-        L2E_CHARGE_USE_SKILL skillInfo;
-        skillInfo.eProtocol = l2e_charge_use_skill;
-        skillInfo.useSkillId = info.skillId;
-        ClientLogic::instance()->pass2Engine(&skillInfo);
-    }
 }
 
 void GameCore::changeGameState(FISH_GAME_STATES nextState)
@@ -796,20 +782,6 @@ void GameCore::changeGameState(FISH_GAME_STATES nextState)
 
 }
 
-void GameCore::loadTaskConfig(int taskId)
-{
-    
-}
-
-void GameCore::loadStageConfig(int stageId)
-{
-    
-}
-void GameCore::loadLevelConfig(int levelId)
-{
-    
-}
-
 void GameCore::enterGameState(FISH_GAME_STATES nextState)
 {
     switch (nextState) {
@@ -821,33 +793,17 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
         case FISH_GAME_INIT:
         {
             srand((unsigned int)time(NULL));
-//            cannonManager = CanonnManager::instance();
-//            bulletManager = BulletManager::instance();
-//            fishManager = FishManager::instance();
-//            skillManager = SkillManager::instance();
-//            lotteryManager = BlackLottery::instance();
-//            
-//            skillManager->loadConfig();
-//            lotteryManager->loadConfig();
-         
             if (stageTargetState == STAGE_TARGET_OPEN) {
                 stageTargetState = STAGE_TARGET_INIT;
             }
             if (stageMissionState == TASK_OPEN) {
                 stageMissionState = TASK_INIT;
             }
-            
-//            readStageFile(currStage, STAGE_CONFIG_FILE);
-//            readTaskFile(stageConfig.missionId, MISSION_CONFIG_FILE);
-//            readLevelFile(level, LEVEL_CONFIG_FILE);
-//            
-//            PathManager::instance()->initPath("path/");
-//            fishManager->loadFishConfig(excludeFishIds);
+
             getMultiFCS();
             cannonManager->loadConfig(unlockCannonLvl);
             cannonManager->loadCannonConfig(stageConfig.minMultiply);
             
-//            changeSceneProb();
             getProbFCS();
             fishManager->setSceneProb(sceneProb);
             
@@ -867,8 +823,6 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
             }
             bulletManager->clear();
             
-//            addLoadFunc(Load::LoadFunc(&GameCore::loadJson));
-//            addLoadFunc(Load::LoadFunc(&GameCore::save2CoreString));
             addLoadFunc(Load::LoadFunc(&GameCore::loadTask));
             addLoadFunc(Load::LoadFunc(&GameCore::loadFish));
             addLoadFunc(Load::LoadFunc(&GameCore::loadPath));
@@ -938,12 +892,8 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
                 tmd.chairId = 0;
                 tmd.isHero = true;
                     
-//                tmd.cannonMul = MIN(currCannonMulti, stageConfig.minMultiply);
                 tmd.cannonMul = currCannonMulti;
                 
-//                tmd.multiply = gCannonMultiply[tmd.cannonMul];
-//                tmd.bulletCount = gCannonBullet[tmd.cannonMul];
-//                tmd.multiply = gCannonMultiply[tmd.cannonMul];
                 tmd.bulletCount = 2;
                 tmd.typeId = currCannonType;
                 tmd.pos = cocos2d::Vec2(winSize.width/2, 45);
@@ -954,14 +904,8 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
             bulletManager->setReadyFire(true);
             
             fishManager->setInTide(false);
-//            fishManager->readFile(fishManager->getCreateFishIdx(), TEST_CREATE_FISH_CONFIG_FILE);
-//            fishManager->doCreateCmd();
             
             nextTideDuration = abs(rand())%30+360;
-//            L2E_SCHEDULE_TIDE info;
-//            info.eProtocol = l2e_schedule_tide;
-//            info.startInterval = abs(rand())%10+60;
-//            ClientLogic::instance()->pass2Engine(&info);
             
             if (cannonManager->CannonMaxLevel()) {
                 L2E_CANNON_MAX_LEVEL info;
@@ -1040,7 +984,6 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
                 ClientLogic::instance()->pass2Engine(&info);
                 stageTargetState = STAGE_TARGET_OPEN;
                 saveBossTask2CS();
-//                save2CoreString();
             }else{
                 L2E_UPDATE_BOSS_TASK info;
                 info.eProtocol = l2e_update_boss_task;
@@ -1051,8 +994,6 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
                 info.targetState = stageTargetState;
                 ClientLogic::instance()->pass2Engine(&info);
             }
-            
-//            save2CoreString();
             
             if (stageMissionState == TASK_INIT) {
                 L2E_INIT_TASK infoTask;
@@ -1140,8 +1081,6 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
             clearAll();
             fishManager->setInTide(true);
             fishManager->createSceneFish();
-//            fishManager->readFile(fishManager->getCreateFishIdx(), TEST_CREATE_FISH_CONFIG_FILE);
-//            fishManager->doCreateCmd();
         }
             break;
 
@@ -1150,15 +1089,6 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
             L2E_NIUNIU_SPLASH info;
             info.eProtocol = l2e_niuniu_splash;
             ClientLogic::instance()->pass2Engine(&info);
-//            niuManager = BlackNiuNiu::instance();
-//            niuManager->deal();
-//            niuManager->getHandCard();
-//            
-//            L2E_ENTER_NIUNIU info;
-//            info.eProtocol = l2e_enter_niuniu;
-//            memcpy(info.cards, niuManager->getHandCard(), 5*sizeof(int));
-//            info.cannonMultiply = cannonManager->getHeroCannon().getMultiple();
-//            ClientLogic::instance()->pass2Engine(&info);
         }
             break;
             
@@ -1167,21 +1097,6 @@ void GameCore::enterGameState(FISH_GAME_STATES nextState)
             L2E_MARY_SPLASH info;
             info.eProtocol = l2e_mary_splash;
             ClientLogic::instance()->pass2Engine(&info);
-            
-//            maryManager = BlackMary::instance();
-//            maryManager->startMary(cannonManager->getHeroCannon().getMultiple());
-//            maryManager->randRoll();
-//            
-//            L2E_ENTER_MARY info;
-//            info.eProtocol = l2e_enter_mary;
-//            info.roundIndex = maryManager->getRoundBtnIndex();
-//            info.roundTypeId = maryManager->getRoundTypeId();
-//            info.cardType = maryManager->getCardType();
-//            info.stageScore = maryManager->getStageScore();
-//            info.totalScore = totalScore;
-//            info.cannonMulti = maryManager->getCannonMulti();
-//            memcpy(info.centerIndex, maryManager->centerTypeId, sizeof(int)*4);
-//            ClientLogic::instance()->pass2Engine(&info);
         }
         default:
             break;
@@ -1205,36 +1120,36 @@ void GameCore::frozenScreen(cocos2d::EventCustom *event)
 
 void GameCore::bombFishes(cocos2d::EventCustom *event)
 {
+    
     std::map<int, int> info = *static_cast<std::map<int, int>*>(event->getUserData());
     
     int scoreSum = 0;
     fishManager->clearCatchGroups();
-    //    fishManager->setPriceSum(0);
     for (auto obj: info) {
         int bulletId = obj.second;
         int fishId = obj.first;
+        //炸弹不能炸组鱼
         if (fishManager->fishMap[fishId].getGroupType() != NONE_GROUP) {
             continue;
         }
+        //炸弹只能炸小鱼
         if(fishManager->getFishType(fishManager->fishMap[fishId].getTypeID()) != SMALL_FISH)
         {
             continue;
         }
         
-//        int multi = bulletManager->bulletMap[bulletId].getMultiply();
         int chairId = bulletManager->bulletMap[bulletId].getChairId();
         bool bomb = (bulletManager->bulletMap[bulletId].getBulletType() == 3);
-//        int expMulti = bulletManager->bulletMap[bulletId].getExpMulti();
+        //炸弹的倍率固定为1000
         scoreSum += fishManager->catchFish(fishId, 1000, 0, chairId, bomb);
         
     }
     
     if(scoreSum > 0)
     {
-        //        totalScore += scoreSum;
         changeGold(scoreSum);
         if (energyDuration == 0) {
-            //            energyScore += scoreSum;
+            //能量炮积分以鱼的价格为准
             if (energyScore + fishManager->getPriceSum() >= ENERGY_THRES) {
                 startEnergyCannon();
             }else{
@@ -1244,6 +1159,7 @@ void GameCore::bombFishes(cocos2d::EventCustom *event)
     }
     
     if (fishManager->getPriceSum()>0) {
+        //经验以鱼的价格为准
         addExp(fishManager->getPriceSum());
     }
 }
@@ -1251,6 +1167,7 @@ void GameCore::bombFishes(cocos2d::EventCustom *event)
 void GameCore::hitFishes(cocos2d::EventCustom *event)
 {
     std::map<int, int> info = *static_cast<std::map<int, int>*>(event->getUserData());
+    //普通子弹击中鱼的数量有个降几率的因子
     int fishCount = (int)info.size();
     float rateFactor = 1;
     if (fishCount <= 0 || fishCount > MAX_FISH_PER_BULLET)
@@ -1284,10 +1201,8 @@ void GameCore::hitFishes(cocos2d::EventCustom *event)
     
     if(scoreSum > 0)
     {
-//        totalScore += scoreSum;
         changeGold(scoreSum);
         if (energyDuration == 0) {
-//            energyScore += scoreSum;
             if (energyScore + fishManager->getPriceSum() >= ENERGY_THRES) {
                 startEnergyCannon();
             }else{
@@ -1308,15 +1223,13 @@ void GameCore::rayHitFishes(cocos2d::EventCustom *event)
     
     int scoreSum = 0;
     fishManager->clearCatchGroups();
-    //    fishManager->setPriceSum(0);
     for (auto obj: info) {
         int bulletId = obj.second;
         int fishId = obj.first;
         
-//        int multi = bulletManager->bulletMap[bulletId].getMultiply();
         int chairId = bulletManager->bulletMap[bulletId].getChairId();
         bool bomb = (bulletManager->bulletMap[bulletId].getBulletType() == 3);
-//        int expMulti = bulletManager->bulletMap[bulletId].getExpMulti();
+        //激光炮的倍率固定为1000
         scoreSum += fishManager->catchFish(fishId, 1000, 0, chairId, bomb);
         
     }
@@ -1330,10 +1243,8 @@ void GameCore::rayHitFishes(cocos2d::EventCustom *event)
     
     if(scoreSum > 0)
     {
-        //        totalScore += scoreSum;
         changeGold(scoreSum);
         if (energyDuration == 0) {
-            //            energyScore += scoreSum;
             if (energyScore + fishManager->getPriceSum() >= ENERGY_THRES) {
                 startEnergyCannon();
             }else{
@@ -1351,7 +1262,7 @@ void GameCore::rayHitFishes(cocos2d::EventCustom *event)
 
 void GameCore::initLevelTable(rapidjson::Document &_doc)
 {
-    if (_doc.IsArray()){
+    if (_doc.IsArray()) {
         int size = _doc.Size();
         int objId;
         for (int i = 0; i<size; i++) {
@@ -1363,7 +1274,7 @@ void GameCore::initLevelTable(rapidjson::Document &_doc)
 
 void GameCore::initRelifeTable(rapidjson::Document &_doc)
 {
-    if (_doc.IsArray()){
+    if (_doc.IsArray()) {
         int size = _doc.Size();
         int objId;
         for (int i = 0; i<size; i++) {
@@ -1375,7 +1286,7 @@ void GameCore::initRelifeTable(rapidjson::Document &_doc)
 
 void GameCore::initIdStageTable(rapidjson::Document &_doc)
 {
-    if (_doc.IsArray()){
+    if (_doc.IsArray()) {
         int size = _doc.Size();
         int objId;
         for (int i = 0; i<size; i++) {
@@ -1387,7 +1298,7 @@ void GameCore::initIdStageTable(rapidjson::Document &_doc)
 
 void GameCore::initIdTaskTable(rapidjson::Document &_doc)
 {
-    if (_doc.IsArray()){
+    if (_doc.IsArray()) {
         int size = _doc.Size();
         int objId;
         for (int i = 0; i<size; i++) {
@@ -1399,7 +1310,7 @@ void GameCore::initIdTaskTable(rapidjson::Document &_doc)
 
 void GameCore::initRechargeTable(rapidjson::Document &_doc)
 {
-    if (_doc.IsArray()){
+    if (_doc.IsArray()) {
         int size = _doc.Size();
         int objId;
         for (int i = 0; i<size; i++) {
@@ -1411,7 +1322,7 @@ void GameCore::initRechargeTable(rapidjson::Document &_doc)
 
 void GameCore::initVipTable(rapidjson::Document &_doc)
 {
-    if (_doc.IsArray()){
+    if (_doc.IsArray()) {
         int size = _doc.Size();
         int objId;
         for (int i = 0; i<size; i++) {
@@ -1459,7 +1370,6 @@ bool GameCore::initStageData(int idx, rapidjson::Document &_doc)
         return false;
     }
     
-//    STAGE_CONFIG stageConfig;
     stageConfig.stageId = DICTOOL->getIntValue_json(dic, "ID");
     stageConfig.bossId = DICTOOL->getIntValue_json(dic, "BossID");
     fishManager->setBossFishId(stageConfig.bossId);
@@ -1472,8 +1382,6 @@ bool GameCore::initStageData(int idx, rapidjson::Document &_doc)
     stageConfig.dailyMoney = DICTOOL->getIntValue_json(dic, "DailyMoney");
     stageConfig.dailyDiamond = DICTOOL->getIntValue_json(dic, "DailyDiamond");
     stageConfig.minMultiply = DICTOOL->getIntValue_json(dic, "MinCannon");
-//    stageConfig.bossRes = DICTOOL->getStringValue_json(dic, "BossRes");
-//    stageConfig.subBossRes = DICTOOL->getStringValue_json(dic, "SubBossRes");
     std::string excludeStr = DICTOOL->getStringValue_json(dic, "ExcludeFishID");
     std::vector<std::string> excludeVec = GameUtils::splitStr(excludeStr, ":");
     excludeFishIds.clear();
@@ -1536,7 +1444,6 @@ void GameCore::loadStageMiniConfigs()
             }
             
             Stage_Mini_Config stageConfig;
-            //    STAGE_CONFIG stageConfig;
             int bossId = DICTOOL->getIntValue_json(dic, "BossID");
             stageConfig.bossRes = fishManager->getFishRes(bossId).c_str();
             stageConfig.bossType = fishManager->getFishType(bossId);
@@ -1640,27 +1547,9 @@ void GameCore::startRebate()
 
 void GameCore::changeSceneProb()
 {
-//    rebateDuration = 0;
-//    sceneProbDuration = abs(rand())%18+6;
-//    float currProb = fishManager->getSceneProb();
-//    int randProb = 0;
-//    do{
-//        randProb = abs(rand())%MAX_SCENE_PROB_STYLE;
-//        int a = abs(rand())%100;
-//        for (int i = 0; i<MAX_SCENE_PROB_STYLE; i++) {
-//            if (a <= gSceneProbRate[i]) {
-//                randProb = i;
-//                break;
-//            }
-//            a -= gSceneProbRate[i];
-//        }
-//        
-//    }while (currProb == gSceneProb[randProb]);
-//    
-//    fishManager->setSceneProb(gSceneProb[randProb]);
-    
     getProbFCS();
     probForceDuration += probTotalDuration;
+    //判断是不是要强制大降几率，还是一般的改几率
     bool forceDown = false;
     if (probForceCount == 0) {
         probForceCount = 1;
@@ -1674,6 +1563,7 @@ void GameCore::changeSceneProb()
     if(!forceDown)
     {
 //        sceneProbDuration = probTotalDuration = (abs(rand())%30+1)*60;
+        //1-300秒重新生成一个几率因子
         sceneProbDuration = probTotalDuration = (abs(rand())%300+1);
         float currProb = sceneProb;
         int randProb = 0;
@@ -1695,10 +1585,12 @@ void GameCore::changeSceneProb()
     }else{
         
         getTotalScoreFromCoreString();
+        //根据有没有充值，决定几率
         if (!probForceRecharge) {
             sceneProb = gSceneLowProb;
             sceneProbDuration = probTotalDuration = PROB_DOWN_TIME;
         }else{
+            //根据有没有赢，决定升或降
             if (probForceGold+probForceRecharge >= totalScore) {
                 sceneProb = gSceneUpProb;
                 sceneProbDuration = probTotalDuration = PROB_UP_TIME;
@@ -1898,7 +1790,6 @@ void GameCore::addExp(int deltaVal)
     info.vip = vip;
     info.title = title;
     ClientLogic::instance()->pass2Engine(&info);
-//    save2CoreString();
     saveExpScore2CS();
 }
 
@@ -1913,7 +1804,6 @@ void GameCore::levelUp()
     expScore = 0;
     level++;
     title = gTitles[level/10];
-//    save2CoreString();
     saveLevel2CS();
     
     changeGold(levelBoundGold);
@@ -1965,13 +1855,6 @@ void GameCore::changeGold(int deltaVal)
         ClientLogic::instance()->pass2Engine(&info);
         saveTotalScore2CS();
     }
-//    if (totalScore <= 0) {
-//        getRelifeFCS();
-//        readRelifeConfig(relifeData.relifeId, RELIFE_CONFIG_FILE);
-//        relifeData.relifeState = 1;
-//        
-//        saveRelife2CS();
-//    }
     
     L2E_UPDATE_HALL_MONEY info;
     info.eProtocol = l2e_update_hall_money;
@@ -1979,6 +1862,7 @@ void GameCore::changeGold(int deltaVal)
     info.diamond = totalDiamond;
     ClientLogic::instance()->pass2Engine(&info);
 }
+
 void GameCore::changeDiamond(int deltaVal)
 {
     getTotalDiamondFromCoreString();
@@ -1986,6 +1870,7 @@ void GameCore::changeDiamond(int deltaVal)
     totalDiamond = MAX(0, totalDiamond);
     
     if (deltaVal != 0) {
+        //钻石变化会更新炮台升级界面
         if (!cannonManager->CannonMaxLevel()) {
             int nextLvl = cannonManager->getUnlockLevel()+1;
             L2E_CANNON_UPDATE_LEVEL info;
@@ -2023,6 +1908,7 @@ void GameCore::unlockCannonLevel()
 {
     getMultiFCS();
     int nextLvl = cannonManager->getUnlockLevel()+1;
+    //钻石不足
     if (totalDiamond < cannonManager->levelConfigs[nextLvl].needDiamondCount) {
         changeGameState(FISH_GAME_UPGRADE_LEVEL);
         L2E_CANNON_SHOW_UNLOCK_DIALOG info;
@@ -2042,6 +1928,7 @@ void GameCore::unlockCannonLevel()
         ClientLogic::instance()->pass2Engine(&info);
         return;
     }
+    
     L2E_CANNON_UNLOCK_LEVEL info;
     info.eProtocol = l2e_cannon_unlock_level;
     info.errNo = 0;
@@ -2075,44 +1962,20 @@ void GameCore::unlockCannonLevel()
 
 void GameCore::chargeUnlockLevel(E2L_CHARGE_UNLOCK_LEVEL pMsgInfo)
 {
-//    int diamond = 0;
-//    switch (pMsgInfo.chargeId) {
-//        case 1:
-//        {
-//            diamond = 10;
-//        }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    changeDiamond(diamond);
     if (currState == FISH_GAME_BATTLE_RECHAGE) {
         return;
     }
     if (cannonManager->checkCanUnlockLevel(totalDiamond)) {
-//        getMultiFCS();
         unlockCannonLevel();
         L2E_CHARGE_UNLOCK_LEVEL info;
         info.eProtocol = l2e_charge_unlock_level;
         info.bound = cannonManager->levelConfigs[cannonManager->getUnlockLevel()].boundGolds;
         ClientLogic::instance()->pass2Engine(&info);
-//        saveMulti2CS();
-//        backGameState();
     }else{
-//        FISH_GAME_STATES tempLast = lastState;
-        
         changeGameState(FISH_GAME_BATTLE_RECHAGE);
-//        lastState = tempLast;
         L2E_UNLOCK_NEED_DIAMOND info;
         info.eProtocol = l2e_cannon_unlock_need_diamond;
         ClientLogic::instance()->pass2Engine(&info);
-//        getVipFCS();
-//        if (vip == 0) {
-//            showVipGift();
-//        }else{
-//            showHallRecharge(0);
-//        }
     }
 }
 
@@ -2177,7 +2040,6 @@ void GameCore::takeTaskBound()
     infoTake.eProtocol = l2e_take_task_bound;
     ClientLogic::instance()->pass2Engine(&infoTake);
     save2TaskCoreString();
-//    saveTask2CS();
 }
 
 void GameCore::hideTaskBound()
@@ -2239,14 +2101,12 @@ void GameCore::saveSkillCount2CS()
         return;
     }
     
-//    _doc["currCannonType"] = cannonManager->getHeroCannon().getCannonType();
     for (int i = 0; i < 5; i++) {
         std::string temp("skill");
         temp += Convert2String(i+1);
         temp += "Count";
         _doc[temp.c_str()] = skillManager->skillMap[i+1].count;
     }
-//    _doc["skill5Count"] = 0;
     
     StringBuffer buff;
     rapidjson::Writer<StringBuffer> writer(buff);
@@ -2705,8 +2565,6 @@ void GameCore::saveProb2CS()
     }
     
     _doc["probForceCount"] = probForceCount;
-//    _doc["probForceRecharge"] = rapidjson::StringRef(Convert2String(probForceRecharge).c_str());
-//    _doc["probForceGold"] = rapidjson::StringRef(Convert2String(probForceGold).c_str());
     _doc["probForceRecharge"] = probForceRecharge;
     _doc["probForceGold"] = probForceGold;
     _doc["probForceDuration"] = probForceDuration;
@@ -2884,8 +2742,8 @@ void GameCore::saveTotalScore2CS()
     
     std::string s = StringUtils::format("%s", buff.GetString());
     coreDataStr = encode(s);
-//    log("%s", coreDataStr.c_str());
 }
+
 bool GameCore::getTotalDiamondFromCoreString()
 {
     if (coreDataStr == "") {
@@ -3039,10 +2897,6 @@ bool GameCore::loadJson()
     if (coreDataStr == "") {
         return false;
     }
-//    if(!getDataFromCoreString())
-//    {
-//        return false;
-//    }
     
     return true;
 }
@@ -3202,7 +3056,6 @@ void GameCore::save2CoreString()
     
     rapidjson::Document::AllocatorType& allocator= _doc.GetAllocator();
     if (exist) {
-//        _doc["currStage"] = currStage;
         _doc["unLockStage"] = maxUnlockStage;
         _doc["totalGold"] = totalScore;
 //        _doc["totalGold"] = rapidjson::StringRef(Convert2String(totalScore).c_str());
@@ -3235,15 +3088,6 @@ void GameCore::save2CoreString()
         
         _doc["bossCount"] = killBoss1Count;
         _doc["subBossCount"] = killBoss2Count;
-////        if (stageMissionState == TASK_OPEN) {
-////            _doc["taskState"] = TASK_INIT;
-////        }else{
-//            _doc["taskState"] = stageMissionState;
-////        }
-//        
-//        _doc["kill1Count"] = killTaskCount[0];
-//        _doc["kill2Count"] = killTaskCount[1];
-//        _doc["kill3Count"] = killTaskCount[2];
         _doc["skill1Count"] = skillManager->skillMap[1].count;
         _doc["skill2Count"] = skillManager->skillMap[2].count;
         _doc["skill3Count"] = skillManager->skillMap[3].count;
@@ -3268,7 +3112,6 @@ void GameCore::save2CoreString()
         _doc["sceneProbDuration"] = sceneProbDuration;
         _doc["sceneProb"] = sceneProb;
     } else {
-//        _doc.AddMember("currStage", currStage, allocator);
         _doc.AddMember("unLockStage", maxUnlockStage, allocator);
 //        _doc.AddMember("totalGold", rapidjson::StringRef(Convert2String(totalScore).c_str()), allocator);
         _doc.AddMember("totalGold", totalScore, allocator);
@@ -3339,14 +3182,6 @@ void GameCore::save2CoreString()
         }
         _doc.AddMember("bossCount", killBoss1Count, allocator);
         _doc.AddMember("subBossCount", killBoss2Count, allocator);
-////        if (stageMissionState == TASK_OPEN) {
-////            _doc.AddMember("taskState", TASK_INIT, allocator);
-////        }else{
-//            _doc.AddMember("taskState", stageMissionState, allocator);
-////        }
-//        _doc.AddMember("kill1Count", killTaskCount[0], allocator);
-//        _doc.AddMember("kill2Count", killTaskCount[1], allocator);
-//        _doc.AddMember("kill3Count", killTaskCount[2], allocator);
         _doc.AddMember("skill1Count", skillCount[0], allocator);
         _doc.AddMember("skill2Count", skillCount[1], allocator);
         _doc.AddMember("skill3Count", skillCount[2], allocator);
@@ -3494,9 +3329,8 @@ void GameCore::loadTask()
     readStageFile(currStage, STAGE_CONFIG_FILE);
     readTaskFile(stageConfig.missionId, MISSION_CONFIG_FILE);
     
-    if (currStage == maxUnlockStage) {
-//        getDataFromCoreString();
-    }else{
+    if (currStage != maxUnlockStage) {
+        //除最后一关外，其他关都不显示下一关按钮
         stageTargetState = STAGE_TARGET_CLOSE;
     }
     
@@ -3594,10 +3428,6 @@ void GameCore::clearDrop()
         receiveDropItem(itr->second);
         itr = dropItemMap.erase(itr);
     }
-//    for (auto itr : dropItemMap) {
-//        receiveDropItem(itr.second);
-//        dropItemMap.erase(itr.first);
-//    }
 }
 
 void GameCore::receiveDropItem(Fish_Drop_Item item)
@@ -3641,7 +3471,6 @@ void GameCore::showCannonHold()
     for (int i = 0; i < CANNON_TYPE_MAX_EX; i++) {
         info.holdCannon[i] = cannonManager->holdCannon[i];
     }
-//    memcpy(info.holdCannon, cannonManager->holdCannon, sizeof(int)*CANNON_TYPE_MAX_EX);
     ClientLogic::instance()->pass2Engine(&info);
 }
 
@@ -3652,7 +3481,6 @@ void GameCore::updateCannonHold()
     for (int i = 0; i < CANNON_TYPE_MAX_EX; i++) {
         info.holdCannon[i] = cannonManager->holdCannon[i];
     }
-//    memcpy(info.holdCannon, cannonManager->holdCannon, sizeof(int)*CANNON_TYPE_MAX_EX);
     ClientLogic::instance()->pass2Engine(&info);
 }
 
@@ -3664,18 +3492,6 @@ void GameCore::cannonUpgradeVip()
     }else{
         showVipIntro();
     }
-    
-//    vip++;
-//    vip = MIN(10, vip);
-//    saveVip2CS();
-//    
-//    getCannonHoldFCS();
-//    for (int i = 0; i < CANNON_TYPE_MAX_EX-1; i++) {
-//        cannonManager->holdCannon[i] = (vip>=i);
-//    }
-//    saveCannonHold2CS();
-//    updateCannonHold();
-    
 }
 
 void GameCore::takeRelife()
@@ -3735,7 +3551,6 @@ void GameCore::unlock2Require(E2L_UNLOCK_TO_REQUIRE pMsgInfo)
                 break;
             }
             
-//            int nextLvl = cannonManager->getUnlockLevel()+1;
             for (int i = 0; i < info.cardCount; i++) {
                 info.nextMultiply[i] = cannonManager->levelConfigs[nextLvl+i].multiply;
                 info.needDiamond[i] = cannonManager->levelConfigs[nextLvl+i].needDiamondCount;
@@ -4043,11 +3858,6 @@ void GameCore::checkAutoFire()
         ClientLogic::instance()->pass2Engine(&info);
     }else{
         changeGameState(FISH_GAME_NEED_VIP);
-////        if (vip == 0) {
-//            showVipGift();
-////        }else{
-////            showVipIntro();
-////        }
         L2E_AUTO_FIRE_NEED_VIP info;
         info.eProtocol = l2e_auto_fire_need_vip;
         info.needVipLevel = 1;
@@ -4170,14 +3980,8 @@ void GameCore::responseShare(S2C_SHARE s2cInfo)
     info.errNo = s2cInfo.errNo;
     if (s2cInfo.errNo == 0) {
         shareCount++;
-        //    float percent = 0;
         for (int i = 0; i < 4; i++) {
             if (gShareCountThres[i] > shareCount) {
-                //            if (i >= 1) {
-                //                percent = (i-1)*33;
-                //                percent += (shareCount-gShareCountThres[i-1])*33.0/(gShareCountThres[i]-gShareCountThres[i-1]);
-                //                percent = MIN(100, percent);
-                //            }
                 break;
             }
             

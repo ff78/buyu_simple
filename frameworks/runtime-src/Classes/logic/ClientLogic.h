@@ -88,7 +88,7 @@ private:
     void UIChargeUnlockLevel(void *pMsg);
     void UIReceiveDropItem(void *pMsg);
     
-    void UIChargeSkill(void *pMsg);
+//    void UIChargeSkill(void *pMsg);
     void UIUseSkill(void *pMsg);
     void UIFishClear(void *pMsg);
     

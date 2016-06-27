@@ -143,12 +143,6 @@ void ClientLogic::UIUseSkill(void *pMsg)
     GameCore::instance()->useSkill(*pMsgInfo);
 }
 
-void ClientLogic::UIChargeSkill(void *pMsg)
-{
-    E2L_CHARGE_SKILL *pMsgInfo = (E2L_CHARGE_SKILL*)pMsg;
-    GameCore::instance()->chargeSkill(*pMsgInfo);
-}
-
 void ClientLogic::UIFishClear(void *pMsg)
 {
     E2L_FISH_ALL_REMOVE *pMsgInfo = (E2L_FISH_ALL_REMOVE*)pMsg;

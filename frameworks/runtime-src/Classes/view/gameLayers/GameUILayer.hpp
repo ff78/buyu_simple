@@ -77,8 +77,6 @@ public:
     bool onUpgradeClickBegan(cocos2d::Touch *touch, cocos2d::Event *event);
     void onUpgradeClickEnd(cocos2d::Touch *touch, cocos2d::Event *event);
     
-    void showSkillCharge(cocos2d::EventCustom* event);
-    void clickChargeOk(cocos2d::Ref *pSender);
     void hideSkillCharge(cocos2d::EventCustom* event);
     
     void useAutoFire();
@@ -130,7 +128,6 @@ private:
     cocos2d::EventListenerCustom *updateTaskListener;
     cocos2d::EventListenerCustom *updateSkillListener;
     cocos2d::EventListenerCustom *useSkillListener;
-//    cocos2d::EventListenerCustom *showSkillChargeListener;
     cocos2d::EventListenerCustom *hideSkillChargeListener;
     cocos2d::EventListenerCustom *updateStarBoxListener;
     cocos2d::EventListenerCustom *canUseAutoFireListener;
