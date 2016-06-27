@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "GameCore::unlockCannonLevel():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager-&gt;getUnlockLevel()">
+            </PersistentString>
+            <PersistentString
+               value = "cannonManager-&gt;levelConfigs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldGame::startRoll(__E2L_GOLD_START_ROLL&amp;):GoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "randRollItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::createGroupFish(__FishConfig&amp;):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "delayCreateCmd">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldObj::initData(int, rapidjson::GenericDocument&lt;rapidjson::UTF8&lt;char&gt;, rapidjson::MemoryPoolAllocator&lt;rapidjson::CrtAllocator&gt;, rapidjson::CrtAllocator&gt;&amp;):GoldObj.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "collideRect">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::EventDispatcher::sortEventListenersOfFixedPriority(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;):CCEventDispatcher.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GoldGameScene::onChangePilers(cocos2d::EventCustom*):GoldGameScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "rope-&gt;getPosition()">
+            </PersistentString>
+            <PersistentString
+               value = "rope">
+            </PersistentString>
+            <PersistentString
+               value = "pliersVec">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameUILayer::updateHeadinfo(cocos2d::EventCustom*):GameUILayer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::doCreateCmd():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cmdCreate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "threadWorker():SoundManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "soundPath">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::save2CoreString():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "coreDataStr">
+            </PersistentString>
+            <PersistentString
+               value = "stageMissionState">
+            </PersistentString>
+            <PersistentString
+               value = "currCannonMulti">
+            </PersistentString>
+            <PersistentString
+               value = "unlockCannonLvl">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackGoldGame::useAllItems():BlackGoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "itemCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::clearDrop():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "dropItemMap[itr.first]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ClientLogic::enterGameMode(E_GAME_STATE):ClientLogic.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchFish(int, int, int, bool):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "bombTypeGroups">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldGame::selStage(__E2L_SEL_GOLD&amp;):GoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "gameData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishLayer::update(float):FishLayer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchFishTypeBombFish():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap[bombTypeFishId]">
+            </PersistentString>
+            <PersistentString
+               value = "fish">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::heroFire(__E2L_CANNON_FIRE):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager">
+            </PersistentString>
+            <PersistentString
+               value = "stageConfig">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchAllNetFish():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap[allNetFishId]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::getMultiFCS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::getDataFromCoreString():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "tempStr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::createSceneFish():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "sceneFishStyleRand">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::getSkillCountFCS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "skillManager-&gt;skillMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NiuNiuLayer::onFrameEvent(cocostudio::timeline::Frame*):NiuNiuLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cardSuitRes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldGame::arrangeOneObj(GoldObj&amp;):GoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "selGridIdx">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::FileUtils::getStringFromFile(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;):CCFileUtils.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::saveCannonType2CS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackMary::randRoll():BlackMary.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "roundCount">
+            </PersistentString>
+            <PersistentString
+               value = "centerTypeId">
+            </PersistentString>
+            <PersistentString
+               value = "roundBtnIndex">
+            </PersistentString>
+            <PersistentString
+               value = "roundTypeId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishNode::pointHitTest(cocos2d::Vec2):FishNode.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::hitFishes(cocos2d::EventCustom*):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CanonnManager::changeCannon(int):CannonManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "heroCannonType">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::emitFish():GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "CannonNode::setLock(bool, float):CannonNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "sdPoint[i]-&gt;getPosition()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::cannonUpgradeVip():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager-&gt;holdCannon">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::saveRelife2CS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "relifeData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::FishManager():FishManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::loadStageMiniConfigs():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "doc-&gt;Size()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackLottery::enterLottery():BlackLottery.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "lotteryMap[info.level].boundsRate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::useSkill(__E2L_USE_SKILL):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "currState">
+            </PersistentString>
+            <PersistentString
+               value = "nextTideDuration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackGoldGame::arrangeObj(float, std::__1::vector&lt;GoldObj, std::__1::allocator&lt;GoldObj&gt; &gt;&amp;):BlackGoldGame.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishNode::initWithRes():FishNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "data">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::loadFishConfig():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "configs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::createNewFish(CMD_S_CREATE_FISH&amp;):FishManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishCoinNode::update(float):FishCoinNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "coinVec">
+            </PersistentString>
+            <PersistentString
+               value = "showScore">
+            </PersistentString>
+            <PersistentString
+               value = "itr-&gt;getState()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldGameScene::update(float):GoldGameScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "rope-&gt;getPosition()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::EventDispatcher::addEventListenerWithFixedPriority(cocos2d::EventListener*, int):CCEventDispatcher.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_listenerMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldGame::initIdTable(rapidjson::GenericDocument&lt;rapidjson::UTF8&lt;char&gt;, rapidjson::MemoryPoolAllocator&lt;rapidjson::CrtAllocator&gt;, rapidjson::CrtAllocator&gt;&amp;):GoldGame.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "BlackFish::create(CMD_S_CREATE_FISH&amp;):BlackFish.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "dropItemCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::EventDispatcher::removeEventListener(cocos2d::EventListener*):CCEventDispatcher.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_listenerMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MaryLayer::enterGameState(int):MaryLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "stageScore">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishNode::onTouchBegan(cocos2d::Touch*, cocos2d::Event*):FishNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "touch-&gt;getLocation()">
+            </PersistentString>
+            <PersistentString
+               value = "fishId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackGoldGame::BlackGoldGame():BlackGoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "gameTime">
+            </PersistentString>
+            <PersistentString
+               value = "difficulty">
+            </PersistentString>
+            <PersistentString
+               value = "diff1Stage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::loadCannon():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::catchFish(__E2L_FISH_DEAD):GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "BlackLottery::enterLuckyDraw():BlackLottery.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::Vec2::getAngle(cocos2d::Vec2 const&amp;) const:Vec2.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::loadTaskJson():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "killTaskCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::receiveDropItem(__Fish_Drop_Item):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "skillManager-&gt;skillMap[item.dropItemId]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::Vec2::getDistance(cocos2d::Vec2 const&amp;) const:Vec2.h">
+      </ContextState>
+      <ContextState
+         contextName = "MathAide::pointHitTest(cocos2d::Vec2, cocos2d::Size, float, float, float):MathAide.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::createRandFish(float):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "configs">
+            </PersistentString>
+            <PersistentString
+               value = "emitDuration">
+            </PersistentString>
+            <PersistentString
+               value = "configs[index]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameScene::update(float):GameScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "coinLayer">
+            </PersistentString>
+            <PersistentString
+               value = "netLayer">
+            </PersistentString>
+            <PersistentString
+               value = "bulletLayer">
+            </PersistentString>
+            <PersistentString
+               value = "fishLayer">
+            </PersistentString>
+            <PersistentString
+               value = "fishLayer-&gt;lockFish-&gt;getPosition()">
+            </PersistentString>
+            <PersistentString
+               value = "cannonLayer-&gt;getHeroCannon()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::logic(float):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishManager">
+            </PersistentString>
+            <PersistentString
+               value = "relifeData">
+            </PersistentString>
+            <PersistentString
+               value = "bulletManager-&gt;bulletMap">
+            </PersistentString>
+            <PersistentString
+               value = "fishManager-&gt;fishMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameUILayer::updateUpgrade(cocos2d::EventCustom*):GameUILayer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::readStageFile(int, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;):GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "BlackGoldGame::addItem(GOLD_ITEM_TYPE, bool):BlackGoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "itemCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackFish::caculateDrop():BlackFish.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishNode::rectRayHitTest(cocos2d::Vec2, float, cocos2d::Size):FishNode.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::unlock2Require(__E2L_UNLOCK_TO_REQUIRE):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager">
+            </PersistentString>
+            <PersistentString
+               value = "totalDiamond">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchGroupsFish():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fish.first">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::emitFish():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "mGroupThreeIDList">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BulletNode::traceFish(cocos2d::Vec2):BulletNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "getPosition()">
+            </PersistentString>
+            <PersistentString
+               value = "targetPos.x">
+            </PersistentString>
+            <PersistentString
+               value = "this-&gt;angle">
+            </PersistentString>
+            <PersistentString
+               value = "startDis">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ChangeWeaponLayer::clickCannon(cocos2d::Ref*):ChangeWeaponLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "chooseFlag">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::saveKillBig2CS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "lotteryManager">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackMary::fillResult():BlackMary.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "typeRollMulti[roundTypeId-1]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::Node::convertToWorldSpace(cocos2d::Vec2 const&amp;) const:CCNode.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::showCannonHold():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cannonManager">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::initStageData(int, rapidjson::GenericDocument&lt;rapidjson::UTF8&lt;char&gt;, rapidjson::MemoryPoolAllocator&lt;rapidjson::CrtAllocator&gt;, rapidjson::CrtAllocator&gt;&amp;):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "stageConfig">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::responseRecharge(__S2C_RECHARGE):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "info.rechargeId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CanonnManager::changeCannonMul(int, int):CannonManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "levelConfigs[mul]">
+            </PersistentString>
+            <PersistentString
+               value = "heroCannon">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::initMary():GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "BlackFish::OnUpdate(float):BlackFish.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameUILayer::initBossTask(cocos2d::EventCustom*):GameUILayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "bossSpt-&gt;getContentSize().height">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackNiuNiu::showHand():BlackNiuNiu.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "handCard">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MaryLayer::beginMary(cocos2d::EventCustom*):MaryLayer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameUILayer::update(float):GameUILayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "hideTick">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishNode::update(float):FishNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "FishManager::instance()-&gt;fishMap[fishId]">
+            </PersistentString>
+            <PersistentString
+               value = "FishManager::instance()-&gt;fishMap">
+            </PersistentString>
+            <PersistentString
+               value = "vec1">
+            </PersistentString>
+            <PersistentString
+               value = "fishId">
+            </PersistentString>
+            <PersistentString
+               value = "vec2">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LightNode::setupView():LightNode.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "animateNode-&gt;getContentSize()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::getFishType(int):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "configs[fishTypeId].type">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::removeFish(int):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::changeCannonMul(__E2L_CHANGE_CANNON_MULTIPLY):GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "TipLayer::addDisableSkillTip():TipLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "currState">
+            </PersistentString>
+            <PersistentString
+               value = "nextTideDuration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::EventDispatcher::dispatchEventToListeners(cocos2d::EventDispatcher::EventListenerVector*, std::__1::function&lt;bool (cocos2d::EventListener*)&gt; const&amp;):CCEventDispatcher.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fixedPriorityListeners-&gt;size()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::doBombClear():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap">
+            </PersistentString>
+            <PersistentString
+               value = "fishMap[bombFishId]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameScene::rayAttack(cocos2d::EventCustom*):GameScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "bullet-&gt;getPosition()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldObj::initIdTable(rapidjson::GenericDocument&lt;rapidjson::UTF8&lt;char&gt;, rapidjson::MemoryPoolAllocator&lt;rapidjson::CrtAllocator&gt;, rapidjson::CrtAllocator&gt;&amp;):GoldObj.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "coAesSetKey(char const*):coAes.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::loadFishConfig(std::__1::vector&lt;int, std::__1::allocator&lt;int&gt; &gt;&amp;):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "i">
+            </PersistentString>
+            <PersistentString
+               value = "emitDuration">
+            </PersistentString>
+            <PersistentString
+               value = "config.configId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SoundManager::play(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, AUDIO_TYPE const&amp;):SoundManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "m_SoundMap">
+            </PersistentString>
+            <PersistentString
+               value = "m_MusicMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchLightningFish():FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap[bombTypeFishId]">
+            </PersistentString>
+            <PersistentString
+               value = "fishMap[fish.first]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlackGoldGame::initData(int, rapidjson::GenericDocument&lt;rapidjson::UTF8&lt;char&gt;, rapidjson::MemoryPoolAllocator&lt;rapidjson::CrtAllocator&gt;, rapidjson::CrtAllocator&gt;&amp;):BlackGoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "GoldObjs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::endLottery():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "skillManager-&gt;skillMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::enterGameState(FISH_GAME_STATES):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "currCannonType">
+            </PersistentString>
+            <PersistentString
+               value = "currCannonMulti">
+            </PersistentString>
+            <PersistentString
+               value = "cannonManager-&gt;levelConfigs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BulletManager::createBullet(__CREATE_BULLET_CMD&amp;):BulletManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::GameCore():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "currCannonType">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameLottery::clickCardBegan(cocos2d::Touch*, cocos2d::Event*):GameLottery.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "resultHand">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::createFish(CMD_S_CREATE_FISH&amp;):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap">
+            </PersistentString>
+            <PersistentString
+               value = "mGroupThreeIDList">
+            </PersistentString>
+            <PersistentString
+               value = "bFish">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::chooseCannon(__E2L_CHOOSE_CANNON):GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::EventDispatcher::addEventListener(cocos2d::EventListener*):CCEventDispatcher.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_listenerMap">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::Node::convertToNodeSpace(cocos2d::Vec2 const&amp;) const:CCNode.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GoldGame::startGame(__E2L_GOLD_START_GAME&amp;):GoldGame.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "gameData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::initData(int, rapidjson::GenericDocument&lt;rapidjson::UTF8&lt;char&gt;, rapidjson::MemoryPoolAllocator&lt;rapidjson::CrtAllocator&gt;, rapidjson::CrtAllocator&gt;&amp;):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cmdCreate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchFish(int, int, int):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap[fishId]">
+            </PersistentString>
+            <PersistentString
+               value = "fishMap">
+            </PersistentString>
+            <PersistentString
+               value = "dyingGroups">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::catchFish(int, int, int, int, bool):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "fishMap[fishId]">
+            </PersistentString>
+            <PersistentString
+               value = "hurtGroups">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldGameScene::init():GoldGameScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "objSpt-&gt;getContentSize()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BulletLayer::updateTrace(cocos2d::Vec2):BulletLayer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::save2Json():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "coreDataStr">
+            </PersistentString>
+            <PersistentString
+               value = "cannonManager-&gt;getHeroCannon().getCannonMul()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HallScene::setupView(__L2E_TO_HALL&amp;):HallScene.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::changeGameState(FISH_GAME_STATES):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "nextTideDuration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::loadDiaryJson():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "dataStr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::SpriteFrameCache::addSpriteFramesWithFile(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;):CCSpriteFrameCache.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "-[iAPTransactionObserver paymentQueue:updatedTransactions:]:IOSiAP.mm">
+         <PersistentStrings>
+            <PersistentString
+               value = "transaction.transactionState">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::logic(float):FishManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cmdCreate">
+            </PersistentString>
+            <PersistentString
+               value = "bPause">
+            </PersistentString>
+            <PersistentString
+               value = "delayCreateCmd">
+            </PersistentString>
+            <PersistentString
+               value = "fishItr.second">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GoldRunnerScene::endOfStart():GoldRunnerScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "runDuration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MathAide::rectHitTest(cocos2d::Vec2, cocos2d::Size, float, cocos2d::Vec2, cocos2d::Size, float):MathAide.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "cornerB[(j+1)%4]">
+            </PersistentString>
+            <PersistentString
+               value = "posA">
+            </PersistentString>
+            <PersistentString
+               value = "cornerB[j%4]">
+            </PersistentString>
+            <PersistentString
+               value = "cornerA[i%4]">
+            </PersistentString>
+            <PersistentString
+               value = "posB">
+            </PersistentString>
+            <PersistentString
+               value = "cornerA[(i+1)%4]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::getRelifeFCS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "relifeData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NiuNiuLayer::setupView(cocos2d::EventCustom*):NiuNiuLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "info">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::save2TaskCoreString():GameCore.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::quitStage():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "coreDataStr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::removeDrop(int):GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "dropItemMap[dropId]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GameCore::getCannonTypeFCS():GameCore.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "currCannonType">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FishManager::clear():FishManager.cpp">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

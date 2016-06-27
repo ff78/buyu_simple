@@ -1,0 +1,1241 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>友盟社会化组件Cocos2d-x SDK -- 集成文档</title>
+
+</head>
+<body>
+<h1>友盟社会化组件Cocos2d-x SDK -- 集成文档</h1>
+
+<ul>
+<li>1.<a href="#social_cocos2dx">下载SDK</a></li>
+<li>2.<a href="#cocos2dx_integration">Cocos2d-x集成分享组件</a>
+
+<ul>
+<li>2.1 <a href="#cocos2dx_integration_android">Android平台集成</a></li>
+<li>2.2 <a href="#cocos2dx_integration_ios">iOS平台集成</a></li>
+<li>2.3 <a href="#cocos2dx_integration_cocos2dx">在Cocos2d-x游戏中添加分享功能</a></li>
+</ul>
+</li>
+<li>3.<a href="#cocos2dx_integration_auth">授权接口使用说明</a></li>
+<li>4.<a href="#cocos2dx_integration_more_platforms">添加更多平台  ( 按需集成 )</a>
+
+<ul>
+<li>4.1 <a href="#cocos2dx_platforms_weixin_integration">微信和微信朋友圈集成</a></li>
+<li>4.2 <a href="#cocos2dx_platforms_qq_integration">QQ和QQ空间集成</a></li>
+<li>4.3 <a href="#cocos2dx_platforms_laiwang_integration">来往和来往动态集成</a></li>
+<li>4.4 <a href="#cocos2dx_platforms_yixin_integration">易信和易信朋友圈集成</a></li>
+<li>4.5 <a href="#cocos2dx_platforms_facebook_integration">facebook集成</a></li>
+<li>4.6 <a href="#cocos2dx_platforms_instagram_integration">instagram集成</a></li>
+<li>4.7 <a href="#cocos2dx_platforms_twitter_integration">twitter集成</a></li>
+<li>4.8 <a href="#cocos2dx_platforms_sms_integration">短信分享集成</a></li>
+<li>4.9 <a href="#cocos2dx_platforms_email_integration">邮件分享集成</a></li>
+</ul>
+</li>
+<li>5.<a href="#cocos2dx_sso_auth">设置SSO授权</a>
+
+<ul>
+<li>5.1 <a href="#cocos2dx_sina_sso">新浪微博的SSO授权</a></li>
+<li>5.2 <a href="#cocos2dx_tencent_sso">腾讯微博的SSO授权</a></li>
+<li>5.3 <a href="#cocos2dx_renren_sso">人人网的SSO授权</a></li>
+</ul>
+</li>
+<li>6.<a href="#cocos2dx_platform_sharecontent">设置平台独立的分享内容</a></li>
+<li>7.<a href="#proguard">Android混淆问题</a></li>
+<li>8.<a href="#support">技术支持</a></li>
+</ul>
+
+
+<hr />
+
+<h2>概述</h2>
+
+<p>   友盟社会化组件，可以让移动应用快速具备社会化分享、登录、评论、喜欢等功能，并提供实时、全面的社会化数据统计分析服务。 <br/>
+   本指南将会手把手教你使用友盟社会化组件Cocos2d-x SDK，用5分钟为APP增加新浪微博、微信、QQ空间等国内外十几个主流平台的分享功能。
+   该Cocos2d-x SDK目前支持ios和android平台。</p>
+
+<h2>前提</h2>
+
+<p>   该Cocos2d-x分享组件需要依赖友盟社会化组件sdk，因此在您集成时必须将iOS或者Android平台的SDK集成到您的工程中,即压缩包中的Platforms目录下的Android和iOS两个文件夹。    <br/>
+   如果你之前已经在友盟注册了应用，并获取到了Appkey，可以继续使用它。如果你尚未在友盟<a href="http://www.umeng.com/">友盟</a>注册开发者账号，需要先注册，注册之后登录你的账号，点击<strong>添加新应用</strong>，填写完应用基本信息后，将进入"下载SDK并添加代码"页面，此页面即可得到Umeng Appkey。进入到"组件"一栏，选择左边的“社会化分享”，然后选择“设置”--“自定义设置”， 然后将你在各个平台获取到的app id和app secret填写到其中，并且保存。</p>
+
+<p><b id=social_cocos2dx></b></p>
+
+<h2>1 下载和拷贝Cocos2d-x所需文件</h2>
+
+<p>   首先您需要下载友盟社会化组件 Cocos2d-x SDK (<a href="http://dev.umeng.com/social/cocos2d-x/sdk-download" target="_blank">下载链接</a>),然后将该sdk压缩包解压。</p>
+
+<blockquote><p>压缩包目录说明：<br/>
+<strong>1. Cocos2dx</strong>  <br/>
+    实现cocos2d-x中跨平台分享功能,需拷贝到您项目的Classes文件夹中;  <br/>
+<strong>2. Platforms</strong>  <br/>
+    原生的Android和iOS社会化组件SDK,需要您将库和资源拷贝到对应平台的项目中;  <br/>
+<strong>3. doc</strong>  <br/>
+    Cocos2d-x SDK集成文档。</p></blockquote>
+
+<p>   <strong>SDK中默认的添加的平台为新浪微博、腾讯微博、人人网、豆瓣这四个平台，其他的平台需要按<a href="#cocos2dx_integration_more_platforms">添加更多平台  ( 按需集成 )</a>提供的方式手动添加。</strong></p>
+
+<p><b id=cocos2dx_integration></b></p>
+
+<h2>2 Cocos2d-x集成友盟分享组件</h2>
+
+<p><b id=cocos2dx_integration_android></b></p>
+
+<h3>2.1 Android平台集成</h3>
+
+<h4>2.1.1 拷贝所需的jar包和资源文件</h4>
+
+<p>  解压Cocos2d-x SDK压缩包，进入到Platforms/Android/core文件夹下，将'libs'文件夹中的所有jar文件拷贝到工程中的libs目录中，并且将所有jar文件添加到编译路径(build path)中；
+  将Platforms/Android/core/res目录下的所有文件夹拷贝到你的项目工程res目录下对应的文件夹中, 如图所示 :  <br/>
+  <img src="http://dev.umeng.com/system/resources/W1siZiIsIjIwMTQvMDUvMjkvMTZfMTZfNDJfMjg1X2NvY29zMmRfeF9kaXIucG5nIl1d/cocos2d-x-dir.png" width="500" height="400" style="border:1px solid black">  <br/>
+  如果您还需要其他的社交平台，您需要按照<a href="#cocos2dx_integration_more_platforms">添加更多平台  ( 按需集成 )</a>这个章节的步骤来进行手动添加。</p>
+
+<h4>2.1.2 拷贝类文件</h4>
+
+<p>   将Platforms/Android/controller目录下的com文件夹拷贝到您的Cocos2d-x项目Android平台的src目录下(<font color="red">所有文件的编码为utf-8，如有乱码，请开发者自行进行转码。</font>), 如图所示 :  <br/>
+     <img src="http://dev.umeng.com/system/images/W1siZiIsIjIwMTQvMDQvMDkvMTVfNTdfMTVfODc2X2NvY29zMmR4X2NvbnRyb2xsZXIucG5nIl1d/cocos2dx-controller.png" width="400" height="160" style="border:1px solid black">      <br/>
+   在jni/Android.mk中的LOCAL_SRC_FILES下添加如下配置 (注意格式,否则会编译出错) :  <br/>
+<code>xml
+../../Classes/Cocos2dx/Android/CCUMSocialController.cpp  \
+../../Classes/Cocos2dx/ShareButton/UMShareButton.cpp \
+../../Classes/Cocos2dx/Common/CCUMSocialSDK.cpp
+</code></p>
+
+<h4>2.1.3 配置AndroidManifest.xml</h4>
+
+<p>```xml
+&lt;?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.umeng.example"
+    android:versionCode="1"
+    android:versionName="1.0" ></p>
+
+<pre><code>&lt;application
+    android:debuggable="true"
+    android:icon="@drawable/icon"
+    android:label="@string/app_name"
+    android:theme="@android:style/Theme.Black.NoTitleBar" &gt;
+    &lt;activity
+        android:name=".UmengHome"
+        android:label="@string/app_name" &gt;
+        &lt;intent-filter&gt;
+            &lt;action android:name="android.intent.action.MAIN" /&gt;
+
+            &lt;category android:name="android.intent.category.LAUNCHER" /&gt;
+        &lt;/intent-filter&gt;
+    &lt;/activity&gt;
+
+    &lt;!-- ###################注册SDK使用的Activity###################### --&gt;
+    &lt;!--分享编辑页--&gt;
+    &lt;activity
+        android:name="com.umeng.socialize.view.ShareActivity"
+        android:configChanges="orientation|keyboard"
+        android:launchMode="singleTask"
+        android:noHistory="true"
+        android:theme="@style/Theme.UMDialog"
+        android:windowSoftInputMode="stateVisible|adjustResize" &gt;
+    &lt;/activity&gt;
+
+    &lt;!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ --&gt;
+    &lt;activity
+        android:name="com.tencent.tauth.AuthActivity"
+        android:launchMode="singleTask"
+        android:noHistory="true" &gt;
+        &lt;intent-filter&gt;
+            &lt;action android:name="android.intent.action.VIEW" /&gt;
+
+            &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+            &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
+            &lt;!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID--&gt;
+            &lt;data android:scheme="tencent100424468" /&gt; 
+        &lt;/intent-filter&gt;
+    &lt;/activity&gt;
+    &lt;activity android:name="com.tencent.plus.ImageActivity" /&gt;
+    &lt;activity android:name="com.tencent.connect.common.AssistActivity"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:screenOrientation="portrait"&gt;
+    &lt;/activity&gt;
+
+    &lt;!-- 微信分享activity注册 --&gt;
+    &lt;activity
+        android:name=".wxapi.WXEntryActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:exported="true"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar" /&gt;
+</code></pre>
+
+<!-- ###################添加UmengAppkey###################### -->
+
+
+<pre><code>    &lt;meta-data
+        android:name="UMENG_APPKEY"
+        android:value="这里是您的友盟 app key" &gt;
+    &lt;/meta-data&gt;
+
+&lt;/application&gt;
+
+&lt;uses-sdk android:minSdkVersion="8" /&gt;
+
+&lt;!-- ###################声明SDK使用的相关权限###################### --&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;  &lt;!-- 检测网络状态 --&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /&gt;     &lt;!-- 获取mac地址作为用户的备用唯一标识 --&gt;
+&lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;      &lt;!-- 获取用户手机的IMEI，用来唯一的标识用户。 --&gt;
+&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /&gt;&lt;!-- 缓存资源优先存入SDcard --&gt;
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;              &lt;!-- 允许应用程序联网，以便向我们的服务器端发送数据。 --&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;  &lt;!-- 用于评论模块分享位置信息 --&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /&gt;&lt;!-- 用于评论模块分享位置信息 --&gt;
+</code></pre>
+
+<p></manifest>
+```</p>
+
+<h4>2.1.4 添加Android平台的初始化代码</h4>
+
+<p>  在您的Cocos2dxActivity子类的onCreate方法下添加如下代码:  <br/>
+<code>java         
+// this为Cocos2dxActivity类型, 参数2为描述符,可随意修改.
+CCUMSocialController.initSocialSDK(this, "com.umeng.social.share");
+</code></p>
+
+<h4>2.1.5 覆写Cocos2dxActivity子类的onActivityResult方法</h4>
+
+<p>   在onActivityResult添加如下代码 :
+<code>java
+// 授权回调    
+CCUMSocialController.onActivityResult(requestCode, resultCode, data);         
+super.onActivityResult(requestCode, resultCode, data);
+</code> <br/>
+   完成以上步骤以后，并且您不需要集成分享到ios平台，您就可以到<a href="#cocos2dx_integration_cocos2dx">在Cocos2d-x游戏中添加分享功能</a>章节添加分享代码到cocos2d-x游戏中。</p>
+
+<p><b id=cocos2dx_integration_ios></b></p>
+
+<h3>2.2 iOS平台集成</h3>
+
+<h4>2.2.1 修改 Xcode 编译选项(cocos2d-x 3.x版本)</h4>
+
+<p>本SDK的库文件默认提供的是包含64位架构的库文件，可是少部分社交平台平台和功能不支持64位的架构，不支持的分享平台和功能有腾讯微博SSO、人人人网SSO、分享到来往等。<br/>
+如果使用上述平台或者功能，并使用cocos2d-x 3.x（发行版）版本新建的工程，需要修改应用编译架构，修改方法为：将Xcode中Build Settings的Architectures修改为<code>$(ARCHS_STANDARD_32_BIT)</code>，Valid Architectures删除arm64。另外你使用的cocos2d-x的SDK库文件，应该使用带有32位版本的库文件。</p>
+
+<h4>2.2.2 加入iOS SDK</h4>
+
+<p>解压SDK压缩包，将Platforms/iOS文件夹和Cocos2dx文件夹拖入工程目录，并删除Cocos2dx/Android文件夹和Platforms/iOS/Frameworks_32文件夹</p>
+
+<p><img src="http://dev.umeng.com/images/ios/social_drag_sdk.png" title="drag_sdk" alt="alt text" /></p>
+
+<p>确认勾选了“Copy items to destination's group folder”选项，并选择你要添加到的Target:</p>
+
+<p><img src="http://dev.umeng.com/images/ios/social_check_tip.png" title="check_tip" alt="alt text" /></p>
+
+<p>现在应该是这样的效果：</p>
+
+<p><img src="http://dev.umeng.com/images/ios/social_project_structure.png" title="project_structure" alt="alt text" /></p>
+
+<p>UMSocial_Sdk_x.x.x 文件夹的目录结构</p>
+
+<table>
+<thead>
+<tr>
+<th>文件或文件夹</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>libUMSocial_Sdk_x.x.x.a, libUMSocial_Sdk_Comment_3.0.a </td>
+<td> 库文件</td>
+</tr>
+<tr>
+<td>Header</td>
+<td> 头文件</td>
+</tr>
+<tr>
+<td>SocialSDKXib</td>
+<td> xib文件</td>
+</tr>
+<tr>
+<td>en.lproj，zh-Hans.lproj </td>
+<td> 英文和中文语言文件</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>UMSocial_Sdk_Extra_Frameworks 文件夹的目录结构</p>
+
+<table>
+<thead>
+<tr>
+<th>文件或文件夹</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wechat</td>
+<td>微信</td>
+</tr>
+<tr>
+<td>TencentOpenAPI</td>
+<td>QQ互联SDK</td>
+</tr>
+<tr>
+<td>Facebook</td>
+<td>Facebook SDK</td>
+</tr>
+<tr>
+<td>LaiWang</td>
+<td>来往 SDK</td>
+</tr>
+<tr>
+<td>YiXin</td>
+<td>易信 SDK</td>
+</tr>
+</tbody>
+</table>
+
+
+<h4>2.2.3 添加下面的系统framework</h4>
+
+<p>Security.framework,libiconv.dylib,SystemConfiguration.framework,CoreGraphics.framework，libsqlite3.dylib，CoreTelephony.framework,libstdc++.dylib,libz.dylib,Social.framework,Accounts.framework。</p>
+
+<h4>2.2.4 按需设置各个平台的URL Scheme</h4>
+
+<table border="1">
+  <tr>
+    <th> 平台 </th>
+    <th>url scheme设置格式</th>
+  </tr>
+   <tr>
+    <td>微信</td>
+    <td>微信应用appId，例如“wxd9a39c7122aa6516”,微信详细集成步骤参考<a href="#social_wechat" style="text-decoration:none">微信集成方法</a></td>
+  </tr>
+   <tr>
+    <td>分享到手机QQ、QQ空间</td>
+    <td>“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FA957C”。生成十六进制方法：在命令行输入<div>echo 'ibase=10;obase=16;您的腾讯QQ互联应用Id'|bc</div>，并在QQ互联后台的URL schema中填入此字符串保持一致，手机QQ详细集成步骤参考<a href="#social_qq" style="text-decoration:none">手机QQ集成方法</a></td>
+  </tr>
+  <tr>
+    <td>单独登录到QQ、QQ空间（不分享）</td>
+    <td>“tencent“+腾讯QQ互联应用Id，例如“tencent100308348”</td>
+  </tr>
+  <tr>
+    <td>来往</td>
+    <td>Identifier填“Laiwang”，URL Schemes填来往AppId.注意使用来往SDK后，Xcode工程other linker flags需要添加-ObjC参数</td>
+  </tr>
+  <tr>
+    <td>易信</td>
+    <td>易信Appkey，例如“yx35664bdff4db42c2b7be1e29390c1a06”</td>
+  </tr>
+  <tr>
+    <td>Facebook</td>
+    <td>默认使用iOS自带的Facebook分享framework，在iOS 6以上有效，若要使用我们提供的facebook分享需要设置“fb”+facebook AppID，例如“fb1440390216179601”，详细集成方法见[集成facebook](#social_facebook)</td>
+  </tr>
+</table>
+
+
+<p></p>
+
+<h4>2.2.5 在AppDelegate实现系统回调方法</h4>
+
+<p>在Xcode工程中的ios文件夹下的AppController.mm文件，实现下面的系统回调</p>
+
+<pre><code>#import "UMSocial.h"
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [UMSocialSnsService handleOpenURL:url];
+}
+</code></pre>
+
+<p>   然后您就可以到<a href="#cocos2dx_integration_cocos2dx">在Cocos2d-x游戏中添加分享功能</a>章节添加分享代码到cocos2d-x游戏中。</p>
+
+<p><b id=cocos2dx_integration_cocos2dx></b></p>
+
+<h4>2.3 在Cocos2d-x游戏中添加分享功能</h4>
+
+<p>   将所需的资源添加到对应的工程以后, 您就可以在cocos2d-x中使用该友盟社会化组件的分享、登录功能了。 <br/>
+  首先将sdk压缩包下的根目录下的Cocos2dx文件夹拷贝到您的工程的Classes目录下，Cocos2dx包括：</p>
+
+<blockquote><ul>
+<li>Android文件夹，Android平台的调用实现；</li>
+<li>iOS文件夹，iOS平台的调用实现；</li>
+<li>Common文件夹，针对Cocos2d-x的统一接口和类型定义 ；</li>
+<li>ShareButton文件夹，针对Cocos2d-x封装的分享按钮,点击按钮即可打开分享面板；</li>
+</ul>
+</blockquote>
+
+<p>   针对Android平台， 如果开发者需要使用facebook、易信、易信朋友圈、来往、来往动态、twitter、instagram平台则需要到<a href="#cocos2dx_integration_more_platforms">添加更多平台  ( 按需集成 )</a>章节添加相应的平台。  <br/>
+   友盟提供了三种方式来方便开发者使用分享功能，示例如下 :  <br/>
+   <strong><em>方式一 :</em></strong>   <br/>
+   开发者可以通过UMShareButton类来快速的实现分享功能，UMShareButton是CCMenuItemImage的子类，当用户点击该按钮时将会打开友盟的分享面板。
+   集成代码如下 :
+```cpp
+// 引入相关的头文件</p>
+
+<h1>include "Cocos2dx/Common/CCUMSocialSDK.h"</h1>
+
+<h1>include "Cocos2dx/ShareButton/UMShareButton.h"</h1>
+
+<p>// 使用友盟命令空间
+USING_NS_UM_SOCIAL;
+// ...... 代码省略</p>
+
+<p>// HelloWorld为cocos2d::CCLayer的子类
+bool HelloWorld::init()
+{
+    //////////////////////////////
+    // 1. super init first
+    if ( !CCLayer::init() )
+    {
+        return false;
+    }</p>
+
+<pre><code>// 创建分享按钮, 参数1为按钮正常情况下的图片, 参数2为按钮选中时的图片,参数3为友盟appkey, 参数4为分享回调
+UMShareButton *shareButton = UMShareButton::create("shareNormal.png","shareSelected.png", "你的友盟appkey", share_selector(shareCallback)) ;
+// 显示在友盟分享面板上的平台
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(SINA);
+platforms-&gt;push_back(RENREN) ;
+platforms-&gt;push_back(DOUBAN) ;
+platforms-&gt;push_back(QZONE) ;
+platforms-&gt;push_back(QQ) ;
+// 设置友盟分享面板上显示的平台
+shareButton-&gt;setPlatforms(platforms);
+// 设置文本分享内容
+shareButton-&gt;setShareContent("umeng social cocos2d-x sdk.") ;
+// 设置要分享的图片, 图片支持本地图片和url图片, 但是url图片必须以http://或者https://开头
+shareButton-&gt;setShareImage("/sdcard/header.jpeg") ;
+// 设置按钮的位置
+shareButton-&gt;setPosition(ccp(150, 180));
+// 然后开发者需要将该按钮添加到游戏场景中
+CCMenu* pMenu = CCMenu::create(shareButton, NULL);
+pMenu-&gt;setPosition(CCPointZero);
+this-&gt;addChild(pMenu, 1);
+
+// ********************** 设置平台信息 ***************************
+// CCUMSocialSDK *sdk = shareButton-&gt;getSocialSDK();
+// sdk-&gt;setQQAppIdAndAppKey("设置QQ的app id", "appkey");
+// sdk-&gt;setWeiXinAppInfo("设置微信和朋友圈的app id","app key");
+// sdk-&gt;setYiXinAppKey("设置易信和易信朋友圈的app id");
+// sdk-&gt;setLaiwangAppInfo("设置来往和来往动态的app id", 
+//                  "设置来往和来往动态的app key", "我的应用名");
+// sdk-&gt;setFacebookAppId("你的facebook appid");
+// 设置用户点击一条图文分享时用户跳转到的目标页面, 一般为app主页或者下载页面
+// sdk-&gt;setTargetUrl("http://www.umeng.com/social");
+//     // 打开或者关闭log
+// sdk-&gt;setLogEnable(true) ;
+// **********************   END ***************************
+
+return true;
+</code></pre>
+
+<p>}
+```</p>
+
+<p><strong><em>方式二 :</em></strong>  <br/>
+    开发者可以使用CCUMSocialSDK类来完成分享、授权、删除授权等操作， 实际上UMShareButton就是包装了CCUMSocialSDK以实现相关的功能。具体功能请参考CCUMSocialSDK中的注释。
+    开发者可以自行定义某个按钮，然后在该按钮的点击事件中通过CCUMSocialSDK来进行相应的操作，示例代码如下 : <br/>
+```cpp
+// 引入相关的头文件</p>
+
+<h1>include "Cocos2dx/Common/CCUMSocialSDK.h"</h1>
+
+<p>// 使用友盟命令空间
+USING_NS_UM_SOCIAL;
+// ...... 代码省略</p>
+
+<p>// HelloWorld为cocos2d::CCLayer的子类, shareButtonClick为某个按钮点击事件的处理函数
+void HelloWorld::shareButtonClick()
+{
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK <em>sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置友盟appkey,如果create中设置了不用调用该函数
+    // sdk->setAppKey("4eaee02c527015373b000003");
+    // </em><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>   设置平台信息  </em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><strong><strong><strong>
+    // sdk->setQQAppIdAndAppKey("设置QQ的app id", "appkey");
+    // sdk->setWeiXinAppInfo("设置微信和朋友圈的app id","app key");
+    // sdk->setYiXinAppKey("设置易信和易信朋友圈的app id");
+    // sdk->setLaiwangAppInfo("设置来往和来往动态的app id",
+    //              "设置来往和来往动态的app key", "我的应用名");
+    // sdk->setFacebookAppId("你的facebook appid");
+    //     // 打开或者关闭log
+    // sdk->setLogEnable(true) ;
+    // </strong></strong></strong><strong><strong><strong><strong><strong><strong><strong><strong>   END </strong></strong></strong></strong></strong></strong></strong></strong>***********</p>
+
+<pre><code>// 设置用户点击一条图文分享时用户跳转到的目标页面, 一般为app主页或者下载页面
+sdk-&gt;setTargetUrl("http://www.umeng.com/social");
+// 设置友盟分享面板上显示的平台
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(SINA);
+platforms-&gt;push_back(RENREN) ;
+platforms-&gt;push_back(DOUBAN) ;
+platforms-&gt;push_back(QZONE) ;
+platforms-&gt;push_back(QQ) ;
+// 设置平台, 在调用分享、授权相关的函数前必须设置SDK支持的平台
+sdk-&gt;setPlatforms(platforms) ;
+
+// 打开分享面板, 注册分享回调, 参数1为分享面板上的平台, 参数2为要分享的文字内容，
+// 参数3为要分享的图片路径(android和IOS的图片地址格式不一致，因此分平台设置), 参数4为分享回调.
+</code></pre>
+
+<p>   #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        sdk->openShare("要分享的文字内容", "/sdcard/image.png", share_selector(shareCallback));
+    #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        sdk->openShare("要分享的文字内容","share.png", share_selector(shareCallback));
+    #endif
+}</p>
+
+<pre><code>
+***方式三 :***    
+    开发者也可以自行定义某个按钮，然后在该按钮的点击事件中通过CCUMSocialSDK的directShare函数来进行直接分享到某个平台的操作，该接口为api分享接口，不会弹出分享面板和内容编辑界面，用户授权之后直接分享。示例代码如下 :   
+```cpp
+// 引入相关的头文件
+#include "Cocos2dx/Common/CCUMSocialSDK.h"
+// 使用友盟命令空间
+USING_NS_UM_SOCIAL;
+// ...... 代码省略
+
+
+// HelloWorld为cocos2d::CCLayer的子类, shareButtonClick为某个按钮点击事件的处理函数
+void HelloWorld::shareButtonClick()
+{
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置用户点击一条图文分享时用户跳转到的目标页面, 一般为app主页或者下载页面
+    sdk-&gt;setTargetUrl("http://www.umeng.com/social");   
+    // **********************   设置平台信息  ***************************
+    // sdk-&gt;setQQAppIdAndAppKey("设置QQ的app id", "appkey");
+    // sdk-&gt;setWeiXinAppInfo("设置微信和朋友圈的app id","app key");
+    // sdk-&gt;setYiXinAppKey("设置易信和易信朋友圈的app id");
+    // sdk-&gt;setLaiwangAppInfo("设置来往和来往动态的app id", 
+    //              "设置来往和来往动态的app key", "我的应用名");
+    // sdk-&gt;setFacebookAppId("你的facebook appid");
+    //     // 打开或者关闭log
+    // sdk-&gt;setLogEnable(true) ;
+    // **********************   END ***************************
+
+    // 直接分享，参数1为要分享到的目标平台, 参数2为要分享的文字内容, 
+    // 参数3为要分享的图片路径(android和IOS的图片地址格式不一致，因此分平台设置), 参数4为分享回调.
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        sdk-&gt;directShare(SINA, "要分享的文字内容","/sdcard/image.png", share_selector(shareCallback));
+    #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        sdk-&gt;directShare(SINA, "要分享的文字内容","image.png", share_selector(shareCallback));
+    #endif
+</code></pre>
+
+<p><strong><em>特别说明 :</em></strong>   <br/>
+   使用CCUMSocialSDK对象设置各个平台的app id或者app key.CCUMSocialSDK对象可以通过CCUMSocialSDK::create("umeng appkey")函数获取，如果使用UMShareButton可以通过getSocialSDK()函数获取.</p>
+
+<blockquote><p>1.如果集成了QQ或者QQ空间平台,则必须通过CCUMSocialSDK类的setQQAppIdAndAppKey("appid","appkey")函数来设置QQ或者QQ空间的AppId、AppKey;         <br/>
+2.如果集成了微信或者微信朋友圈平台,则必须通过CCUMSocialSDK类的setWeiXinAppInfo("","")函数来设置微信或者朋友圈的App id和app key;      <br/>
+3.如果集成了易信或者易信朋友圈平台,则必须通过CCUMSocialSDK类的setYiXinAppKey("")函数来设置微信的App key;      <br/>
+4.如果集成了来往或者来往动态平台,则必须通过CCUMSocialSDK类的setLaiwangAppInfo("app id ", "app key", "app Name")来设置来往和来往动态的App id、App key、App Name(应用名).
+   在设置完平台的app id或者app key之后，需要调用CCUMSocialSDK对象的setPlatforms函数将所需的平台添加到sdk中，这样该平台才会在sdk得到支持。  <br/>
+   最后,点击对应的按钮则会弹出如下界面 :  <br/>
+  <img src="http://dev.umeng.com/system/images/W1siZiIsIjIwMTQvMDQvMDkvMTVfNTdfNTVfMjk5X2NvY29zMmR4X29wZW5TaGFyZS5wbmciXV0/cocos2dx-openShare.png" width="450" height="300" style="border:1px solid black"></p></blockquote>
+
+<p><strong>分享回调的为如下形式 :</strong>  <br/>
+   请不要在该回调中更新UI，友盟社会化组件Cocos2d-x SDK不保证在分享回调中更新UI一定会被顺利执行。    <br/>
+```cpp
+/<em>
+ * 分享回调, 该回调不是某个类的成员函数， 而是一个普通的函数, 具体使用参考HelloWorldScene的例子
+* @param platform 要分享到的目标平台
+ * @param stCode 返回码, 200代表分享成功, 100代表开始分享
+ * @param errorMsg 分享失败时的错误信息,android平台没有错误信息
+ </em>/
+void shareCallback(int platform, int stCode, string&amp; errorMsg)
+{
+    if ( stCode == 100 )
+    {
+        CCLog("#### HelloWorld 开始分享");
+    }
+    else if ( stCode == 200 )
+    {
+        CCLog("#### HelloWorld 分享成功");
+    }
+    else
+    {
+        CCLog("#### HelloWorld 分享出错");
+    }</p>
+
+<pre><code>CCLog("platform num is : %d.", platform);
+</code></pre>
+
+<p>}
+```</p>
+
+<p><b id=cocos2dx_integration_auth></b></p>
+
+<h3>3 授权接口使用说明</h3>
+
+<h4>3.1 授权接口说明</h4>
+
+<p>   CCUMSocialSDK类中还提供了授权相关的接口，支持授权的平台有新浪微博、QQ空间、QQ、人人网、豆瓣、腾讯微博、facebook。授权接口使用说明如下 :
+```cpp
+CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+// 对某个平台授权, 参数二为授权回调
+sdk->authorize(RENREN, auth_selector(authCallback));</p>
+
+<p>// 判断某个平台是否授权
+ sdk->isAuthorized(RENREN);</p>
+
+<p>// 删除某个平台的授权
+ sdk->deleteAuthorization(RENREN, auth_selector(authCallback));
+```</p>
+
+<h4>3.2 授权回调说明</h4>
+
+<p>   授权回调类型定义在CCUMTypeDef.h中，当授权成功时, 会将授权信息返回给开发者, 开发者可以通过遍历map来获取数据；  <br/>
+    当授权失败, 会返回一个字段的数据, key为"msg", 值为错误的信息。如果是删除授权, 也是返回一个字段的数据, key为"msg", 值为"deleteOauth"。开发者可以通过判断返回码和map中的数据来进行相应的处理。  <br/>
+   请不要在该回调中更新UI，友盟社会化组件Cocos2d-x SDK不保证在分享回调中更新UI一定会被顺利执行。  <br/>
+   授权回调函数示例如下 : <br/>
+```cpp
+/<em>
+ </em>授权回调
+ * @param platform 要授权的平台
+ * @param stCode 返回码, 200代表授权成功, 100代表开始授权, 0代表授权出错, -1代表取消授权
+ * @param data 授权时返回的数据
+ */
+void authCallback(int platform, int stCode, map&lt;string, string>&amp; data)
+{
+    if ( stCode == 100 )
+    {
+        CCLog("#### 授权开始");
+    }
+    else if ( stCode == 200 )
+    {
+        CCLog("#### 授权完成");
+    } else if ( stCode == 0 )
+    {
+        CCLog("#### 授权出错");
+    } else if ( stCode == -1 )
+    {
+        CCLog("#### 取消授权");
+    }</p>
+
+<pre><code>// 输入授权数据, 如果授权失败,则会输出错误信息
+map&lt;string,string&gt;::iterator it = data.begin();
+for (; it != data.end(); ++it) {
+    CCLog("#### data  %s -&gt; %s." , it-&gt;first.c_str(), it-&gt;second.c_str());
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p><b id=cocos2dx_integration_more_platforms></b></p>
+
+<h2>4 添加更多平台 ( 按需集成 )</h2>
+
+<pre><code>为了减小集成友盟社会化组件SDK占用的内存空间，Android SDK中默认只添加了新浪微博、腾讯微博、人人网、豆瓣这几个平台。其他的平台则需要您手动添加到SDK中。     
+与Android不用的是，iOS SDK中默认链接了各个平台所需的framework，如果您不需要某个平台，可以将该平台移除。    
+</code></pre>
+
+<p><b id=cocos2dx_platforms_weixin_integration></b></p>
+
+<h3>4.1.1 集成微信和微信朋友圈</h3>
+
+<p>   <font color="red">注意，集成微信或者微信朋友圈之前，您必须到<a href="http://open.weixin.qq.com/" target="_blank">微信开放平台</a>中申请app id,app key,并且正确填写应用的信息，对于Android平台您必须确保包名和APP的签名是正确的，然后通过审核后即可分享成功，否则将无法跳转到微信或者微信朋友圈的分享界面。</font>     <br/>
+    要集成微信或者微信朋友圈，你需要在Cocos2d-x代码中添加如下代码 :  <br/>
+```java
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置微信的app id和app key
+    sdk->setWeiXinAppInfo("wx485ab7ca6a7e02d1",
+            "f9cad1d153aaa97925a2e2b5fa63d59f");</p>
+
+<pre><code>// 设置友盟SDK支持的平台, 记得加上微信和微信朋友圈
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(WEIXIN);
+platforms-&gt;push_back(WEIXIN_CIRCLE) ;
+// 其他你需要的平台
+
+// 将这些平台添加到SDK中
+sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<pre><code>
+***Android平台***     
+    如果是在Android平台上添加微信或者微信朋友圈平台，需要将Platforms/Android/sns_platforms/weixin/libs目录下的文件拷贝到您工程中的libs目录中。还需要您到压缩包中的Platforms/Android/sns_platforms/weixin/目录下将wxapi目录拷贝到您的工程根包下面。
+    您的根包定义在AndroidManafest.xml的package属性中，例如我的package为com.umeng.game,那么wxapi就要放在com.umeng.game包下,因此其完整路径为com.umeng.game.wxapi.WXEntryActivity。此时，可能会在WXEntryActivity有错误，您重新import一下所需要的类即可。       
+
+***iOS平台***     
+    需要设置Xcode的URL scheme，添加“URL Schemes”为微信appId，例如"wxd9a39c7122aa6516"
+
+
+
+&lt;b id=cocos2dx_platforms_qq_integration&gt;&lt;/b&gt; 
+### 4.1.2 集成QQ和QQ空间
+   &lt;font color="red"&gt;注意，集成QQ或者QQ空间之前，您必须到&lt;a href="http://open.qq.com/" target="_blank"&gt;腾讯开放平台&lt;/a&gt;中申请app id,app key,并且正确填写应用的信息，审核通过后即可分享成功。然后将app id填写到AndroidManifext.xml对应的位置中。&lt;/font&gt;              
+    在Cocos2d-x游戏中通过如下代码添加QQ空间或者QQ的支持：   
+```java
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置QQ和QQ空间的app id和app key
+    sdk-&gt;setQQAppIdAndAppKey("100424468", "c7394704798a158208a74ab60104f0ba");
+
+    // 设置友盟SDK支持的平台, 记得加上QQ或者QQ空间
+    vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+    platforms-&gt;push_back(QQ);
+    platforms-&gt;push_back(QZONE) ;
+    // 其他你需要的平台
+
+    // 将这些平台添加到SDK中
+    sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<p><strong><em>Android平台</em></strong>    <br/>
+    针对Android平台，需要将Platforms/Android/sns_platforms/qq_qzone/libs目录下的文件拷贝到您工程中的libs目录中。这样，您就成功集成QQ或者QQ空间了。</p>
+
+<p><strong><em>iOS平台</em></strong>       <br/>
+    需要设置Xcode的URL scheme，添加“URL Schemes”为“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FA957C”。生成十六进制方法：在命令行输入<div>echo 'ibase=10;obase=16;您的腾讯QQ互联应用Id'|bc</div>，并在QQ互联后台的URL schema中填入此字符串保持一致。<br/>
+    若你只使用授权到qq或者QQ空间，需要设置Xcode的URL scheme的“URL Schemes”为"tencent"+腾讯开放平台appId。</p>
+
+<p><b id=cocos2dx_platforms_laiwang_integration></b></p>
+
+<h3>4.1.3 集成来往和来往动态</h3>
+
+<pre><code>通过CCUMSocialSDK类的setLaiwangAppId("")和setLaiwangAppKey()函数来分别设置来往和来往动态的App id、app key，代码如下 :
+</code></pre>
+
+<p>```java
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置来往或者来往动态的app id和app key
+        sdk->setLaiwangAppInfo("设置来往和来往动态的app id", "设置来往和来往动态的app key", "我的应用名");</p>
+
+<pre><code>// 设置友盟SDK支持的平台, 记得加上来往或者来往动态
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(LAIWANG);
+platforms-&gt;push_back(LAIWANG_CIRCLE) ;
+// 其他你需要的平台
+
+// 将这些平台添加到SDK中
+sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<pre><code>
+***Android平台***    
+   添加所需jar和资源，将Platforms/Android/sns_platforms/laiwang文件夹下的libs、res目录下的文件拷贝到工程中对应的文件夹中。这样，您就成功集成来往或者来往动态了。        
+
+***iOS平台***     
+    1. 将Xcode的other linker flag设置为-all_load 。
+    2. 将Platforms/iOS/Frameworks_32/laiwang文件夹添加到Xcode工程中。
+    3. 并把UmSocialControllerIOS.h 头文件中把宏CC_ShareToLaiWang设置为1。 
+    4. 需要设置Xcode的URL scheme，添加“URL Schemes”为来往AppId，“Identifier”为“Laiwang”
+
+&lt;b id=cocos2dx_platforms_yixin_integration&gt;&lt;/b&gt; 
+### 4.1.4 集成易信和易信朋友圈
+
+   首先到&lt;a href="http://open.yixin.im/" target="_blank"&gt;易信开发平台&lt;/a&gt;中获取app id, app key等信息。然后在Cocos2d-x代码中，通过CCUMSocialSDK类的setYiXinAppKey("")函数来设置微信的App key，
+```java
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置易信和易信朋友圈的app id和app key
+    sdk-&gt;setYiXinAppKey("yx52dd5c14bbb3430b93e6f2dafcbcc68d");
+
+    // 设置友盟SDK支持的平台, 记得加上易信和易信朋友圈
+    vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+    platforms-&gt;push_back(YIXIN);
+    platforms-&gt;push_back(LYIXIN_CIRCLE) ;
+    // 其他你需要的平台
+
+    // 将这些平台添加到SDK中
+    sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<p><strong><em>Android平台</em></strong>  <br/>
+    添加所需jar和资源，将SDK压缩包中Platforms/Android/sns_platforms/yixin文件夹下的libs、res目录下的文件拷贝到工程中对应的文件夹中。</p>
+
+<p><strong>易信精确回调使用说明</strong>  <br/>
+如果在您的项目中集成了易信或者易信朋友圈，并且您需要准确的分享回调 (建议添加)，则需要在AndroidManifest.xml中下注册下面的回调Activity。
+<code>xml
+&lt;activity
+   android:name=".yxapi.YXEntryActivity"
+   android:theme="@android:style/Theme.Translucent.NoTitleBar"
+   android:configChanges="keyboardHidden|orientation|screenSize"
+   android:exported="true"
+   android:screenOrientation="portrait" /&gt;
+</code></p>
+
+<blockquote><ul>
+<li>将SDK包中yixin目录下的yxapi文件夹拷贝到您的工程的包目录下，然后修改YXEntryActivity的完整路径即可。例如social_sdk_example的包名为com.umeng.soexample,
+因此将yxapi文件夹拷贝到com.umeng.soexample下即可。最终YXEntryActivity的完整路径为com.umeng.soexample.yxapi.YXEntryActivity。</li>
+<li>其中分享回调接口SnsPostListener中的onComplete方法的第二个参数代表分享的状态码，当值为200时表示分享成功;其余的值则为分享失败。</li>
+</ul>
+</blockquote>
+
+<p><strong><em>iOS平台</em></strong>  <br/>
+    iOS平台集成易信不需要其他的设置。如果您不需要集成易信，可以在Xcode中把UMSocial_Sdk_Extra_Frameworks下把YiXin文件夹删除。并把UmSocialControllerIOS.h 头文件中把宏CC_ShareToYiXin设置为0。<br/>
+    需要设置Xcode的URL scheme，添加“URL Schemes”为易信AppId。</p>
+
+<p> <b id=cocos2dx_platforms_facebook_integration></b></p>
+
+<h3>4.1.5 集成Facebook</h3>
+
+<p> 首先到<a href="https://developers.facebook.com/">facebook开发者网站</a>(需翻墙)上创建应用，然后填写应用签名、包名等信息，然后获取app id等信息,通过facebook审核以后即可进行分享。在Cocos2d-x代码中首先需要设置facebook的app id，并且将facebook添加到sdk中, 代码如下 :
+```java
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 设置facebook的app id
+    sdk->setFacebookAppId("567261760019884");</p>
+
+<pre><code>// 设置友盟SDK支持的平台, 记得加上facebook
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(FACEBOOK);
+// 其他你需要的平台
+
+// 将这些平台添加到SDK中
+sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<pre><code>
+**Android平台**    
+   针对于Android平台, 您需要添加所需jar和资源，将SDK压缩包中Platforms/Android/sns_platforms/facebook文件夹下的libs、res目录下的文件拷贝到工程中对应的文件夹中。最后在AndroidManifest.xml中注册activity:      
+```xml
+        &lt;!-- 如果使用，则必须添加以下activity和facebook_app_id (不使用facebook可以去掉) --&gt;
+        &lt;activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /&gt;
+</code></pre>
+
+<pre><code>这样就集成完成。      
+</code></pre>
+
+<p><strong>iOS平台</strong><br/>
+    iOS平台集成facebook不再需要其他的设置。但是如果您不需要集成Facebook，可以在Xcode中把UMSocial_Sdk_Extra_Frameworks下把Facebook文件夹删除。并把UmSocialControllerIOS.h 头文件中把宏CC_ShareToFacebook设置为0。</p>
+
+<p><b id=cocos2dx_platforms_instagram_integration></b></p>
+
+<h3>4.1.6 集成Instagram</h3>
+
+<p> 在Cocos2d-x代码中添加instagram到SDK:
+ ```cpp
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 其他设置</p>
+
+<pre><code>// 设置友盟SDK支持的平台, 记得加上Instagram
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(INSTAGRAM);
+// 其他你需要的平台
+
+// 将这些平台添加到SDK中
+sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<pre><code>
+**Android平台**
+    针对于Android平台，您还需要添加所需jar和资源，将SDK压缩包中Platforms/Android/sns_platforms/instagram文件夹下的libs、res目录下的文件拷贝到工程中对应的文件夹中。     
+
+**iOS平台**  
+    iOS平台集成Instagram不再需要其他的设置。   
+    若不需要集成Instagram，可以在Xcode中把UMSocial_Sdk_Extra_Frameworks下把Instagram文件夹删除。并把UmSocialControllerIOS.h 头文件中把宏CC_ShareToInstagram设置为0。
+
+
+&lt;b id=cocos2dx_platforms_twitter_integration&gt;&lt;/b&gt; 
+### 4.1.7 集成Twitter
+    在Cocos2d-x游戏代码中添加如下代码:
+```cpp
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 其他设置
+
+    // 设置友盟SDK支持的平台, 记得加上Twitter
+    vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+    platforms-&gt;push_back(TWITTER);
+    // 其他你需要的平台
+
+    // 将这些平台添加到SDK中
+    sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<p><strong><em>Android平台</em></strong>
+    无需设置。</p>
+
+<p><strong><em>iOS平台</em></strong>
+    iOS平台集成Twitter不再需要其他的设置。  <br/>
+    若不需要集成Twitter，可以在Xcode中把UMSocial_Sdk_Extra_Frameworks下把Twitter文件夹删除。并把UmSocialControllerIOS.h 头文件中把宏CC_ShareToTwitter设置为0。</p>
+
+<p><b id=cocos2dx_platforms_sms_integration></b></p>
+
+<h3>4.1.8 集成短信分享</h3>
+
+<pre><code>在Cocos2d-x游戏代码中添加如下代码:
+</code></pre>
+
+<p>```cpp
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 其他设置</p>
+
+<pre><code>// 设置友盟SDK支持的平台, 记得加上Twitter
+vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+platforms-&gt;push_back(SMS);
+// 其他你需要的平台
+
+// 将这些平台添加到SDK中
+sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<pre><code>
+***Android平台***
+    将SDK压缩包中Platforms/Android/sns_platforms/sms文件夹下的libs、res目录下的文件拷贝到工程中对应的文件夹中即可。     
+
+***iOS平台***
+    iOS平台集成短信不再需要其他的设置。     
+
+&lt;b id=cocos2dx_platforms_email_integration&gt;&lt;/b&gt; 
+### 4.1.9 集成邮件分享
+    在Cocos2d-x游戏代码中添加如下代码:
+```cpp
+    // 获取一个CCUMSocialSDK实例
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("你的友盟appkey");
+    // 其他设置
+
+    // 设置友盟SDK支持的平台, 记得加上EMAIL
+    vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+    platforms-&gt;push_back(EMAIL);
+    // 其他你需要的平台
+
+    // 将这些平台添加到SDK中
+    sdk-&gt;setPlatforms(platforms) ;
+</code></pre>
+
+<p><strong><em>Android平台</em></strong>
+    将SDK压缩包中Platforms/Android/sns_platforms/email文件夹下的libs、res目录下的文件拷贝到工程中对应的文件夹中即可。</p>
+
+<p><strong><em>iOS平台</em></strong>
+    iOS平台集成邮件不再需要其他的设置。</p>
+
+<p><b id=cocos2dx_sso_auth></b></p>
+
+<h2>5. 设置SSO授权</h2>
+
+<p><b id=cocos2dx_sina_sso></b></p>
+
+<h3>5.1 新浪微博的SSO授权</h3>
+
+<p>   要使用新浪微博SSO授权，首先您需要在新浪微博开放平台填写游戏的相关信息。如有问题，请<a href="http://dev.umeng.com/social/android/detail-share/sso#SSO_2_1" target="_blank">新浪微博SSO授权设置</a>。             <br/>
+    针对于Android平台需要支持新浪微博SSO授权，首先您需要将压缩包下的platforms/Android/sns_platforms/sina/src/目录下的com文件夹拷贝到工程中的src目下，并且将libs目录下的SocialSDK_sina.jar拷贝到工程中的libs目录下。然后通过如下代码支持新浪微博的SSO授权 :
+```java
+    CCUMSocialSDK <em>sdk = CCUMSocialSDK::create("4eaee02c527015373b000003");
+    // 设置平台，按照您的需要添加平台
+    vector<int></em> platforms = new vector<int>();
+    // 添加新浪平台
+    platforms->push_back(SINA);
+    // 添加其他平台</p>
+
+<pre><code>// 添加平台到SDK中
+sdk-&gt;setPlatforms(platforms);
+
+// 设置新浪微博SSO授权,参数2修改为你的授权回调地址
+sdk-&gt;setSsoAuthorization(SINA,"http://sns.whalecloud.com/sina2/callback");
+</code></pre>
+
+<pre><code>    这样新浪就支持SSO授权了。     
+
+&lt;b id=cocos2dx_tencent_sso&gt;&lt;/b&gt;
+### 5.2 腾讯微博的SSO授权
+***Android平台***
+    针对于Android平台的腾讯微博SSO授权，您需要将压缩包内的Platforms/Android/sns_platforms/tencent_wb/目录下的jar包拷贝到您工程的libs目录下，并且添加到"build path"中。然后添加如下代码即可支持SSO授权 : 
+```java
+    CCUMSocialSDK *sdk = CCUMSocialSDK::create("4eaee02c527015373b000003");
+    // 设置平台，按照您的需要添加平台
+    vector&lt;int&gt;* platforms = new vector&lt;int&gt;();
+    // 添加腾讯微博平台
+    platforms-&gt;push_back(TENCENT_WEIBO);
+    // 添加其他平台 
+
+    // 添加平台到SDK中
+    sdk-&gt;setPlatforms(platforms);
+
+    // 设置腾讯微博SSO授权, 参数2修改为你的授权回调地址
+    sdk-&gt;setSsoAuthorization(TENCENT_WEIBO,"http://sns.whalecloud.com/tencent2/callback");
+</code></pre>
+
+<p><strong><em>iOS平台</em></strong> <br/>
+    针对iOS平台腾讯微博SSO授权，
+    1. 将Platforms/iOS/Frameworks_32/TencentWeibo文件夹添加到Xcode工程中。
+    2. 并把UmSocialControllerIOS.h 头文件中把宏CC_SsoToTencentWeibo设置为1。</p>
+
+<pre><code>这样腾讯微博就支持SSO授权了。  
+</code></pre>
+
+<p><b id=cocos2dx_renren_sso></b></p>
+
+<h3>5.3 人人网的SSO授权（仅支持Android)</h3>
+
+<pre><code>由于人人网iOS SSO SDK在横屏下有问题，不支持人人网iOS的SSO授权。  
+针对于Android平台的人人网SSO授权，您需要将压缩包内的Platforms/Android/sns_platforms/renren/目录下的jar包拷贝到您工程的libs目录下，并且添加到"build path"中。然后添加如下代码即可支持SSO授权 : 
+</code></pre>
+
+<p>```java
+    CCUMSocialSDK <em>sdk = CCUMSocialSDK::create("4eaee02c527015373b000003");
+    // 设置平台，按照您的需要添加平台
+    vector<int></em> platforms = new vector<int>();
+    // 添加人人网平台
+    platforms->push_back(RENREN);
+    // 添加其他平台</p>
+
+<pre><code>// 添加平台到SDK中
+sdk-&gt;setPlatforms(platforms);
+
+// 设置人人网SSO授权的app id, app key, app secret
+sdk-&gt;setRenrenAppInfo("人人网的app id", "人人网的app key", "人人网的app secret");
+
+// 最后设置人人网支持SSO授权
+sdk-&gt;setSsoAuthorization(RENREN,NULL);
+</code></pre>
+
+<pre><code>    最后在AndroidManifest.xml中添加如下权限:
+```xml
+    &lt;!-- renren sso Permission for Unit Test --&gt;
+    &lt;uses-permission android:name="android.permission.GET_TASKS" /&gt;
+    &lt;uses-permission android:name="android.permission.SET_DEBUG_APP" /&gt;
+    &lt;uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /&gt;
+    &lt;uses-permission android:name="android.permission.GET_ACCOUNTS" /&gt;
+    &lt;uses-permission android:name="android.permission.USE_CREDENTIALS" /&gt;
+    &lt;uses-permission android:name="android.permission.MANAGE_ACCOUNTS" /&gt;
+</code></pre>
+
+<pre><code>并且如下Activity注册 :
+</code></pre>
+
+<p><code>xml
+    &lt;!-- 人人SSO授权所需的OAuthActivity --&gt;
+        &lt;activity
+            android:name="com.renn.rennsdk.oauth.OAuthActivity"
+            android:configChanges="orientation|navigation|keyboardHidden" /&gt;
+</code>        <br/>
+    这样人人网就支持SSO授权了。</p>
+
+<p><b id=cocos2dx_platform_sharecontent></b></p>
+
+<h2>6. 设置分平台的分享内容</h2>
+
+<pre><code>通过CCUMSocialSDK的directShare和openShare函数设置的分享内容都是各个平台通用的，即所有平台的分享内容都是一样的。
+在某些情况下，你需要某些平台的分享内容与其他平台的不一样，那么您可以使用如下接口来设置 : 
+</code></pre>
+
+<p><code>java
+CCUMSocialSDK *sdk = CCUMSocialSDK::create("4eaee02c527015373b000003");
+// 设置新浪微博的分享内容
+sdk-&gt;setPlatformShareContent(SINA, "sina share 内容",
+            "assets/CloseNormal.png", "sina-title");
+// 设置微信的分享内容
+sdk-&gt;setPlatformShareContent(WEIXIN, "WEIXIN share 内容",
+            "assets/CloseNormal.png", "WEIXIN-title",
+            "http://blog.csdn.net/bboyfeiyu");
+// 设置QQ的分享内容
+sdk-&gt;setPlatformShareContent(QQ, "QQ share 内容", "assets/CloseNormal.png",
+            "QQ-title", "http://blog.csdn.net/bboyfeiyu");
+</code>  <br/>
+    该接口有五个参数，其中前三个参数为必填参数，分别为平台、文本内容、图片地址；后两个参数为选填，分别为分享时的标题、点击该条分享时跳转到的目标url,这两个属性主要在QQ、QQ空间、微信、微信朋友圈、来往、易信这几个平台上使用。</p>
+
+<p><b id=proguard></b></p>
+
+<h2>7. Android混淆</h2>
+
+<p>  为了保证引用友盟Social SDK jar文件以及腾讯jar文件被混淆，请在proguard.cfg文件中添加以下代码避免被混淆.。 <br/>
+```text
+-dontwarn com.google.android.maps.<strong>
+-dontwarn android.webkit.WebView
+-dontwarn com.umeng.</strong>
+-dontwarn com.tencent.weibo.sdk.<strong>
+-dontwarn com.facebook.</strong></p>
+
+<p>-libraryjars libs/SocialSDK_QQZone_2.jar</p>
+
+<p>-keep enum com.facebook.<em><em>
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes </em>Annotation</em>
+-keepattributes SourceFile,LineNumberTable</p>
+
+<p>-keep public interface com.facebook.<strong>
+-keep public interface com.tencent.</strong>
+-keep public interface com.umeng.socialize.<strong>
+-keep public interface com.umeng.socialize.sensor.</strong>
+-keep public interface com.umeng.scrshot.**</p>
+
+<p>-keep public class com.umeng.socialize.<em> {</em>;}
+-keep public class javax.<strong>
+-keep public class android.webkit.</strong></p>
+
+<p>-keep class com.facebook.<strong>
+-keep class com.umeng.scrshot.</strong>
+-keep public class com.tencent.<strong> {*;}
+-keep class com.umeng.socialize.sensor.</strong></p>
+
+<p>-keep class com.tencent.mm.sdk.openapi.WXMediaMessage {*;}</p>
+
+<p>-keep class com.tencent.mm.sdk.openapi.<em>* implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {</em>;}</p>
+
+<p>-keep class im.yixin.sdk.api.YXMessage {<em>;}
+-keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{</em>;}</p>
+
+<p>-keep public class [your_pkg].R$<em>{
+    public static final int </em>;
+}                               <br/>
+```</p>
+
+<p>混淆过程中遇到的问题,请联系我们.</p>
+
+<p><b id=support></b></p>
+
+<h2>8 技术支持</h2>
+
+<p>请发邮件至social-support@umeng.com。如果您出现的问题和SDK相关，请说明您使用的是Android的SDK或者是iOS的SDK，我们会尽快回复您。</p>
+</body>
+</html>
