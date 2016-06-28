@@ -11,7 +11,6 @@
 #import "JZVerManager.h"
 
 #ifndef APP_URL
-//    #define APP_URL @"http://itunes.apple.com/lookup?id=1062224929"
 #define APP_URL @"http://itunes.apple.com/lookup?id=1118863549"
 
 
@@ -28,6 +27,9 @@
 -(bool) isOnLine;
 
 -(void) openCommentUrl;
+
+-(void) openCommentUrl1;
+
 -(void) openCommentUrl2;
 
 @end
@@ -85,6 +87,36 @@ static JZVerManager* mInstance = nil;
 }
 
 -(void) openCommentUrl{
+    
+    if (self.trackViewURL != nil) {
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewURL]];
+        
+    }else{
+        NSString *URL = APP_URL;
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:[NSURL URLWithString:URL]];
+        [request setHTTPMethod:@"POST"];
+        NSHTTPURLResponse *urlResponse = nil;
+        NSError *error = nil;
+        NSData *recervedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+        
+        if(recervedData == nil) return ;
+        
+        NSDictionary *dic  = [NSJSONSerialization JSONObjectWithData:recervedData options:NSJSONReadingMutableContainers error:nil];
+        NSArray *infoArray  = [dic objectForKey:@"results"];
+        
+        if ([infoArray count]) {
+            NSDictionary *releaseInfo   = [infoArray objectAtIndex:0];
+            NSString     *lastVersion   = [releaseInfo objectForKey:@"version"];
+            self.mLastVersion = [[NSString alloc] initWithString:lastVersion];
+            self.trackViewURL = [releaseInfo objectForKey:@"trackViewUrl"];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewURL]];
+        }
+    }
+}
+
+-(void) openCommentUrl1{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.buyubisai.com"]];
 }
 
@@ -117,6 +149,11 @@ void GameIOS::openCommentUrl()
     [[JZVerManager getInstance] openCommentUrl];
 }
 
+void GameIOS::openCommentUrl1()
+{
+    [[JZVerManager getInstance] openCommentUrl1];
+}
+
 void GameIOS::openCommentUrl2()
 {
     [[JZVerManager getInstance] openCommentUrl2];
@@ -126,4 +163,15 @@ void GameIOS::openCommentUrl2()
 bool GameIOS::isOnLine()
 {
     return [[JZVerManager getInstance] isOnLine];
+}
+
+std::string GameIOS::getTodayStr()
+{
+    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    NSLog(@"dateString:%@",dateString);
+    
+    return [dateString UTF8String];
 }

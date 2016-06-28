@@ -136,6 +136,7 @@ private:
     void showShare(void *pMsg);
     void updateShareResult(void *pMsg);
     void takeShareCountBound(void *pMsg);
+    void showComment(void *pMsg);
 };
 
 #endif /* defined(__buyu_simple__UIManager__) */

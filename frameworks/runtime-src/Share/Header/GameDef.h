@@ -416,5 +416,6 @@ const std::string xxteaSignStr = "twgdh";
 #define HALL_SHARE_UI "hall_scene/freegold/FreeGold.csb"
 #define HALL_VIP_GIFT_UI "hall_scene/recharge/VipGift.csb"
 #define HALL_VIP_INTRO_UI "hall_scene/recharge/VipIntro.csb"
+#define HALL_EVALUATE_UI "hall_scene/comment/Eveluate.csb"
 
 #endif

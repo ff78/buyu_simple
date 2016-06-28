@@ -156,4 +156,5 @@
 #define UI_SHOW_SHARE "uishowshare"
 #define UI_UPDATE_SHARE_RESULT "uiupdateshareresult"
 #define UI_TAKE_SHARE_COUNT_BOUND "uitakesharecountbound"
+#define UI_SHOW_EVALUATE "uishowevaluate"
 #endif

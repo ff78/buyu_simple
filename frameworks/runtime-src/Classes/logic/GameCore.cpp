@@ -12,6 +12,9 @@
 #include "utils/GameUtils.h"
 #include "utils/libs.h"
 #include "tinyxml2/tinyxml2.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "iOSHelper.h"
+#endif
 
 
 USING_NS_CC;
@@ -118,7 +121,11 @@ lotteryManager(nullptr)
     
     coreDataStr = "";
     
-//    deleteJson();
+    evaluated = false;
+    openedEvaluate = false;
+    evaluateDay = "";
+    
+//    deleteJson();
     if (!loadJson()) {
         sceneProb = gRebateProb;
         sceneProbDuration = probTotalDuration = REBATE_TIME_LIMIT;
@@ -2805,6 +2812,51 @@ void GameCore::getCannonHoldFCS()
     return;
 }
 
+void GameCore::getEvaluateFCS()
+{
+    if (coreDataStr == "") {
+        return;
+    }
+    
+    rapidjson::Document _doc;
+    std::string tempStr = decode(coreDataStr.c_str());
+    _doc.Parse < 0 > (tempStr.c_str());
+    if(_doc.HasParseError())
+    {
+        return;
+    }
+    
+    evaluated = DICTOOL->getBooleanValue_json(_doc, "evaluated");
+    openedEvaluate = DICTOOL->getBooleanValue_json(_doc, "openedEvaluate");
+    evaluateDay = DICTOOL->getStringValue_json(_doc, "evaluateDay");
+    return;
+}
+
+void GameCore::saveEvaluate2CS()
+{
+    if (coreDataStr == "") {
+        return;
+    }
+    rapidjson::Document _doc;
+    std::string tempStr = decode(coreDataStr.c_str());
+    _doc.Parse < 0 > (tempStr.c_str());
+    if(_doc.HasParseError())
+    {
+        return;
+    }
+    
+    _doc["evaluated"] = evaluated;
+    _doc["openedEvaluate"] = openedEvaluate;
+    _doc["evaluateDay"] = rapidjson::StringRef(evaluateDay.c_str());
+    
+    StringBuffer buff;
+    rapidjson::Writer<StringBuffer> writer(buff);
+    _doc.Accept(writer);
+    
+    std::string s = StringUtils::format("%s", buff.GetString());
+    coreDataStr = encode(s);
+}
+
 void GameCore::saveCannonHold2CS()
 {
     if (coreDataStr == "") {
@@ -3111,6 +3163,12 @@ void GameCore::save2CoreString()
         _doc["probTotalDuration"] = probTotalDuration;
         _doc["sceneProbDuration"] = sceneProbDuration;
         _doc["sceneProb"] = sceneProb;
+        
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        _doc["evaluated"] = evaluated;
+        _doc["openedEvaluate"] = openedEvaluate;
+        _doc["evaluateDay"] = rapidjson::StringRef(iOSHelper::todayStr.c_str());
+#endif
     } else {
         _doc.AddMember("unLockStage", maxUnlockStage, allocator);
 //        _doc.AddMember("totalGold", rapidjson::StringRef(Convert2String(totalScore).c_str()), allocator);
@@ -3193,6 +3251,12 @@ void GameCore::save2CoreString()
         _doc.AddMember("RelifeId", relifeData.relifeId, allocator);
         _doc.AddMember("RelifeState", relifeData.relifeState, allocator);
         _doc.AddMember("RelifeCount", relifeData.relifeCountDown, allocator);
+        
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        _doc.AddMember("evaluated", evaluated, allocator);
+        _doc.AddMember("openedEvaluate", openedEvaluate, allocator);
+        _doc.AddMember("evaluateDay", rapidjson::StringRef(iOSHelper::todayStr.c_str()), allocator);
+#endif
     }
     
     
@@ -3954,6 +4018,17 @@ void GameCore::link2NetGame(E2L_LINK_TO_NETGAME info)
     ClientLogic::instance()->pass2Server(&c2sinfo);
 }
 
+void GameCore::openCommnet(E2L_COMMENT info)
+{
+    C2S_LINK_TO_NETGAME c2sinfo;
+    c2sinfo.eProtocol = c2s_link_to_netgame;
+    c2sinfo.type = 0;
+    ClientLogic::instance()->pass2Server(&c2sinfo);
+    evaluated = true;
+    changeGold(3000);
+    saveEvaluate2CS();
+}
+
 void GameCore::showShare()
 {
     getShareFCS();
@@ -4015,4 +4090,29 @@ void GameCore::takeShareCountBound(E2L_SHARE_COUNT_BOUND info)
     info1.shareCount = shareCount;
     memcpy(info1.countState, shareCountState, sizeof(int)*4);
     ClientLogic::instance()->pass2Engine(&info1);
+}
+
+bool GameCore::showComment()
+{
+    if (!iOSHelper::bOnline) {
+        return false;
+    }
+    getEvaluateFCS();
+    if (evaluated) {
+        return false;
+    }
+    if (iOSHelper::todayStr == evaluateDay) {
+        if (openedEvaluate) {
+            return false;
+        }
+    }
+    
+    openedEvaluate = true;
+    evaluateDay = iOSHelper::todayStr;
+    saveEvaluate2CS();
+    return true;
+    
+//    L2E_SHOW_EVALUATE info;
+//    info.eProtocol = l2e_show_evaluate;
+//    ClientLogic::instance()->pass2Engine(&info);
 }

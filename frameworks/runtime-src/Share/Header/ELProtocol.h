@@ -100,6 +100,8 @@ enum E2LProtocol
     e2l_cash_benefit_code,                  //  兑救济金码
     e2l_link_to_netgame,                    //  跳转网页
     
+    e2l_commnet,                            //  跳转好评页面
+    
     e2l_show_share,                         //  显示分享界面
     e2l_share_count_bound,                  //  领取分享次数奖励
     e2l_share,                              //  分享
@@ -236,6 +238,7 @@ enum L2EProtocol
     l2e_share_count_bound,                  //  领取分享次数奖励
     l2e_update_share,                       //  更新分享界面
     l2e_share_result,                       //  分享结果
+    l2e_show_evaluate,                      //  显示好评界面
     l2e_max
 };
 
@@ -413,6 +416,7 @@ typedef struct __L2E_TO_HALL
     int                             levelBossType[36];
     int                             levelBoundGold[36];
     int                             levelBoundDiamond[36];
+    bool                            showEvaluate;
 }L2E_TO_HALL;
 
 typedef struct __L2E_LOGIN_RESULTE
@@ -1280,6 +1284,11 @@ typedef struct __E2L_LINK_TO_NETGAME
     int             type;
 }E2L_LINK_TO_NETGAME;
 
+typedef struct __E2L_COMMENT
+{
+   E2LProtocol     eProtocol; 
+}E2L_COMMENT;
+
 typedef struct __E2L_SHOW_SHARE
 {
     E2LProtocol     eProtocol;
@@ -1330,4 +1339,9 @@ typedef struct __L2E_UNLOCK_NEED_DIAMOND
 {
     L2EProtocol     eProtocol;
 }L2E_UNLOCK_NEED_DIAMOND;
+
+typedef struct __L2E_SHOW_EVALUATE
+{
+    L2EProtocol     eProtocol;
+}L2E_SHOW_EVALUATE;
 #endif

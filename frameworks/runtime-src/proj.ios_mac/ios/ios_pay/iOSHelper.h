@@ -33,6 +33,7 @@ public:
 //    static bool isQQInstalled();
     static bool bOnline;
     static std::string uuidStr;
+    static std::string todayStr;
 //    static bool bQQInstalled;
 private:
     static iOSHelper *instance;

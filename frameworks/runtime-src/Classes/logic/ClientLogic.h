@@ -135,6 +135,7 @@ private:
     void UIShowBenefits(void *pMsg);
     void UICashBenefitCode(void *pMsg);
     void UILink2NetGame(void *pMsg);
+    void UIComment(void *pMsg);
     
     void UIShowShare(void *pMsg);
     void UIShare(void *pMsg);

@@ -21,6 +21,7 @@
 #include "../gameLayers/TipLayer.h"
 #include "../gameLayers/BenefitLayer.h"
 #include "../gameLayers/ShareLayer.h"
+#include "../gameLayers/EvaluateLayer.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -85,6 +86,7 @@ public:
     void showFreeGold(cocos2d::EventCustom* event);
     void updateShareResult(cocos2d::EventCustom* event);
     void takeShareCountBound(cocos2d::EventCustom* event);
+    void showEvaluate();
     
     CREATE_FUNC(HallScene);
 private:
@@ -120,6 +122,7 @@ private:
     cocos2d::EventListenerCustom* showFreeGoldListener;
     cocos2d::EventListenerCustom* updateShareResultListener;
     cocos2d::EventListenerCustom* takeShareCountBoundListener;
+//    cocos2d::EventListenerCustom* evaluateListener;
 };
 
 #endif /* defined(__buyu_simple__HallScene__) */

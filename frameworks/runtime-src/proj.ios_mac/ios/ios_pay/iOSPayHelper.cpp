@@ -17,6 +17,7 @@
 
 
 std::string iOSHelper::uuidStr = "";
+std::string iOSHelper::todayStr = "";
 bool iOSHelper::bOnline = false;
 //bool iOSHelper::bQQInstalled = false;
 
@@ -103,12 +104,20 @@ void iOSHelper::paySuccess(int idx)
 
 void iOSHelper::openCommentUrl(int type)
 {
-    if (type == 1) {
-        GameIOS::getInstance()->openCommentUrl();
-    }else {
-        GameIOS::getInstance()->openCommentUrl2();
-    }
-    
+    switch (type) {
+        case 0:
+            GameIOS::getInstance()->openCommentUrl();
+            break;
+        case 1:
+            GameIOS::getInstance()->openCommentUrl1();
+            break;
+        case 2:
+            GameIOS::getInstance()->openCommentUrl2();
+            break;
+            
+        default:
+            break;
+    }    
 
 }
 //

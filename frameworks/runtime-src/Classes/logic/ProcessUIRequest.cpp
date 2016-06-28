@@ -391,6 +391,12 @@ void ClientLogic::UILink2NetGame(void *pMsg)
     GameCore::instance()->link2NetGame(*pMsgInfo);
 }
 
+void ClientLogic::UIComment(void *pMsg)
+{
+    E2L_COMMENT *pMsgInfo = (E2L_COMMENT*)pMsg;
+    GameCore::instance()->openCommnet(*pMsgInfo);
+}
+
 void ClientLogic::UIShowShare(void *pMsg)
 {
     GameCore::instance()->showShare();

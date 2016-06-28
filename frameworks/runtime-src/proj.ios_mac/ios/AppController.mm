@@ -94,6 +94,7 @@ static AppDelegate s_sharedApplication;
     iOSHelper::uuidStr = keyUUID.UTF8String;
     
     iOSHelper::bOnline = GameIOS::getInstance()->isOnLine();
+    iOSHelper::todayStr = GameIOS::getInstance()->getTodayStr();
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);

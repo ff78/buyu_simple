@@ -213,6 +213,7 @@ private:
     cocos2d::EventListenerCustom* unlockNeedDiamondListener;
     
     
+    
     bool noCollide;
     float readyRayDuration;
     cocos2d::ui::TextAtlas *readyRayCount;

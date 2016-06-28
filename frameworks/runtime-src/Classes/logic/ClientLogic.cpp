@@ -91,6 +91,7 @@ ClientLogic::ClientLogic()
     m_UI2LogicFunc[e2l_show_benefits] = &ClientLogic::UIShowBenefits;
     m_UI2LogicFunc[e2l_cash_benefit_code] = &ClientLogic::UICashBenefitCode;
     m_UI2LogicFunc[e2l_link_to_netgame] = &ClientLogic::UILink2NetGame;
+    m_UI2LogicFunc[e2l_commnet] = &ClientLogic::UIComment;
     
     m_UI2LogicFunc[e2l_show_share] = &ClientLogic::UIShowShare;
     m_UI2LogicFunc[e2l_share] = &ClientLogic::UIShare;
@@ -227,6 +228,7 @@ bool ClientLogic::enterGameMode(E_GAME_STATE next)
                 info.levelBoundGold[i] = stageConfig.boundsMoney;
                 info.levelBoundDiamond[i] = stageConfig.boundsDiamond;
             }
+            info.showEvaluate = GameCore::instance()->showComment();
             pass2Engine(&info);
         }
             break;

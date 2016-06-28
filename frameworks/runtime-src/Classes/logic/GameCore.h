@@ -282,6 +282,7 @@ public:
     void getBenefitsFCS();
     void getShareFCS();
     void getProbFCS();
+    void getEvaluateFCS();
     
     void saveTotalScore2CS();
     void saveTotalDiamond2CS();
@@ -300,6 +301,7 @@ public:
     void saveBenefits2CS();
     void saveShare2CS();
     void saveProb2CS();
+    void saveEvaluate2CS();
     
     bool getDataFromCoreString();
     
@@ -344,11 +346,13 @@ public:
     void cashBenefitCode(E2L_CASH_BENEFIT_CODE info);
     void responseCashBenefitCode(S2C_CASH_BENEFIT_CODE s2cinfo);
     void link2NetGame(E2L_LINK_TO_NETGAME info);
+    void openCommnet(E2L_COMMENT info);
     
     void showShare();
     void share(E2L_SHARE info);
     void responseShare(S2C_SHARE s2cInfo);
     void takeShareCountBound(E2L_SHARE_COUNT_BOUND info);
+    bool showComment();
 protected:
     virtual void onLoadFinish();
 private:
@@ -404,6 +408,10 @@ private:
     
     int shareCount;
     int shareCountState[4];
+    
+    bool evaluated;
+    bool openedEvaluate;
+    std::string evaluateDay;
     
     int probForceCount;
     uint64_t probForceRecharge;

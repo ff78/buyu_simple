@@ -20,9 +20,13 @@ public:
     
     void openCommentUrl();
     
+    void openCommentUrl1();
+    
     void openCommentUrl2();
     
     bool isOnLine();
+    
+    std::string getTodayStr();
 private:
     GameIOS();
     static GameIOS* instance;

@@ -139,6 +139,7 @@ UIManager::UIManager()
     m_Logic2EngineFunc[l2e_show_share] = &UIManager::showShare;
     m_Logic2EngineFunc[l2e_share_result] = &UIManager::updateShareResult;
     m_Logic2EngineFunc[l2e_share_count_bound] = &UIManager::takeShareCountBound;
+//    m_Logic2EngineFunc[l2e_show_evaluate] = &UIManager::showComment;
 }
 
 void UIManager::loop(float dt)
@@ -840,3 +841,9 @@ void UIManager::showUnlockNeedDiamondTip(void *pMsg)
     EventCustom event(UI_SHOW_UNLOCK_NEED_DIAMOND_TIP);
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
+
+//void UIManager::showComment(void *pMsg)
+//{
+//    EventCustom event(UI_SHOW_EVALUATE);
+//    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+//}

@@ -56,6 +56,7 @@
 		A500885C1CB39738005E0DE2 /* StageCompleteLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A500885A1CB39738005E0DE2 /* StageCompleteLayer.cpp */; };
 		A501A9981CB3B42900A85F36 /* NextStageLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A501A9961CB3B42900A85F36 /* NextStageLayer.cpp */; };
 		A502F8DF1CF4036A00CAAC55 /* MultiplyNotEnoughLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A502F8DD1CF4036A00CAAC55 /* MultiplyNotEnoughLayer.cpp */; };
+		A505DB5F1D224BF60034A74D /* EvaluateLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A505DB5D1D224BF60034A74D /* EvaluateLayer.cpp */; };
 		A50691101D012471005C59EF /* buyu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A506910F1D012471005C59EF /* buyu_icon.png */; };
 		A51125241CAA8B9B00D38841 /* UpgradeLevelLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A51125221CAA8B9B00D38841 /* UpgradeLevelLayer.cpp */; };
 		A51218ED1C9A5CC20003011C /* BlackNiuNiu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A51218EB1C9A5CC20003011C /* BlackNiuNiu.cpp */; };
@@ -367,6 +368,8 @@
 		A501A9971CB3B42900A85F36 /* NextStageLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextStageLayer.h; sourceTree = "<group>"; };
 		A502F8DD1CF4036A00CAAC55 /* MultiplyNotEnoughLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiplyNotEnoughLayer.cpp; sourceTree = "<group>"; };
 		A502F8DE1CF4036A00CAAC55 /* MultiplyNotEnoughLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplyNotEnoughLayer.h; sourceTree = "<group>"; };
+		A505DB5D1D224BF60034A74D /* EvaluateLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EvaluateLayer.cpp; sourceTree = "<group>"; };
+		A505DB5E1D224BF60034A74D /* EvaluateLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluateLayer.h; sourceTree = "<group>"; };
 		A506910F1D012471005C59EF /* buyu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buyu_icon.png; path = ../../../Resources/buyu_icon.png; sourceTree = "<group>"; };
 		A51125221CAA8B9B00D38841 /* UpgradeLevelLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpgradeLevelLayer.cpp; sourceTree = "<group>"; };
 		A51125231CAA8B9B00D38841 /* UpgradeLevelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeLevelLayer.h; sourceTree = "<group>"; };
@@ -1042,6 +1045,8 @@
 				A5D7639E1CFD7192003E0F14 /* BenefitLayer.h */,
 				A5F0F19E1CFE84250014DF18 /* ShareLayer.cpp */,
 				A5F0F19F1CFE84250014DF18 /* ShareLayer.h */,
+				A505DB5D1D224BF60034A74D /* EvaluateLayer.cpp */,
+				A505DB5E1D224BF60034A74D /* EvaluateLayer.h */,
 			);
 			path = gameLayers;
 			sourceTree = "<group>";
@@ -1811,6 +1816,7 @@
 				A5E9CD661CF7E3A000EFB027 /* DiamondRechargeLayer.cpp in Sources */,
 				A5D46E1C1CB7933F006DB9BC /* aes.cpp in Sources */,
 				A55DEFB81C17E37B0075486F /* GameScene.cpp in Sources */,
+				A505DB5F1D224BF60034A74D /* EvaluateLayer.cpp in Sources */,
 				A57CA5D81C1996D500D48C19 /* GameEntity.cpp in Sources */,
 				A5D46E221CB7933F006DB9BC /* libs.cpp in Sources */,
 				A5C741AA1C28FC6300B9694C /* LoadGoldScene.cpp in Sources */,

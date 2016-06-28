@@ -36,6 +36,7 @@ HallScene::~HallScene()
     Director::getInstance()->getEventDispatcher()->removeEventListener(showFreeGoldListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(updateShareResultListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(takeShareCountBoundListener);
+//    Director::getInstance()->getEventDispatcher()->removeEventListener(evaluateListener);
 }
 
 bool HallScene::init()
@@ -156,6 +157,8 @@ bool HallScene::init()
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(updateShareResultListener, -1);
     takeShareCountBoundListener = EventListenerCustom::create(UI_TAKE_SHARE_COUNT_BOUND, CC_CALLBACK_1(HallScene::takeShareCountBound, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(takeShareCountBoundListener, -1);
+//    evaluateListener = EventListenerCustom::create(UI_SHOW_EVALUATE, CC_CALLBACK_0(HallScene::showEvaluate, this));
+//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(evaluateListener, -1);
     
     AUDIO_PLAY("room", AUDIO_TYPE::MUSIC_TYPE);
     return true;
@@ -280,6 +283,10 @@ void HallScene::setupView(L2E_TO_HALL &info)
     
     auto diaryBtn = (Button*)leftRoot->getChildByName("journal_button");
     diaryBtn->addClickEventListener(CC_CALLBACK_0(HallScene::clickDiary, this));
+    
+    if (info.showEvaluate) {
+        showEvaluate();
+    }
 }
 
 void HallScene::startStage(int index)
@@ -631,6 +638,12 @@ void HallScene::showFreeGold(cocos2d::EventCustom *event)
     auto layer = ShareLayer::create();
     layer->setupView(event);
     layer->setTag(1007);
+    addChild(layer);
+}
+
+void HallScene::showEvaluate()
+{
+    auto layer = EvaluateLayer::create();
     addChild(layer);
 }
 
