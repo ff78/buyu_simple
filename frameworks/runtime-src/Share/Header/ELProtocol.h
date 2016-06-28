@@ -1277,6 +1277,7 @@ typedef struct __L2E_CASH_BENEFIT_CODE
 typedef struct __E2L_LINK_TO_NETGAME
 {
     E2LProtocol     eProtocol;
+    int             type;
 }E2L_LINK_TO_NETGAME;
 
 typedef struct __E2L_SHOW_SHARE

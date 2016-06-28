@@ -65,7 +65,8 @@ void BenefitLayer::setupView(cocos2d::EventCustom *event)
         
         
         auto benefit1 = (Sprite*)root->getChildByName("benefits_1");
-        auto benefit2 = (Sprite*)root->getChildByName("benefits_2");
+        auto benefit2 = (Button*)root->getChildByName("benefits_2");
+        benefit2->addClickEventListener(CC_CALLBACK_0(BenefitLayer::clickLink2Btn, this));
         auto jumpButton = (Button*)root->getChildByName("jump_button");
         jumpButton->addClickEventListener(CC_CALLBACK_0(BenefitLayer::clickJumpBtn, this));
         
@@ -118,6 +119,16 @@ void BenefitLayer::clickLinkBtn()
     AUDIO_PLAY("click", AUDIO_TYPE::EFFECT_TYPE);
     E2L_LINK_TO_NETGAME info;
     info.eProtocol = e2l_link_to_netgame;
+    info.type = 1;
+    ClientLogic::instance()->ProcessUIRequest(&info);
+}
+
+void BenefitLayer::clickLink2Btn()
+{
+    AUDIO_PLAY("click", AUDIO_TYPE::EFFECT_TYPE);
+    E2L_LINK_TO_NETGAME info;
+    info.eProtocol = e2l_link_to_netgame;
+    info.type = 2;
     ClientLogic::instance()->ProcessUIRequest(&info);
 }
 

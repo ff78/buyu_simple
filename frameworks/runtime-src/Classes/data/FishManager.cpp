@@ -41,8 +41,6 @@ pauseDuration(0)
     
     
     clear();
-//    hitListener = EventListenerCustom::create(HIT_FISHES, CC_CALLBACK_1(FishManager::hitFishes, this));
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(hitListener, -1);
 }
 
 FishManager::~FishManager()
@@ -57,8 +55,6 @@ FishManager::~FishManager()
 
 void FishManager::clear()
 {
-//    cannonProb = 1;
-//    sceneProb = 1;
     IncrementID = 0;
     IncrementGroupId = 0;
     createFishIdx = 1;
@@ -77,6 +73,8 @@ void FishManager::setPause(bool val)
     log("setPause");
     bPause = val;
 }
+
+//潮汐来到后，清除所有在屏幕外的鱼
 void FishManager::tideClear()
 {
     for(auto fishItr : fishMap)
@@ -90,8 +88,6 @@ void FishManager::tideClear()
 
 void FishManager::logic(float dt)
 {
-//    log("this ==== : %08x === ", this);
-//    assert(bPause == false);
     if (bPause) {
         pauseDuration -= dt;
         if (pauseDuration <= 0) {
@@ -101,20 +97,7 @@ void FishManager::logic(float dt)
             Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
         }
     }else{
-//        if (selFishInterval != 0) {
-//        selFishDuration += dt;
-//        if (selFishDuration >= selFishInterval) {
-//            selFishInterval = 0;
-//            selFishDuration = 0;
-//            createFish(cmdCreate);
-//            if(findNextFish(createFishIdx, 1))
-//            {
-//                doCreateCmd();
-//            }
-//            
-//        }
-//        createRandFish(dt);
-        
+        //执行延迟发鱼的命令
         for (std::vector<CMD_S_CREATE_FISH>::iterator it = delayCreateCmd.begin(); it != delayCreateCmd.end();) {
             it->fDelay -= dt;
             if (it->fDelay <= 0) {
@@ -130,16 +113,9 @@ void FishManager::logic(float dt)
             //        fishItr.second.OnUpdate(dt);
         }        
     }
-    
-
-//    }
-//    for(auto fishItr : fishMap)
-//    {
-//        fishMap[fishItr.first].OnUpdate(dt);
-////        fishItr.second.OnUpdate(dt);
-//    }        
 }
 
+//发鱼
 void FishManager::createNewFish(CMD_S_CREATE_FISH &cmd)
 {
     IncrementID++;
@@ -147,7 +123,6 @@ void FishManager::createNewFish(CMD_S_CREATE_FISH &cmd)
     bFish.create(cmd);
     
     fishMap[IncrementID] = bFish;
-//    createFishIdx = cmd.nID;
     
     L2E_CREATE_FISH info;
     info.eProtocol = l2e_create_fish;
@@ -163,50 +138,10 @@ void FishManager::createNewFish(CMD_S_CREATE_FISH &cmd)
     }
     
 }
-void FishManager::createFish(CMD_S_CREATE_FISH &cmd)
-{
-    if (cmd.nType == FISH_TYPE_EX_28) {
-        mGroupThreeIDList[cmd.nData] = GroupFirstIdSet(cmd.nID, 0);
-        return;
-    }
-    IncrementID++;
-    BlackFish bFish;
-    bFish.create(cmd);
-    if(mGroupThreeIDList.size() != 0)
-    {
-        for(auto &it : mGroupThreeIDList)
-        {
-            if(cmd.nData == it.first)
-            {
-                bFish.setGroupType(FishGroupType::THREE_GROUP);
-                bFish.setGroupFirstId(mGroupThreeIDList[cmd.nData].group);
-                if((mGroupThreeIDList[cmd.nData].count += 1) ==3)
-                {
-                    mGroupThreeIDList.erase(cmd.nData);
-                    break;
-                }
-            }
-        }
-//    }else{
-//        cocos2d::log("debug");
-    }
-    fishMap[IncrementID] = bFish;
-    createFishIdx = cmd.nID;
-    
-    L2E_CREATE_FISH info;
-    info.eProtocol = l2e_create_fish;
-    info.fishId = IncrementID;
-    ClientLogic::instance()->pass2Engine(&info);
-}
 
 void FishManager::removeFish(int fishId)
 {
     fishMap.erase(fishId);
-}
-
-void FishManager::readFishFile()
-{
-    
 }
 
 void FishManager::initIdTable(rapidjson::Document &_doc)
@@ -257,70 +192,6 @@ bool FishManager::initData(int idx, rapidjson::Document& _doc)
     return true;
 }
 
-bool FishManager::doCreateCmd()
-{
-    
-    int groupCount  = 1;
-    if (cmdCreate.nType == FISH_TYPE_EX_28) {
-        groupCount = 4;
-    }else if (cmdCreate.nType == FISH_TYPE_EX_29) {
-        groupCount = 5;
-    }
-    
-    selFishInterval = 0;
-    selFishDuration = 0;
-    
-    if (abs(rand())%10000 > cmdCreate.randThres) {
-        if(findNextFish(cmdCreate.nID, groupCount))
-        {
-            doCreateCmd();
-        }
-        
-        return false;
-    }
-    
-    if (cmdCreate.interval == 0) {
-        createFish(cmdCreate);
-        if(findNextFish(cmdCreate.nID, 1))
-        {
-            doCreateCmd();
-        }
-        
-        return true;
-    }
-    
-    selFishInterval = cmdCreate.interval;
-    selFishDuration = 0;
-    createFishIdx = cmdCreate.nID;
-    return true;
-}
-
-bool FishManager::findNextFish(int idx, int groupLen)
-{
-    int index = idTable.find(idx)->second;
-    if (index >= idTable.size()-groupLen) {
-        index = 0;
-        if (inTide) {
-            return false;
-        }
-    }else{
-        index+=groupLen;
-    }
-    
-    auto _doc = GameReader::getDocInstance(TEST_CREATE_FISH_CONFIG_FILE);
-    const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(*_doc, index);
-    int nextIdx = DICTOOL->getIntValue_json(dic, "ID");
-    
-    readFile(nextIdx, TEST_CREATE_FISH_CONFIG_FILE);
-    return true;
-}
-
-void FishManager::createNextFish()
-{
-    readFile(createFishIdx, TEST_CREATE_FISH_CONFIG_FILE);
-    doCreateCmd();
-}
-
 void FishManager::speedUpAll()
 {
     bPause = false;
@@ -334,7 +205,6 @@ void FishManager::speedUpAll()
 
 int FishManager::catchFish(int fishId, int multiply, int expMultiply, int chairId, bool bomb, float rateFactor)
 {
-    //.......todo 一网打尽  &   同类炸弹
     if (allNetFishId != -1) {
         if (fishMap[fishId].getGroupType() == ALL_NET_GROUP) {
             return 0;
@@ -394,7 +264,6 @@ int FishManager::catchFish(int fishId, int multiply, int expMultiply, int chairI
             return 0;
         } else if(fishMap[fishId].getTypeID() == FISH_TYPE_EX_32 && fishMap[fishId].getGroupType() == NONE_GROUP) {
             bombFishId = fishId;
-//            bombMultiply = multiply;
             return 0;
         } else if(fishMap[fishId].getTypeID() == FISH_TYPE_EX_39 || fishMap[fishId].getTypeID() == FISH_TYPE_EX_41) {
             return 0;
@@ -403,8 +272,6 @@ int FishManager::catchFish(int fishId, int multiply, int expMultiply, int chairI
             fishMap[fishId].setStatus(FISH_LIGHTNING);
             if (find(lightGroups.begin(), lightGroups.end(), fishMap[fishId].getTypeID()) == lightGroups.end()) {
                 lightGroups.push_back(fishId);
-//                lightMultiply = multiply;
-//                bombMultiply = multiply;
             }
             return 0;
         }
@@ -429,12 +296,10 @@ int FishManager::catchFish(int fishId, int multiply, int expMultiply, int chairI
     if (fishMap[fishId].getStatus() == FISH_DIED) {
         if (fishMap[fishId].getGroupType() == ALL_NET_GROUP ) {
             allNetFishId = fishId;
-//            bombMultiply = multiply;
         }else if (fishMap[fishId].getGroupType() == FISH_TYPE_BOMB_GROUP) {
             if (find(bombTypeGroups.begin(), bombTypeGroups.end(), fishMap[fishId].getTypeID()) == bombTypeGroups.end()) {
                 bombTypeGroups.push_back(fishMap[fishId].getTypeID());
                 bombTypeIdGroups.push_back(fishId);
-//                bombMultiply = multiply;
             }
         }
     }
@@ -467,9 +332,6 @@ void FishManager::catchGroupsFish()
         }
         
     }
-    
-//    clearCatchGroups();
-
 }
 
 int FishManager::catchAllNetFish()
@@ -611,6 +473,7 @@ void FishManager::clearCatchGroups()
     bombFishId = -1;
     priceSum = 0;
 }
+
 int FishManager::doBombClear()
 {
     if (bombFishId == -1) {
@@ -655,62 +518,6 @@ int FishManager::doBombClear()
     bombFishId = -1;
     return catchScore;
 }
-//void FishManager::hitFishes(cocos2d::EventCustom *event)
-//{
-//    std::map<int, int> info = *static_cast<std::map<int, int>*>(event->getUserData());
-//    int foundObjId = -1;
-//    std::vector<int> hurtGroups;
-//    hurtGroups.clear();
-//    std::vector<int> dyingGroups;
-//    dyingGroups.clear();
-//    
-//    for (auto obj: info) {
-//        if(abs(rand()%10000) > 5000)
-//        {
-//            fishMap[obj.first].setStatus(FISH_DIED);
-//        }else{
-//            fishMap[obj.first].setStatus(FISH_HURT);
-//        }
-//        
-//        if (fishMap[obj.first].getGroupType() == 0) {
-//            continue;
-//        }
-//        
-//        if (fishMap[obj.first].getGroupType() == THREE_GROUP || fishMap[obj.first].getGroupType() == FOUR_GROUP) {
-//            if (fishMap[obj.first].getStatus() == FISH_HURT) {
-//                hurtGroups.push_back(fishMap[obj.first].getGroupFirstId());
-//            }else if (fishMap[obj.first].getStatus() == FISH_DIED){
-//                dyingGroups.push_back(fishMap[obj.first].getGroupFirstId());
-//            }
-//            
-//        }
-//    }
-//    
-//    for (auto fish : fishMap) {
-//        if (fish.second.getStatus() != FISH_ALIVE) {
-//            continue;
-//        }
-//        
-//        if (fish.second.getGroupFirstId() == 0) {
-//            continue;
-//        }
-//        
-//        for (auto groupId : hurtGroups) {
-//            if (fish.second.getGroupFirstId() == groupId) {
-//                fishMap[fish.first].setStatus(FISH_HURT);
-//                break;
-//            }
-//        }
-//        
-//        for (auto groupId : dyingGroups) {
-//            if (fish.second.getGroupFirstId() == groupId) {
-//                fishMap[fish.first].setStatus(FISH_DIED);
-//                break;
-//            }
-//        }
-//        
-//    }
-//}
 
 void FishManager::loadFishConfig(std::vector<int> &excludeFish)
 {
@@ -1179,14 +986,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 cmdArray.push_back(cmd);
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_3);
-//                fish.SetPathID(i);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH_EX3);
-//                fish.SetSpeed(1.0f);
-//                m_Fishs.push_back(fish);
             }
             
             //! 右边第三个圈
@@ -1212,14 +1011,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 cmdArray.push_back(cmd);
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_5);
-//                fish.SetPathID(i);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH_EX3);
-//                fish.SetSpeed(1.0f);
-//                m_Fishs.push_back(fish);
             }
             
             //! 右边第四个圈
@@ -1245,14 +1036,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 cmdArray.push_back(cmd);
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_6);
-//                fish.SetPathID(i);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH_EX3);
-//                fish.SetSpeed(1.0f);
-//                m_Fishs.push_back(fish);
             }
             
             //! 左边第一个圈
@@ -1377,14 +1160,7 @@ void FishManager::createSceneFish()
             cmd.resource = configs[cmd.nType].resource;
             cmd.sound = configs[cmd.nType].sound;
             cmdArray.push_back(cmd);
-//            CFish fish;
-//            fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//            fish.SetTypeID(FISH_TYPE_EX_18);
-//            fish.SetPathID(180);
-//            fish.SetData(-1);
-//            fish.SetPathType(FISH_ARRAY_PATH_EX3);
-//            fish.SetSpeed(1.0f);
-//            m_Fishs.push_back(fish);
+
             CMD_S_CREATE_FISH cmd1;
             cmd1.dropThres = 0;
             cmd1.groupId = -1;
@@ -1406,13 +1182,6 @@ void FishManager::createSceneFish()
             cmd1.resource = configs[cmd1.nType].resource;
             cmd1.sound = configs[cmd1.nType].sound;
             cmdArray.push_back(cmd1);
-//            fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//            fish.SetTypeID(FISH_TYPE_EX_19);
-//            fish.SetPathID(181);
-//            fish.SetData(-1);
-//            fish.SetPathType(FISH_ARRAY_PATH_EX3);
-//            fish.SetSpeed(1.0f);
-//            m_Fishs.push_back(fish);
         }
             break;
         case 2:	//! 鱼阵2
@@ -1444,17 +1213,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 cmdArray.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_15);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ = (i == 0 ? 50 : -50);
-//                fish.SetOffest(offset);
-//                m_Fishs.push_back(fish);
             }
             
             fDelay = 0.3f;
@@ -1481,17 +1239,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_17);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetDelay(fDelay);
-//                offset.y_ = 0;
-//                fish.SetSpeed(fSpeed);
-//                m_Fishs.push_back(fish);
                 fDelay += 1.8f;
             }
             
@@ -1519,18 +1266,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_13);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ =  100;
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetOffest(offset);
-//                m_Fishs.push_back(fish);
                 fDelay += 1.0f;
             }
             
@@ -1558,18 +1293,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_13);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ =  -100;
-//                fish.SetDelay(fDelay);
-//                fish.SetOffest(offset);
-//                fish.SetSpeed(fSpeed);
-//                m_Fishs.push_back(fish);
                 fDelay += 1.0f;
             }
             
@@ -1597,18 +1320,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_6);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ =  150;
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetOffest(offset);
-//                m_Fishs.push_back(fish);
                 fDelay += 1.0f;
             }
             
@@ -1636,18 +1347,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_6);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ =  -150;
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetOffest(offset);
-//                m_Fishs.push_back(fish);
                 fDelay +=1.0f;
             }
             
@@ -1675,18 +1374,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ =  200;
-//                fish.SetDelay(fDelay);
-//                fish.SetOffest(offset);
-//                fish.SetSpeed(fSpeed);
-//                m_Fishs.push_back(fish);
                 fDelay +=1.0f;
             }
             
@@ -1714,18 +1401,6 @@ void FishManager::createSceneFish()
                 cmd.resource = configs[cmd.nType].resource;
                 cmd.sound = configs[cmd.nType].sound;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.y_ =  -200;
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetOffest(offset);
-//                m_Fishs.push_back(fish);
                 fDelay += 1.0f;
             }
         }
@@ -1760,23 +1435,7 @@ void FishManager::createSceneFish()
                 cmd.fDelay = fDelay;
                 
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                
-//                //! 左上右下
-//                offset.x_ = RandInt(1, 200);
-//                fish.SetPathID(2);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
-                
-                
+
                 CMD_S_CREATE_FISH cmd1;
                 cmd1.dropThres = 0;
                 cmd1.groupId = -1;
@@ -1799,20 +1458,6 @@ void FishManager::createSceneFish()
                 cmd1.OffestY = 0;
                 cmd1.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd1);
-                
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                
-//                //! 左上右下
-//                offset.x_ = RandInt(200, 400);
-//                fish.SetPathID(2);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
                 
                 CMD_S_CREATE_FISH cmd2;
                 cmd2.dropThres = 0;
@@ -1837,20 +1482,6 @@ void FishManager::createSceneFish()
                 cmd2.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd2);
                 
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                
-//                //! 左上右下
-//                offset.x_ = RandInt(400, 600);
-//                fish.SetPathID(2);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
-                
                 CMD_S_CREATE_FISH cmd3;
                 cmd3.dropThres = 0;
                 cmd3.groupId = -1;
@@ -1873,15 +1504,6 @@ void FishManager::createSceneFish()
                 cmd3.OffestY = 0;
                 cmd3.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd3);
-                
-//                offset.x_ = RandInt(600, 800);
-//                fish.SetPathID(2);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
                 
                 //! 刷向上的小鱼
                 CMD_S_CREATE_FISH cmd4;
@@ -1907,19 +1529,6 @@ void FishManager::createSceneFish()
                 cmd4.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd4);
                 
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                
-//                offset.x_ = (RandInt(1, 200) * -1);
-//                fish.SetPathID(3);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
-                
                 CMD_S_CREATE_FISH cmd5;
                 cmd5.dropThres = 0;
                 cmd5.groupId = -1;
@@ -1942,19 +1551,6 @@ void FishManager::createSceneFish()
                 cmd5.OffestY = 0;
                 cmd5.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd5);
-                
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                
-//                offset.x_ = (RandInt(200, 400) * -1);
-//                fish.SetPathID(3);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
                 
                 CMD_S_CREATE_FISH cmd6;
                 cmd6.dropThres = 0;
@@ -1979,19 +1575,6 @@ void FishManager::createSceneFish()
                 cmd6.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd6);
                 
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                
-//                offset.x_ = (RandInt(400, 600) * -1);
-//                fish.SetPathID(3);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
-                
                 CMD_S_CREATE_FISH cmd7;
                 cmd7.dropThres = 0;
                 cmd7.groupId = -1;
@@ -2014,15 +1597,6 @@ void FishManager::createSceneFish()
                 cmd7.OffestY = 0;
                 cmd7.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd7);
-                
-//                offset.x_ = (RandInt(600, 800) * -1);
-//                fish.SetPathID(3);
-//                
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetDelay(fDelay);
-//                fish.SetSpeed(1.00f);
-//                m_Fishs.push_back(fish);
                 
                 fDelay += 0.5f;
             }
@@ -2053,18 +1627,6 @@ void FishManager::createSceneFish()
                 cmd.OffestY = abs(rand())%300-150;
                 cmd.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(RandInt(FISH_TYPE_EX_16, FISH_TYPE_EX_19));
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                offset.x_ = 100;
-//                offset.y_ =  RandInt(-150, 150);
-//                fish.SetDelay(fDelay);
-//                fish.SetOffest(offset);
-//                m_Fishs.push_back(fish);
                 fDelay += 3.0f;
             }
             
@@ -2100,15 +1662,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_1);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 100)
@@ -2136,15 +1689,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 100 && i <= 120)
@@ -2172,15 +1716,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_3);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 121)
@@ -2208,15 +1743,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 121 && i <= 141)
@@ -2244,15 +1770,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_4);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 142)
@@ -2280,15 +1797,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 142 && i <= 162)
@@ -2316,15 +1824,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_5);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 163)
@@ -2353,14 +1852,6 @@ void FishManager::createSceneFish()
                     cmdArray.push_back(cmd);
                     
                     //! 圈中间的乌龟
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 163 && i <= 183)
@@ -2387,15 +1878,6 @@ void FishManager::createSceneFish()
                     cmd.OffestX = 0;
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
-                    cmdArray.push_back(cmd);
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_6);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 184)
@@ -2423,14 +1905,6 @@ void FishManager::createSceneFish()
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
                     //! 圈中间的乌龟
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 184 && i <= 204)
@@ -2458,14 +1932,6 @@ void FishManager::createSceneFish()
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
                     //! 小圈1
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_9);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX2);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
             }
         }
@@ -2503,17 +1969,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 250;
                     cmd.fDelay = fDelay;
                     delayCreateCmd.push_back(cmd);
-                    
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(0);
-//                    offset.y_ = 250;
-//                    fish.SetOffest(offset);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH);
-//                    fish.SetSpeed(fSpeed);
-//                    fish.SetDelay(fDelay);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 CMD_S_CREATE_FISH cmd;
@@ -2539,17 +1994,6 @@ void FishManager::createSceneFish()
                 cmd.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd);
                 
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_10);
-//                fish.SetPathID(0);
-//                offset.y_ = 150;
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
-                
                 CMD_S_CREATE_FISH cmd1;
                 cmd1.dropThres = 0;
                 cmd1.groupId = -1;
@@ -2572,17 +2016,6 @@ void FishManager::createSceneFish()
                 cmd1.OffestY = -150;
                 cmd1.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd1);
-                
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_10);
-//                fish.SetPathID(0);
-//                offset.y_ = -150;
-//                fish.SetOffest(offset);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
                 
                 if(false)
                 {
@@ -2608,17 +2041,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = -250;
                     cmd.fDelay = fDelay;
                     delayCreateCmd.push_back(cmd);
-                    
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_10);
-//                    fish.SetPathID(0);
-//                    offset.y_ = -250;
-//                    fish.SetOffest(offset);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH);
-//                    fish.SetSpeed(fSpeed);
-//                    fish.SetDelay(fDelay);
-//                    m_Fishs.push_back(fish);
                 }
                 fDelay += 1.0f;
             }
@@ -2649,16 +2071,6 @@ void FishManager::createSceneFish()
                 cmd.OffestY = 0;
                 cmd.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd);
-                
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(FISH_TYPE_EX_17);
-//                fish.SetPathID(0);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
                 
                 fDelay += 2.0f;
             }
@@ -2694,15 +2106,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-                    
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_3);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i >= 50 && i < 90)
@@ -2729,15 +2132,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_4);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i >= 90 && i < 120)
@@ -2764,15 +2158,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_9);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 120)
@@ -2799,15 +2184,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_19);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 120 && i <= 170)
@@ -2834,15 +2210,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_5);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 170 && i <= 210)
@@ -2869,15 +2236,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_2);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i > 210 && i <= 240)
@@ -2904,15 +2262,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_7);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
                 
                 if (i == 241)
@@ -2939,15 +2288,6 @@ void FishManager::createSceneFish()
                     cmd.OffestY = 0;
                     cmd.fDelay = 0;
                     cmdArray.push_back(cmd);
-
-//                    CFish fish;
-//                    fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                    fish.SetTypeID(FISH_TYPE_EX_18);
-//                    fish.SetPathID(i);
-//                    fish.SetData(-1);
-//                    fish.SetPathType(FISH_ARRAY_PATH_EX1);
-//                    fish.SetSpeed(fSpeed);
-//                    m_Fishs.push_back(fish);
                 }
             }
             
@@ -2985,16 +2325,6 @@ void FishManager::createSceneFish()
                 cmd.OffestY = 0;
                 cmd.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd);
-
-//                CFish fish;
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(nRandFish);
-//                fish.SetPathID(nPathID);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
                 
                 nPathID = 5;
                 CMD_S_CREATE_FISH cmd1;
@@ -3019,15 +2349,6 @@ void FishManager::createSceneFish()
                 cmd1.OffestY = 0;
                 cmd1.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd1);
-
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(nRandFish);
-//                fish.SetPathID(nPathID);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
                 
                 nPathID = 6;
                 CMD_S_CREATE_FISH cmd2;
@@ -3052,14 +2373,6 @@ void FishManager::createSceneFish()
                 cmd2.OffestY = 0;
                 cmd2.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd2);
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(nRandFish);
-//                fish.SetPathID(nPathID);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
                 
                 nPathID = 7;
                 CMD_S_CREATE_FISH cmd3;
@@ -3084,14 +2397,7 @@ void FishManager::createSceneFish()
                 cmd3.OffestY = 0;
                 cmd3.fDelay = fDelay;
                 delayCreateCmd.push_back(cmd3);
-//                fish.SetID(CIDGenerate::GetInstance()->GetNewID());
-//                fish.SetTypeID(nRandFish);
-//                fish.SetPathID(nPathID);
-//                fish.SetData(-1);
-//                fish.SetPathType(FISH_ARRAY_PATH);
-//                fish.SetSpeed(fSpeed);
-//                fish.SetDelay(fDelay);
-//                m_Fishs.push_back(fish);
+
                 fDelay += 5.0f;
             }
         }
@@ -3110,9 +2416,6 @@ std::string FishManager::getFishName(int fishTypeId)
 
 std::string FishManager::getFishRes(int fishTypeId)
 {
-//    if (find(configs.begin(), configs.end(), fishTypeId) == configs.end()) {
-//        return "";
-//    }
     return configs[fishTypeId].resource;
 }
 
@@ -3123,8 +2426,5 @@ std::string FishManager::getFishSound(int fishTypeId)
 
 int FishManager::getFishType(int fishTypeId)
 {
-//    if (find(configs.begin(), configs.end(), fishTypeId) == configs.end()) {
-//        return -1;
-//    }
     return configs[fishTypeId].type;
 }

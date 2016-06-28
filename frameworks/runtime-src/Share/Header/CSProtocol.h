@@ -54,6 +54,7 @@ typedef struct __S2C_CASH_BENEFIT_CODE {
 typedef struct __C2S_LINK_TO_NETGAME
 {
     C2SProtocol             eProtocol;
+    int                     type;
 }C2S_LINK_TO_NETGAME;
 
 typedef struct __C2S_SHARE

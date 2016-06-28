@@ -30,6 +30,8 @@ public:
     
     void clickLinkBtn();
     
+    void clickLink2Btn();
+    
     CREATE_FUNC(BenefitLayer);
     
 private:

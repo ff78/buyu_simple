@@ -3946,11 +3946,12 @@ void GameCore::responseCashBenefitCode(S2C_CASH_BENEFIT_CODE s2cinfo)
     ClientLogic::instance()->pass2Engine(&info);
 }
 
-void GameCore::link2NetGame()
+void GameCore::link2NetGame(E2L_LINK_TO_NETGAME info)
 {
-    C2S_LINK_TO_NETGAME info;
-    info.eProtocol = c2s_link_to_netgame;
-    ClientLogic::instance()->pass2Server(&info);
+    C2S_LINK_TO_NETGAME c2sinfo;
+    c2sinfo.eProtocol = c2s_link_to_netgame;
+    c2sinfo.type = info.type;
+    ClientLogic::instance()->pass2Server(&c2sinfo);
 }
 
 void GameCore::showShare()

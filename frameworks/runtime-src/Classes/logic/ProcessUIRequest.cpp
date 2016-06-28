@@ -387,7 +387,8 @@ void ClientLogic::UICashBenefitCode(void *pMsg)
 
 void ClientLogic::UILink2NetGame(void *pMsg)
 {
-    GameCore::instance()->link2NetGame();
+    E2L_LINK_TO_NETGAME *pMsgInfo = (E2L_LINK_TO_NETGAME*)pMsg;
+    GameCore::instance()->link2NetGame(*pMsgInfo);
 }
 
 void ClientLogic::UIShowShare(void *pMsg)

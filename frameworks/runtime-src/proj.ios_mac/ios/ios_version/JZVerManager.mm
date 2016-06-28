@@ -12,7 +12,7 @@
 
 #ifndef APP_URL
 //    #define APP_URL @"http://itunes.apple.com/lookup?id=1062224929"
-#define APP_URL @"http://yuyu.91bisai.com"
+#define APP_URL @"http://itunes.apple.com/lookup?id=1118863549"
 
 
 //    #define APP_URL @"http://itunes.apple.com/lookup?id=1037694328"
@@ -28,6 +28,7 @@
 -(bool) isOnLine;
 
 -(void) openCommentUrl;
+-(void) openCommentUrl2;
 
 @end
 
@@ -84,34 +85,11 @@ static JZVerManager* mInstance = nil;
 }
 
 -(void) openCommentUrl{
-    
-    if (self.trackViewURL != nil) {
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewURL]];
-        
-    }else{
-        NSString *URL = APP_URL;
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URL]];
-//        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-//        [request setURL:[NSURL URLWithString:URL]];
-//        [request setHTTPMethod:@"POST"];
-//        NSHTTPURLResponse *urlResponse = nil;
-//        NSError *error = nil;
-//        NSData *recervedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
-//        
-//        if(recervedData == nil) return ;
-//        
-//        NSDictionary *dic  = [NSJSONSerialization JSONObjectWithData:recervedData options:NSJSONReadingMutableContainers error:nil];
-//        NSArray *infoArray  = [dic objectForKey:@"results"];
-//        
-//        if ([infoArray count]) {
-//            NSDictionary *releaseInfo   = [infoArray objectAtIndex:0];
-//            NSString     *lastVersion   = [releaseInfo objectForKey:@"version"];
-//            self.mLastVersion = [[NSString alloc] initWithString:lastVersion];
-//            self.trackViewURL = [releaseInfo objectForKey:@"trackViewUrl"];
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewURL]];
-//        }
-    }
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.buyubisai.com"]];
+}
+
+-(void) openCommentUrl2{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://yuyu.91bisai.com"]];
 }
 
 @end
@@ -138,6 +116,12 @@ void GameIOS::openCommentUrl()
 {
     [[JZVerManager getInstance] openCommentUrl];
 }
+
+void GameIOS::openCommentUrl2()
+{
+    [[JZVerManager getInstance] openCommentUrl2];
+}
+
 
 bool GameIOS::isOnLine()
 {

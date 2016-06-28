@@ -64,25 +64,12 @@ public:
     
     //删除掉某条鱼
     void removeFish(int fishId);
-    //创建鱼
-    void createFish(CMD_S_CREATE_FISH &cmd);
     
-    void readFishFile();
-//    void selectFish();
-    
-    //读取下一条鱼
-    bool findNextFish(int idx, int groupLen);
     //读取鱼的数据，并初始化创建鱼的命令
     void readFile(int idx, std::string filename);
     
     static void initIdTable(rapidjson::Document &_doc);
-    
-    //创建下一条鱼
-    void createNextFish();
-    
-    //执行创建鱼的命令
-    bool doCreateCmd();
-    
+        
     //加速所有的鱼
     void speedUpAll();
     

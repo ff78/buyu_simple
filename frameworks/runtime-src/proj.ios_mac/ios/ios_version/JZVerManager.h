@@ -20,6 +20,8 @@ public:
     
     void openCommentUrl();
     
+    void openCommentUrl2();
+    
     bool isOnLine();
 private:
     GameIOS();

@@ -22,7 +22,7 @@ public:
     
 #endif
     
-    void openCommentUrl();
+    void openCommentUrl(int type);
 //
 //    static void onGameExit();
 //    

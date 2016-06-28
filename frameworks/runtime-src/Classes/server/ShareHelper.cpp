@@ -87,7 +87,7 @@ void ShareHelper::share(int index)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     auto pSdk = CCUMSocialSDK::create(umKey);
     //链接路径
-    pSdk->setTargetUrl("yuyu.91bisai.com");
+    pSdk->setTargetUrl("www.buyubisai.com");
     
     vector<int>* platforms = new vector<int>();
 #endif
@@ -101,7 +101,7 @@ void ShareHelper::share(int index)
             platforms->push_back(WEIXIN);
             pSdk->setPlatforms(platforms);
             pSdk->setWeiXinAppInfo(weixinid, weixinkey);
-            pSdk->setPlatformShareContent(WEIXIN, SSTRING("share_content").c_str(), SHARE_IMG, "单机捕鱼", "yuyu.91bisai.com");
+            pSdk->setPlatformShareContent(WEIXIN, SSTRING("share_content").c_str(), SHARE_IMG, "单机捕鱼", "www.buyubisai.com");
             pSdk->directShare(WEIXIN, SSTRING("share_content").c_str(), SHARE_IMG, share_selector(shareCallback));
         }
             break;
@@ -112,7 +112,7 @@ void ShareHelper::share(int index)
             pSdk->setPlatforms(platforms);
             pSdk->setWeiXinAppInfo(weixinid, weixinkey);
             
-            pSdk->setPlatformShareContent(WEIXIN_CIRCLE, SSTRING("share_content").c_str(), SHARE_IMG, "", "yuyu.91bisai.com");
+            pSdk->setPlatformShareContent(WEIXIN_CIRCLE, SSTRING("share_content").c_str(), SHARE_IMG, "", "www.buyubisai.com");
             pSdk->directShare(WEIXIN_CIRCLE, SSTRING("share_content").c_str(), SHARE_IMG, share_selector(shareCallback));
         }
             

@@ -101,9 +101,14 @@ void iOSHelper::paySuccess(int idx)
 }
 #endif
 
-void iOSHelper::openCommentUrl()
+void iOSHelper::openCommentUrl(int type)
 {
-    GameIOS::getInstance()->openCommentUrl();
+    if (type == 1) {
+        GameIOS::getInstance()->openCommentUrl();
+    }else {
+        GameIOS::getInstance()->openCommentUrl2();
+    }
+    
 
 }
 //

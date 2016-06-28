@@ -16,6 +16,10 @@
 #include "logic/GameCore.h"
 #include "../node/GoldFallen.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "iOSHelper.h"
+#endif
+
 USING_NS_CC;
 using namespace ui;
 
@@ -116,6 +120,9 @@ bool HallScene::init()
     
     auto benefitBtn = (Button*)leftRoot->getChildByName("benefits_button");
     benefitBtn->addClickEventListener(CC_CALLBACK_0(HallScene::clickBenefit, this));
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    benefitBtn->setVisible(iOSHelper::bOnline);
+#endif
     
     auto vipBtn = (Button*)root->getChildByName("vip_gift_button");
     vipBtn->addClickEventListener(CC_CALLBACK_0(HallScene::clickVip, this));

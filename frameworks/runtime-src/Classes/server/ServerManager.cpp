@@ -74,10 +74,11 @@ void ServerManager::processCashBenefitCode(void *pMsg)
 
 void ServerManager::processLink2NetGame(void *pMsg)
 {
+    C2S_LINK_TO_NETGAME info = *static_cast<C2S_LINK_TO_NETGAME*>(pMsg);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    iOSHelper::getInstance()->openCommentUrl();
+    iOSHelper::getInstance()->openCommentUrl(info.type);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    AndoridHelper::instance()->openURL("yuyu.91bisai.com");
+//    AndoridHelper::instance()->openURL("www.buyubisai.com");
 #endif
 }
 

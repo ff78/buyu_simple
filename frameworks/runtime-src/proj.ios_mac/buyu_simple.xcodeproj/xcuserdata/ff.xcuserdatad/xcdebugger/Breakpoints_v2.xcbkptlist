@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/data/FishManager.cpp"
-            timestampString = "488285736.531184"
+            timestampString = "488775384.534213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "752"
-            endingLineNumber = "752"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
             landmarkName = "FishManager::loadFishConfig(std::vector&lt;int&gt; &amp;excludeFish)"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,7 +122,7 @@
                   moduleName = "buyu_simple-mobile"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///work/buyu_simple/frameworks/runtime-src/Classes/view/scene/GoldRunnerScene.cpp"
-                  timestampString = "488714251.890895"
+                  timestampString = "488776850.288979"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "190"
@@ -137,7 +137,7 @@
                   moduleName = "buyu_simple-mobile"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///work/buyu_simple/frameworks/runtime-src/Classes/view/scene/GoldRunnerScene.cpp"
-                  timestampString = "488714251.891028"
+                  timestampString = "488776850.289164"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "190"
@@ -240,6 +240,22 @@
             startingLineNumber = "89"
             endingLineNumber = "89"
             landmarkName = "-paymentQueue:updatedTransactions:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ios/AppController.mm"
+            timestampString = "488776795.410874"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -343,7 +343,7 @@ public:
     void showBenefits(E2L_SHOW_BENEFITS info);
     void cashBenefitCode(E2L_CASH_BENEFIT_CODE info);
     void responseCashBenefitCode(S2C_CASH_BENEFIT_CODE s2cinfo);
-    void link2NetGame();
+    void link2NetGame(E2L_LINK_TO_NETGAME info);
     
     void showShare();
     void share(E2L_SHARE info);

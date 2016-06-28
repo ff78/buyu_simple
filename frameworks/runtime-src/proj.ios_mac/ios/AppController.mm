@@ -33,6 +33,7 @@
 
 #import "GameUUID.h"
 #import "ios_pay/iOSHelper.h"
+#import "ios_version/JZVerManager.h"
 #import "UMSocial.h"
 
 @implementation AppController
@@ -91,6 +92,8 @@ static AppDelegate s_sharedApplication;
     NSString* keyUUID = [[[GameUUID alloc] init] gatherMessage];
     NSLog(@"udid in keychain %@", keyUUID);
     iOSHelper::uuidStr = keyUUID.UTF8String;
+    
+    iOSHelper::bOnline = GameIOS::getInstance()->isOnLine();
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
