@@ -12,7 +12,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "iOSHelper.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//#include "server/AndroidHelper.h"
+#include "server/AndroidHelper.h"
 #endif
 
 ServerManager::ServerManager()
@@ -79,6 +79,11 @@ void ServerManager::processLink2NetGame(void *pMsg)
     iOSHelper::getInstance()->openCommentUrl(info.type);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 //    AndoridHelper::instance()->openURL("www.buyubisai.com");
+    std::string url("http://www.buyubisai.com");
+    if (info.type == 2) {
+        url = "http://yuyu.91bisai.com";
+    }
+    AndroidHelper::instance()->openURL(url);
 #endif
 }
 

@@ -25,7 +25,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "iOSHelper.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//#include "server/AndroidHelper.h"
+#include "server/AndroidHelper.h"
 #endif
 
 using namespace CocosDenshion;
@@ -87,7 +87,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     uuStr += iOSHelper::uuidStr;
     #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    uuStr += AndroidHelper::instance()->getDeviceID().c_str();
+    uuStr += AndroidHelper::instance()->getDeviceID().c_str();
     #endif
     coAesSetKey(uuStr.substr(0,32).c_str());
     
@@ -111,7 +111,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto glView = Director::getInstance()->getOpenGLView();
     glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);
     
-    Director::getInstance()->setDisplayStats(true);
+    Director::getInstance()->setDisplayStats(false);
     GameUtils::winSize = Director::getInstance()->getWinSize();
     
     //初始化声音引擎

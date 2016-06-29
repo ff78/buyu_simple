@@ -26,6 +26,7 @@ FILE_LIST += ../../Classes/AppDelegate.cpp \
 ../../Classes/ide-support/lua_debugger.c \
 ../../Classes/server/ServerManager.cpp \
 ../../Classes/server/ShareHelper.cpp \
+../../Classes/server/AndroidHelper.cpp \
 ../../Classes/Cocos2dx/Common/CCUMSocialSDK.cpp \
 ../../Classes/Cocos2dx/Android/CCUMSocialController.cpp 
 

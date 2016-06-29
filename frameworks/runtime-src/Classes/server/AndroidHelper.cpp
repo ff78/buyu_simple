@@ -19,24 +19,41 @@ extern "C"
         if (!JniHelper::getStaticMethodInfo(minfo,JNI_CLASS_NAME,"getInstance","()Ljava/lang/Object;"))
             return false;
         jobj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+        log("call static");
         return JniHelper::getMethodInfo(minfo, JNI_CLASS_NAME, sFunction, sSignature);
     }
 
-
+    char* jstringTostring(JNIEnv* env, jstring jstr)
+    {
+        char* rtn = NULL;
+        jclass clsstring = env->FindClass("java/lang/String");
+        jstring strencode = env->NewStringUTF("utf-8");
+        jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
+        jbyteArray barr= (jbyteArray)env->CallObjectMethod(jstr, mid, strencode);
+        jsize alen = env->GetArrayLength(barr);
+        jbyte* ba = env->GetByteArrayElements(barr, JNI_FALSE);
+        if (alen > 0)
+        {
+            rtn = (char*)malloc(alen + 1);
+            
+            memcpy(rtn, ba, alen);
+            rtn[alen] = 0;
+        }
+        env->ReleaseByteArrayElements(barr, ba, 0);
+        return rtn;
+    }
 }
+
 /// 得到设备的唯一标示
 std::string AndroidHelper::getDeviceID()
 {
     JniMethodInfo minfo;
     jobject jobj;
     
-    if(getJniMethod(jobj,minfo,"getDeviceID","()Ljava/lang/String;"))
+    if(JniHelper::getStaticMethodInfo(minfo,JNI_CLASS_NAME,"getDeviceID","()Ljava/lang/String;"))
     {
-        jstring result = (jstring)minfo.env->CallObjectMethod(jobj,minfo.methodID);
-        m_deviceID = minfo.env->GetStringUTFChars(result,0);
-//        JZCore::getInstance()->setDeviceID(str);
-        minfo.env->DeleteLocalRef(result);
-        return m_deviceID;
+        jstring result = (jstring)minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+        return JniHelper::jstring2string(result);
     }
     return "";
 }
@@ -46,12 +63,10 @@ void AndroidHelper::openURL(std::string url)
     JniMethodInfo minfo;
     jobject jobj;
     
-    if(getJniMethod(jobj,minfo,"openURL","(Ljava/lang/String;)V"))
+    if(JniHelper::getStaticMethodInfo(minfo,JNI_CLASS_NAME,"openURL","(Ljava/lang/String;)V"))
     {
-        jstring url_jstr = minfo.env->NewStringUTF(appuserid.c_str());
-        minfo.env->CallVoidMethod(jobj, minfo.methodID, url_jstr);
-//        m_deviceID = minfo.env->GetStringUTFChars(result,0);
-//        JZCore::getInstance()->setDeviceID(str);
+        jstring url_jstr = minfo.env->NewStringUTF(url.c_str());
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, url_jstr);
         minfo.env->DeleteLocalRef(url_jstr);
     }
     
@@ -68,28 +83,21 @@ void AndroidHelper::pay(int index)
     JniMethodInfo minfo;
     jobject jobj;
     
-    if(getJniMethod(jobj,minfo,"pay","(I)V;"))
+    if(JniHelper::getStaticMethodInfo(minfo,JNI_CLASS_NAME,"pay","(I)V"))
     {
-        minfo.env->CallVoidMethod(jobj, minfo.methodID, index);
+        jint jorderId = index;
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, jorderId);
     }
     
 }
 
-JNIEXPORT void JNICALL Java_org_cocos2dx_lua_AndroidHelper_OnPayProcessFailed()
+JNIEXPORT void JNICALL Java_org_cocos2dx_lua_AndroidHelper_OnPayProcessResult(int orderId, int errNo)
 {
     S2C_RECHARGE info;
     info.eProtocol = s2c_recharge;
-    info.rechargeId = pMsgInfo.rechargeId;
-    info.errNo = 1;
+    info.rechargeId = orderId;
+    info.errNo = errNo;
     ClientLogic::instance()->ProcessServerResponse(&info);
 }
 
-JNIEXPORT void JNICALL Java_org_cocos2dx_lua_AndroidHelper_OnPayProcessSuccess()
-{
-    S2C_RECHARGE info;
-    info.eProtocol = s2c_recharge;
-    info.rechargeId = pMsgInfo.rechargeId;
-    info.errNo = 0;
-    ClientLogic::instance()->ProcessServerResponse(&info);
-}
 

@@ -8,7 +8,7 @@
 #ifndef AndroidHelper_h
 #define AndroidHelper_h
 
-#include "GameUtils.h"
+#include "utils/GameUtils.h"
 #include "cocos2d.h"
 #include "platform/android/jni/JniHelper.h"
 #include <Jni.h>

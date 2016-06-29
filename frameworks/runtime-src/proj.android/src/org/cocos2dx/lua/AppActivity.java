@@ -95,7 +95,7 @@ public class AppActivity extends Cocos2dxActivity{
             }
             hostIPAdress = getHostIpAddress();
         }
-
+        AndroidHelper.initIApp(this);
 
     }
 

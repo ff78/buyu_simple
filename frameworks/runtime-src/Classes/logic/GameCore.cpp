@@ -4094,6 +4094,7 @@ void GameCore::takeShareCountBound(E2L_SHARE_COUNT_BOUND info)
 
 bool GameCore::showComment()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     if (!iOSHelper::bOnline) {
         return false;
     }
@@ -4111,6 +4112,9 @@ bool GameCore::showComment()
     evaluateDay = iOSHelper::todayStr;
     saveEvaluate2CS();
     return true;
+#else
+    return false;
+#endif
     
 //    L2E_SHOW_EVALUATE info;
 //    info.eProtocol = l2e_show_evaluate;
