@@ -88,6 +88,8 @@ public:
     void takeShareCountBound(cocos2d::EventCustom* event);
     void showEvaluate();
     
+    void update(float dt);
+    
     CREATE_FUNC(HallScene);
 private:
     int focus;

@@ -66,11 +66,12 @@ public class AndroidHelper {
         i.setData(Uri.parse(url));
         getInstance().mMainActivity.startActivity(i);
     }
+    public static native void OnPayProcessResult(int orderId, int errNo);
 
-    public static void pay(int orderId) {
-
+    public static void pay(int orderId, float price) {
+        System.out.println("pay stub!");
+        OnPayProcessResult(orderId, 0);
     }
 
-    public static native void OnPayProcessResult(int orderId, int errNo);
 
 }

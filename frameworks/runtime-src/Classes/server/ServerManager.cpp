@@ -45,7 +45,7 @@ void ServerManager::processRecharge(void *pMsg)
 #if iOS_PAY
     iOSHelper::getInstance()->pay(pMsgInfo.rechargeId);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    AndroidHelper::instance()->pay(pMsgInfo.rechargeId);
+    AndroidHelper::instance()->pay(pMsgInfo.rechargeId, pMsgInfo.price);
 #else
     S2C_RECHARGE info;
     info.eProtocol = s2c_recharge;

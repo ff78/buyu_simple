@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/buyu_simple.iml" filepath="$PROJECT_DIR$/buyu_simple.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iapppay_res/iapppay_res.iml" filepath="$PROJECT_DIR$/iapppay_res/iapppay_res.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../cocos2d-x/cocos/platform/android/java/libcocos2dx.iml" filepath="$PROJECT_DIR$/../../cocos2d-x/cocos/platform/android/java/libcocos2dx.iml" />
+    </modules>
+  </component>
+</project>

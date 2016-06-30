@@ -353,6 +353,8 @@ public:
     void responseShare(S2C_SHARE s2cInfo);
     void takeShareCountBound(E2L_SHARE_COUNT_BOUND info);
     bool showComment();
+    
+    void jniRecharge(cocos2d::EventCustom *event);
 protected:
     virtual void onLoadFinish();
 private:
@@ -390,6 +392,7 @@ private:
     cocos2d::EventListenerCustom* endRayListener;
     cocos2d::EventListenerCustom* readyPlaneListener;
     cocos2d::EventListenerCustom* endPlaneListener;
+    cocos2d::EventListenerCustom* jniRechargeListener;
     
     std::vector<int> excludeFishIds;
     std::vector<int> dailySkills;
@@ -423,6 +426,9 @@ private:
     Relife_Data relifeData;
     
     int dropItemIncreacement;
+    
+    bool jniRechargeOk;
+    int  jniRechargeId;
     
     CC_SYNTHESIZE_READONLY(std::string, coreDataStr, CoreDataStr);
     CC_SYNTHESIZE_READONLY(std::string, taskDataStr, TaskDataStr);

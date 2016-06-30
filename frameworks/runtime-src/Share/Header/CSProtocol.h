@@ -30,6 +30,7 @@ typedef struct __C2S_RECHARGE
 {
     C2SProtocol             eProtocol;
     int                     rechargeId;
+    float                   price;
 }C2S_RECHARGE;
 
 typedef struct __S2C_RECHARGE

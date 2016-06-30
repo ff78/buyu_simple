@@ -15,6 +15,7 @@
 #include "sound/SoundManager.h"
 #include "logic/GameCore.h"
 #include "../node/GoldFallen.h"
+#include "../UIManager.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "iOSHelper.h"
@@ -25,6 +26,7 @@ using namespace ui;
 
 HallScene::~HallScene()
 {
+    unscheduleUpdate();
     Director::getInstance()->getEventDispatcher()->removeEventListener(showDiaryListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(showRechargeListener);
     Director::getInstance()->getEventDispatcher()->removeEventListener(showVipIntroListener);
@@ -287,6 +289,12 @@ void HallScene::setupView(L2E_TO_HALL &info)
     if (info.showEvaluate) {
         showEvaluate();
     }
+    scheduleUpdate();
+}
+
+void HallScene::update(float dt)
+{
+    UIManager::instance()->loop(dt);
 }
 
 void HallScene::startStage(int index)

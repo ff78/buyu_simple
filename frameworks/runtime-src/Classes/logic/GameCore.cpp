@@ -56,6 +56,8 @@ lotteryManager(nullptr)
     cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(readyPlaneListener, -1);
     endPlaneListener = cocos2d::EventListenerCustom::create(END_PLANE_BOMB, CC_CALLBACK_1(GameCore::endPlane, this));
     cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(endPlaneListener, -1);
+    jniRechargeListener = cocos2d::EventListenerCustom::create(JNI_RECHARGE_OK, CC_CALLBACK_1(GameCore::jniRecharge, this));
+    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(jniRechargeListener, -1);
     
     currState = FISH_GAME_NONE;
     currStage = 1;
@@ -125,6 +127,9 @@ lotteryManager(nullptr)
     openedEvaluate = false;
     evaluateDay = "";
     
+    jniRechargeOk = false;
+    jniRechargeId = 0;
+    
 //    deleteJson();
     if (!loadJson()) {
         sceneProb = gRebateProb;
@@ -146,6 +151,7 @@ GameCore::~GameCore()
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(endPlaneListener);
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(bombListener);
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(rayHitListener);
+    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(jniRechargeListener);
     clearAll();
 }
 
@@ -208,6 +214,19 @@ void GameCore::niuniuEnd(E2L_NIUNIU_END info)
 
 void GameCore::logic(float dt)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//    log("logic");
+    if (jniRechargeOk) {
+        log("jni recharge ok");
+        jniRechargeOk = false;
+        S2C_RECHARGE info;
+        info.eProtocol = s2c_recharge;
+        info.rechargeId = jniRechargeId;
+        info.errNo = 0;
+        jniRechargeId = 0;
+        responseRecharge(info);
+    }
+#endif
     switch (currState) {
         case FISH_GAME_INIT:
             changeGameState(FISH_GAME_NORMAL);
@@ -3748,16 +3767,23 @@ void GameCore::recharge(E2L_RECHARGE info)
     C2S_RECHARGE c2sInfo;
     c2sInfo.eProtocol = c2s_recharge;
     c2sInfo.rechargeId = info.rechargeId;
+    Recharge_Config config;
+    readRechargeConfig(info.rechargeId, config, RECHARGE_CONFIG_FILE);
+    c2sInfo.price = config.price;
     ClientLogic::instance()->pass2Server(&c2sInfo);
 }
 
 void GameCore::responseRecharge(S2C_RECHARGE info)
 {
+    log("response recharge");
+    log("response err:%d", info.errNo);
     if (info.errNo == 0) {
         Recharge_Config config;
         readRechargeConfig(info.rechargeId, config, RECHARGE_CONFIG_FILE);
         getVipFCS();
         getRechargeFCS();
+        log("order:%d", info.rechargeId);
+        log("amount:%d", config.amount);
         //最终数额=(基本数额+充值加成)*VIP加成
         int result = config.amount;
         if (firstRecharge[info.rechargeId-1]) {
@@ -3775,6 +3801,7 @@ void GameCore::responseRecharge(S2C_RECHARGE info)
         }else if (vip >= 5) {
             result *= 1.1;
         }
+//        log("add:%d",result);
         
         if (rechargeRecord == 0) {
             sceneProbDuration = probTotalDuration = REBATE_TIME_LIMIT;
@@ -4119,4 +4146,17 @@ bool GameCore::showComment()
 //    L2E_SHOW_EVALUATE info;
 //    info.eProtocol = l2e_show_evaluate;
 //    ClientLogic::instance()->pass2Engine(&info);
+}
+
+void GameCore::jniRecharge(cocos2d::EventCustom *event)
+{
+    log("jniRecharge");
+    S2C_RECHARGE info = *static_cast<S2C_RECHARGE*>(event->getUserData());
+    log("jni recharge err:%d",info.errNo);
+    if (info.errNo == 0) {
+        jniRechargeId = info.rechargeId;
+        jniRechargeOk = true;
+        log("set var ok");
+    }
+    
 }

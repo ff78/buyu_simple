@@ -26,7 +26,7 @@ public:
     
     void openURL(std::string url);
     
-    void pay(int index);
+    void pay(int index, float price);
 private:
     std::string m_deviceID;
 };

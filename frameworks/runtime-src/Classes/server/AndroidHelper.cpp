@@ -8,6 +8,7 @@
 
 #include "AndroidHelper.h"
 #include "CSProtocol.h"
+#include "EventDef.h"
 #include "logic/ClientLogic.h"
 
 USING_NS_CC;
@@ -41,6 +42,20 @@ extern "C"
         }
         env->ReleaseByteArrayElements(barr, ba, 0);
         return rtn;
+    }
+    
+    void Java_org_cocos2dx_lua_AndroidHelper_OnPayProcessResult(JNIEnv *env, jobject thiz, int orderId, int errNo)
+    {
+//        log("back to c++ result!");
+        S2C_RECHARGE info;
+        info.eProtocol = s2c_recharge;
+        info.rechargeId = orderId;
+        info.errNo = errNo;
+//        log("pass 2 sever");
+//        ClientLogic::instance()->ProcessServerResponse(&info);
+        EventCustom event(JNI_RECHARGE_OK);
+        event.setUserData(&info);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     }
 }
 
@@ -78,26 +93,18 @@ void AndroidHelper::Toast(const std::string& message)
     MessageBox(message.c_str(), "");
 }
 
-void AndroidHelper::pay(int index)
+void AndroidHelper::pay(int index, float price)
 {
     JniMethodInfo minfo;
     jobject jobj;
     
-    if(JniHelper::getStaticMethodInfo(minfo,JNI_CLASS_NAME,"pay","(I)V"))
+    if(JniHelper::getStaticMethodInfo(minfo,JNI_CLASS_NAME,"pay","(IF)V"))
     {
         jint jorderId = index;
-        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, jorderId);
+        jfloat jprice = price;
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, jorderId, jprice);
     }
     
-}
-
-JNIEXPORT void JNICALL Java_org_cocos2dx_lua_AndroidHelper_OnPayProcessResult(int orderId, int errNo)
-{
-    S2C_RECHARGE info;
-    info.eProtocol = s2c_recharge;
-    info.rechargeId = orderId;
-    info.errNo = errNo;
-    ClientLogic::instance()->ProcessServerResponse(&info);
 }
 
 

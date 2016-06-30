@@ -5,6 +5,7 @@
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/anim/umeng_socialize_shareboard_animation_out.xml \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/anim/umeng_socialize_slide_in_from_bottom.xml \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/anim/umeng_socialize_slide_out_from_bottom.xml \
+/work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable/icon.png \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable/sina_logo.png \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable/umeng_socialize_action_back.xml \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable/umeng_socialize_action_back_normal.png \
@@ -89,6 +90,7 @@
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable-hdpi/umeng_socialize_share_video.png \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable-ldpi/icon.png \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable-mdpi/icon.png \
+/work/buyu_simple/frameworks/runtime-src/proj.android/res/drawable-xhdpi/icon.png \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/layout/umeng_bak_at_list.xml \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/layout/umeng_bak_at_list_item.xml \
 /work/buyu_simple/frameworks/runtime-src/proj.android/res/layout/umeng_bak_platform_item_simple.xml \

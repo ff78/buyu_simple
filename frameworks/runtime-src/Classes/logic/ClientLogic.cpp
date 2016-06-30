@@ -108,6 +108,7 @@ ClientLogic::ClientLogic()
     m_LogicStateFunc[GAME_STATE_LOAD_GOLDEN] = &ClientLogic::onStateLoadGold;
     m_LogicStateFunc[GAME_STATE_GOLDEN_GAME]  = &ClientLogic::onStateGoldGame;
     m_LogicStateFunc[GAME_STATE_GAME] = &ClientLogic::onStateFishGame;
+    m_LogicStateFunc[GAME_STATE_HALL] = &ClientLogic::onStateFishGame;
 }
 
 void ClientLogic::onStateInit(float dt)
