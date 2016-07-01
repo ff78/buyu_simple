@@ -73,7 +73,6 @@
 		A541815F1CE9D5B500932D9D /* DropItemNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A541815D1CE9D5B500932D9D /* DropItemNode.cpp */; };
 		A541D59D1C9BAF13009A98AA /* NiuNiuLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A541D59B1C9BAF13009A98AA /* NiuNiuLayer.cpp */; };
 		A541D59F1C9BDB15009A98AA /* bmfont in Resources */ = {isa = PBXBuildFile; fileRef = A541D59E1C9BDB15009A98AA /* bmfont */; };
-		A54648941D23638600355527 /* AndroidHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A54648921D23638600355527 /* AndroidHelper.cpp */; };
 		A54E48341C44ED4700B30AD3 /* FishNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A54E48321C44ED4700B30AD3 /* FishNode.cpp */; };
 		A54E48361C44F23F00B30AD3 /* game_scene in Resources */ = {isa = PBXBuildFile; fileRef = A54E48351C44F23F00B30AD3 /* game_scene */; };
 		A55836F71BFEF31500111A59 /* LoadLogin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A55836F51BFEF31500111A59 /* LoadLogin.cpp */; };
@@ -401,8 +400,6 @@
 		A541D59B1C9BAF13009A98AA /* NiuNiuLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NiuNiuLayer.cpp; sourceTree = "<group>"; };
 		A541D59C1C9BAF13009A98AA /* NiuNiuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NiuNiuLayer.h; sourceTree = "<group>"; };
 		A541D59E1C9BDB15009A98AA /* bmfont */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bmfont; path = ../../../Resources/bmfont; sourceTree = "<group>"; };
-		A54648921D23638600355527 /* AndroidHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AndroidHelper.cpp; sourceTree = "<group>"; };
-		A54648931D23638600355527 /* AndroidHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidHelper.h; sourceTree = "<group>"; };
 		A54E48321C44ED4700B30AD3 /* FishNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FishNode.cpp; sourceTree = "<group>"; };
 		A54E48331C44ED4700B30AD3 /* FishNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishNode.h; sourceTree = "<group>"; };
 		A54E48351C44F23F00B30AD3 /* game_scene */ = {isa = PBXFileReference; lastKnownFileType = folder; name = game_scene; path = ../../../Resources/game_scene; sourceTree = "<group>"; };
@@ -1314,8 +1311,6 @@
 		A5E9CD701CF8301300EFB027 /* server */ = {
 			isa = PBXGroup;
 			children = (
-				A54648921D23638600355527 /* AndroidHelper.cpp */,
-				A54648931D23638600355527 /* AndroidHelper.h */,
 				A5BF875E1CFFD158009F3F7C /* ShareHelper.cpp */,
 				A5BF875F1CFFD158009F3F7C /* ShareHelper.h */,
 				A5E9CD711CF8310200EFB027 /* ServerManager.cpp */,
@@ -1740,7 +1735,6 @@
 				A5D259131C4E46B7004AD00F /* BlackBullet.cpp in Sources */,
 				A55DEFB51C17E0380075486F /* Hall.cpp in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
-				A54648941D23638600355527 /* AndroidHelper.cpp in Sources */,
 				A5BBA5A71C28125500D12D42 /* GoldObj.cpp in Sources */,
 				A53D2E2B1C4C886C0094DE91 /* BulletLayer.cpp in Sources */,
 				A53D2E321C4CC68B0094DE91 /* CannonNode.cpp in Sources */,
